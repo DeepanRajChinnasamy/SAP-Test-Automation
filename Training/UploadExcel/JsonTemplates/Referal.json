@@ -1,0 +1,58 @@
+{
+  "query": "mutation testFn( $data: Object) { testFunction(input: { name: \"receive-price-proposal-from-kafka\" data: { apiversion: \"1.0.1\" tenant: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" id: \"51014872-8dfd-11ed-a1eb-0242ac120002\" type: \"priceproposal.requested\" source: \"urn:appcat:cmh-eeolink\" specversion: \"1.0\" subject: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" time: \"2019-08-24T14:15:22Z\" datacontenttype: \"application/json\" data: $data } } ) { status data }}",
+  "variables": {
+    "data": {
+      "requestId": "e5a1358c-2f36-4d02-8c68-fe0b8c46172a",
+      "submissionId": "<<Id>>",
+      "edRefCode": "ACN3-2023-06-0432",
+      "articleDOI": "",
+      "journalId": "<<JournalID>>",
+      "sourceSystem": "EM",
+      "baseArticleType": "Research Article",
+      "displayArticleType": "Research Article (ABC)",
+      "submissionDate": "2024-04-15",
+      "articleAcceptedDate": "2024-02-10",
+      "editorialStatus": "TBC",
+      "articleTitle": "Seismic slip history of the Pizzalto fault (Central Apennines Italy) using in situ-produced Clcosmic ray exposure dating and rare earth element concentrations.",
+      "isManualOverrideRequired": false,
+      "manualOverrideInstructions": "Have a goood day(*&^%$#.",
+      "societyCodes": [],
+      "promoCodes": [],
+      "discountCodes": [],
+      "referringJournalId": "5068a689-3372-4684-8576-aa709dd0d369",
+      "authors": [
+        {
+          "role": "CorrespondingAuthor",
+          "authorSequenceNumber": 1,
+          "firstName": "Jim",
+          "middleName": "M.",
+          "lastName": "TESSON",
+          "honorificPrefix": "Mr.",
+          "honorificSuffix": "",
+          "email": "TestAuto@wiley.com",
+          "affiliationIdType": "Ringgold",
+          "affiliations": [
+            {
+              "affiliationIds": [
+                {
+                  "institutionId": "",
+                  "institutionIdType": "Ringgold"
+                }
+              ],
+              "addressLocality": "AixenProvence",
+              "countryCode": "IN",
+              "country": "IN",
+              "institution": "GrantInstitute",
+              "department": "SchoolofGeoSciences",
+              "stateProvince": "AndhraPradesh",
+              "postalCode": "500072",
+              "streetAddress": [
+                "1832ColvinAve"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
