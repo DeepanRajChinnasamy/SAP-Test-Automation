@@ -26,7 +26,7 @@ ${BASE_URLQA2}       https://api.wileyas.qa2.viax.io/graphql
 ${BASE_URLQA}    https://api.wileyas.qa2.viax.io/graphql
 #${BASE_URL}       https://api.wileyas.qa.viax.io/graphql
 ${EMPTY}
-${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MTkxNTgyNzQsImlhdCI6MTcxOTE1MTA3NCwianRpIjoiOWZhNDg2Y2MtNjc4NS00ZDAwLWEzZmEtOTA5OTM4MmIxNmU4IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiJlNWQ5ZjYyYy00YzVmLTQ4ZDktOWFiYi03YmY0NzY1ZWQwZWYiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiZTVkOWY2MmMtNGM1Zi00OGQ5LTlhYmItN2JmNDc2NWVkMGVmIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.cJ5RJyXHzs7zSxHIqPdJ9AUkrLKARsBTAzE1Dpx4ibYW-HnmJmk85JlazIuvcBGSyZ0u-hgkI3dnFlB5BDZG-gnPkOtKsCtBhLLQvaT_1RP7-pg-xMZmD2N74olCkObWuAct8emyDq8c6CksVxMcHn_XnfUw5ifCYZWi-28a2EcUmbHWggoWWMe5JLjfSFKbFqufERLrE6-w5fgkqoJR2ZID44yUI3PK7cUbLl6VMphASgZdBDr03ZsSFZ_j1ghtuPbdWY1sK_5kEOy-dnYzqrxcmv1gUi74CF0cri5xOxtxR4qvzsIfijMHoGpARK__yC43G32waB-0l1CurGkPgA
+${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MTkyOTkxODMsImlhdCI6MTcxOTI5MTk4MywianRpIjoiZDQ3YzcxN2MtYzEzMy00YzA4LTliY2YtZjk5MmMyMGJkNDE4IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiJmM2YzYWIzOS1kM2YxLTQzMDItODA1ZC05OGU1YmViZDU4N2YiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiZjNmM2FiMzktZDNmMS00MzAyLTgwNWQtOThlNWJlYmQ1ODdmIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.WFWzc6SCrtn9HJpG-kwWUI23VN0LEq9MOTZDj0F0ljgDkwVXceEIg3hGvmKiIls1B1kagHq4e4FLyiQl8xBEyj07m9cJeaGsfzbJoA9_7u4KWnciIuz1mJv4_NygBwZp5kBxw8YfFSCxKT64NuWTMegI-uBWcQok9Lfo5FWn0OFl_FpbE9OBy0QeXJezA1d71_eGiDRljROVWBnsTdyko79XGTz_FPcEXm2Zq9_ilDJzUCM9qf7JIjnBrJxtHFn7cdYNbpOEFoXII4Jskc7kCkrI8PPbxqm9VHiadV15BlhxZ7QFP4-AkMkJ8oBHCW1VkbwvYCkWl5sxsbiabxrtDg
 ${response_text}
 ${True}    True
 ${END}    END
@@ -51,8 +51,8 @@ ${green}    00FF00
 ${red}    FF0000
 #--------------------------Chrome---------------------------------------
 ${URLQA2}            https://wileyas.qa2.viax.io/orders
-#${URLQA}            https://wileyas.stage.viax.io/orders
-${URLQA}       https://wileyas.qa2.viax.io/orders
+${URLQA}            https://wileyas.stage.viax.io/orders
+#${URLQA}       https://wileyas.qa2.viax.io/orders
 ${Browser}        chrome
 ${username}     dchinnasam@wiley.com
 ${password}     VIRapr@678

@@ -41,7 +41,7 @@ PriceProposal
             set variable    ${response.json()}
             ${response_text}=    convert to string    ${response.content}
             ${response.json()}=    convert to string    ${response.json()}
-            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response_text}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
             ${JsonResp}=  Evaluate  ${response.text}
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
@@ -50,9 +50,11 @@ PriceProposal
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
-            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
+                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
                 ${error_code}=    convert to string    ${error_code}
@@ -69,9 +71,11 @@ PriceProposal
                     save excel document    ${PPInputExcelPath}
                 END
             ELSE
-                ${error_code}=  Set Variable  ${json_dict['errors']}
-                ${error_code}=    convert to string    ${error_code}
-                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}    FF0000
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${error_code}=  Set Variable  ${json_dict['errors']}
+#                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
                 save excel document    ${PPInputExcelPath}
             END
         END

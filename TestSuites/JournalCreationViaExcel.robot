@@ -2,6 +2,14 @@
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 
 *** Test Cases ***
+
+HandOverFormJournalCreation
+    [Tags]    id=NC_OP_09
+    Jouranl Creation Via Handoverform
+
+
+*** Keywords ***
+
 Jouranl Creation Via Handoverform
     Lanch and Login STEP      ${Var_STEPWebLink}    ${Var_UserName}   ${Var_Password}
     Read All Input Values HandoverForm    ${Var_Handoverformfile}    PDMUseOnly
@@ -24,10 +32,6 @@ Jouranl Creation Via Handoverform
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
     END
     close all excel documents
-
-
-
-*** Keywords ***
 
 Submit Media in Journal Complete
     [Arguments]    ${AutomationJouranlName}
