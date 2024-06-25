@@ -46,7 +46,7 @@ PriceProposal
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+            #log to console    @{list}
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
