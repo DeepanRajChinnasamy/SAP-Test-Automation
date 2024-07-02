@@ -4,7 +4,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 
 *** Test Cases ***
 Creata Order via JSON File and Fetch the Status
-    [Tags]    id=VA_CO_01
+
 #    ${ExistingMailIdDict}=    get mailid for existing users    ${InputExcelPath}    ExistingUsers
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
     close all excel documents
@@ -144,7 +144,7 @@ Creata Order via JSON File and Fetch the Status
     close sap connection
 
 Valiadte the Values in DBS and download the PDF
-    [Tags]    id=VA_CO_02
+
 #    close browser
     close all excel documents
 #    Launch and Login DBS    ${URLQA2}    ${username}    ${password}
@@ -232,7 +232,6 @@ Valiadte the Values in DBS and download the PDF
     close browser
 
 Cancelling Order via JSON File and Fetch the Status
-    [Tags]    id=VA_CO_03
     Read All Input Values For Cancel    ${InputExcelPath}    HappyFlowInputs
     Launch and Login DBS    ${URLQA2}    ${username}    ${password}
     ${ListIndexIterator}    set variable    0

@@ -1223,7 +1223,7 @@ ReadAllValuesFromPPExcel
     # set the ExcelDictionary to use it across the test suite
     set suite variable    ${excelValues}    ${ExcelDict}
     close current excel document
-    [Return]    ${ExcelDict}
+    RETURN    ${ExcelDict}
 
 #Read All Input Values From DataExcel
 #    [Arguments]    ${InputExcel}    ${InputSheet}
@@ -1281,10 +1281,10 @@ Convert List To Dictionary
     FOR    ${index}    IN RANGE    0    ${length}
        Set To Dictionary    ${dict}    @{my_list}[${index}]    @{my_list}[${index+1}]
     END
-    [Return]    ${dict}
+    RETURN    ${dict}
 
 Get Key Value
     [Arguments]  ${json_data}  ${key}
     ${parsed_json}=  Evaluate  json.loads('${json_data}')  json
     ${value}=  Get From Dictionary  ${parsed_json}  ${key}
-    [Return]  ${value}
+    RETURN  ${value}

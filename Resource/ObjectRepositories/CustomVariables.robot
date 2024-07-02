@@ -26,7 +26,7 @@ ${BASE_URLQA2}       https://api.wileyas.qa2.viax.io/graphql
 ${BASE_URLQA}    https://api.wileyas.qa2.viax.io/graphql
 #${BASE_URL}       https://api.wileyas.qa.viax.io/graphql
 ${EMPTY}
-${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MTkyOTkxODMsImlhdCI6MTcxOTI5MTk4MywianRpIjoiZDQ3YzcxN2MtYzEzMy00YzA4LTliY2YtZjk5MmMyMGJkNDE4IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiJmM2YzYWIzOS1kM2YxLTQzMDItODA1ZC05OGU1YmViZDU4N2YiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiZjNmM2FiMzktZDNmMS00MzAyLTgwNWQtOThlNWJlYmQ1ODdmIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.WFWzc6SCrtn9HJpG-kwWUI23VN0LEq9MOTZDj0F0ljgDkwVXceEIg3hGvmKiIls1B1kagHq4e4FLyiQl8xBEyj07m9cJeaGsfzbJoA9_7u4KWnciIuz1mJv4_NygBwZp5kBxw8YfFSCxKT64NuWTMegI-uBWcQok9Lfo5FWn0OFl_FpbE9OBy0QeXJezA1d71_eGiDRljROVWBnsTdyko79XGTz_FPcEXm2Zq9_ilDJzUCM9qf7JIjnBrJxtHFn7cdYNbpOEFoXII4Jskc7kCkrI8PPbxqm9VHiadV15BlhxZ7QFP4-AkMkJ8oBHCW1VkbwvYCkWl5sxsbiabxrtDg
+${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MTk5MzU2MTEsImlhdCI6MTcxOTkyODQxMSwianRpIjoiMDQ2ZWRkMGItOGNmNC00MjI3LWE5OGQtYjdkMTVmZjVhNTJkIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiJkN2ZjMTNjMS05YmQ1LTQwNzAtYTMyMi1jZDg0NjYxNjA1MzIiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiZDdmYzEzYzEtOWJkNS00MDcwLWEzMjItY2Q4NDY2MTYwNTMyIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.XiKb2XnPFNDB2yrbGuvs6hEaJxmtT5fXdDAJ6Od5XrcjiKjE8uFFPrPFplMB1Ct9rb5rM9_OCP7MxGsb89JprcVlfhnP3iJc22LZBCFYofSzpIB8vItpaxkbtaW1mQmTnNp3TQJY8O1lnDBgbPIX0sw1NeWZvZGEqsWUu0CqimHKAGMr93ullOpUnT6Tlqc-0uovW2MbBITZ70X2V3phc8kRQHMf-AtL-ggHJ3Gmr-hRVst98mUHiWK2KTnRIanotBEYBNMFPbwZS28GHJvaIpJLji3RWQ8PHEcZ0kscEIs9xoFOerj88mW8WMqdbLBK1sRgBStZClbeaNOKbLV3hA
 ${response_text}
 ${True}    True
 ${END}    END
@@ -332,7 +332,7 @@ ReadAllValuesFromExcel
     # set the ExcelDictionary to use it across the test suite
     set suite variable    ${excelValues}    ${ExcelDict}
     close current excel document
-    [Return]    ${ExcelDict}
+    RETURN    ${ExcelDict}
 
 #Get the JSON Path
 #    [Arguments]    ${OrderType}
@@ -346,14 +346,14 @@ ReadAllValuesFromExcel
 #        ${JsonPath}=     set variable    ${json_file_path}
 #    END
 #    set suite variable    ${JsonPath}    ${JsonPath}
-#    [Return]    ${JsonPath}
+#    RETURN    ${JsonPath}
 
 GetColumnIndexInExcelSheet
     [Arguments]    ${sheetname}    ${columnName}
     ${getallColumnnames}=    read excel row    1    sheet_name=${sheetname}
     ${columnindex}=    get index from list   ${getallColumnnames}    ${columnName}
     ${columnindex}=    evaluate    ${columnindex} + int(${1})
-    [Return]    ${columnindex}
+    RETURN    ${columnindex}
 
 Write and Color Excel
      [Arguments]    ${sheetname}    ${columnname}    ${excelrownumber}    ${writevalue}    ${colorCode}
@@ -408,7 +408,7 @@ Calculate TAX Percentage
     ${TotalAmountSAP}    replace string    ${TotalAmount}    ,    ${EMPTY}
     ${TAXAmount}    evaluate    (${TotalAmountSAP} / 100) * ${TAXPercentage}
     set suite variable    ${TAXAmount}    ${TAXAmount}
-    [Return]    ${TAXAmount}
+    RETURN    ${TAXAmount}
 
 
 
@@ -430,7 +430,7 @@ Search IDoc in WE09
     click sap popup button if present   ${unsuccessfulyesbutton}
     ${statusbarvalue}=     SapGuiLibrary.Get Value    ${statusbar}
     set suite variable    ${statusbarvalue}    ${statusbarvalue}
-    [Return]    ${statusbarvalue}
+    RETURN    ${statusbarvalue}
 
 
 Process IDoc in BD87
@@ -462,7 +462,7 @@ Get Idoc Number in We09
     click sap popup button if present   ${popyesbutton}
     ${IdocNumber}=    SapGuiLibrary.Get Value    ${idoclabelindex}
     set suite variable    ${IdocNumber}    ${IdocNumber}
-    [Return]    ${IdocNumber}
+    RETURN    ${IdocNumber}
 
 Get IDoc Status in WE09
     [Arguments]    ${IdocNumber}
@@ -473,7 +473,7 @@ Get IDoc Status in WE09
 #    send vkey    2
     ${IdocStatus}=    SapGuiLibrary.Get Value    ${idocstatusvalue}
     set suite variable    ${IdocStatus}    ${IdocStatus}
-    [Return]    ${IdocStatus}
+    RETURN    ${IdocStatus}
 
 Validate Status and Process IDoc
     [Arguments]     ${BD87nodelink}    ${MailId}    ${Direction}    ${BasicType}    #${SerachSegement}
@@ -520,7 +520,7 @@ Validate Status and Process IDoc
         set suite variable    ${IdocNumber}     No Idoc Found
         set suite variable    ${IdocValidationStatus}    No Idoc Found
     END
-    [Return]    ${IdocValidationStatus}
+    RETURN    ${IdocValidationStatus}
 
 
 Launch and Login DBS
@@ -557,7 +557,7 @@ VIAX Order Status
     ELSE
         ${ViaxOrderStatus}=    set variable     ${OrderId}:Order Not Found in DBS
     END
-    [Return]    ${ViaxOrderStatus}
+    RETURN    ${ViaxOrderStatus}
 
 
 Close SAP Connection
@@ -650,7 +650,7 @@ Generate the JSON file to create order
     Write Output Excel    HappyFlowInputs    DynamicID    ${excelrownumber}    ${Id}
     Write Output Excel    HappyFlowInputs    RandomDhid    ${excelrownumber}    ${Dhid}
     excellibrary.save excel document    ${InputExcelPath}
-    [Return]    ${json_content}
+    RETURN    ${json_content}
 
 
 Connect to New Connection
@@ -678,7 +678,7 @@ Get MailID for Existing users
 #    ${mailid}=    get from dictionary    ${mailiddict}     ${Scenarioname}
     set suite variable    ${mailiddict}    ${mailiddict}
     close all excel documents
-    [Return]    ${mailiddict}
+    RETURN    ${mailiddict}
 
 Validate the content and update the excel
     [Arguments]    ${value1}    ${value2}    ${sheetname}    ${columnname}    ${excelrownumber}
@@ -1003,7 +1003,7 @@ Enter Data in JournalBaseLine
     #    sleep    3s
         JS Click Element    ${Var_HomeScreenButton}
     END
-    [Return]    ${DataCheckFlag}
+    RETURN    ${DataCheckFlag}
 
 
 Zoom Out Page

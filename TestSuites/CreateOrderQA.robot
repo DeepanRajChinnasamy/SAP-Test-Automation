@@ -5,6 +5,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 *** Test Cases ***
 Creata Order via JSON File and Fetch the Status
 #    ${ExistingMailIdDict}=    get mailid for existing users    ${InputExcelPath}    ExistingUsers
+    [Tags]    id=VA_CO_01
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
     close all excel documents
     open excel document    ${InputExcelPath}    docID
@@ -12,15 +13,15 @@ Creata Order via JSON File and Fetch the Status
     ${DataIndexIterator}    set variable    0
     ${OrderTypeCount}=    get length    ${FlagList}
     ${RowCounter}    set variable    2
-    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-    Launch and Login DBS    ${URLQA}    ${username}    ${password}
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${URLQA}    ${username}    ${password}
     FOR    ${dataIterator}    IN RANGE    ${OrderTypeCount}
         ${EnironmentValue}=    get from list    ${EnvironmentList}     ${ListIndexIterator}
         Get Environmet    ${EnironmentValue}
-#        IF    '${dataIterator}' == '0'
-#               open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#               Launch and Login DBS    ${URL}    ${username}    ${password}
-#        END
+        IF    '${dataIterator}' == '0'
+               open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+               Launch and Login DBS    ${URL}    ${username}    ${password}
+        END
         ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
         ${NewOrdercancellFlag}=   get from list     ${NewOrderCancellationFlagList}    ${ListIndexIterator}
         ${ExistingOrderCancellationFlag}=    get from list    ${ExistingOrderCancellationFlagList}    ${ListIndexIterator}
@@ -39,7 +40,7 @@ Creata Order via JSON File and Fetch the Status
             ${MailId}=  set variable     ${UniqueOrderId}@Wiley.com
             ${json_file_path}=    get from list    ${JsonPathList}    ${ListIndexIterator}
             log to console    ${json_file_path}
-            ${NumbersofIteration}=    set variable    1
+            ${NumbersofIteration}=    set variable    2
             FOR    ${TestIterator}    IN RANGE    0    ${NumbersofIteration}
                 IF    '${TestIterator}' == '1'
                     ${strtowrite}=    catenate    ${OrderType}Existing${separator}${CountryCode}
@@ -54,7 +55,7 @@ Creata Order via JSON File and Fetch the Status
                 END
                 ${json_content}=  Get File  ${execdir}${json_file_path}
                 ${json_content}=    Generate the JSON file to create order    ${json_content}    ${RowCounter}    ${InputExcelPath}    ${ListIndexIterator}    ${FirstName}    ${LastName}    ${MailId}
-                log     ${json_content}
+
 
                 create session    order_session    ${URL}    verify=True
                 ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
@@ -174,6 +175,7 @@ Creata Order via JSON File and Fetch the Status
     close sap connection
 
 Valiadte the Values in DBS and download the PDF
+    [Tags]    id=VA_CO_02
 #    close browser
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
     close all excel documents
@@ -262,6 +264,7 @@ Valiadte the Values in DBS and download the PDF
     close browser
 
 Cancelling Order via JSON File and Fetch the Status
+    [Tags]    id=VA_CO_03
     Read All Input Values For Cancel    ${InputExcelPath}    HappyFlowInputs
     Launch and Login DBS    ${URLQA}    ${username}    ${password}
     ${ListIndexIterator}    set variable    0
