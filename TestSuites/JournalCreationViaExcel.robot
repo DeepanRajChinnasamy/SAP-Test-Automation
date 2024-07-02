@@ -4,7 +4,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 *** Test Cases ***
 
 HandOverFormJournalCreation
-    [Tags]    id=NC_OP_09
+    [Tags]    id=JC_UI_01
     Jouranl Creation Via Handoverform
 
 

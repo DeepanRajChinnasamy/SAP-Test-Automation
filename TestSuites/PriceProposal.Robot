@@ -10,7 +10,7 @@ ${QA2_Graphql}    https://api.wileyas.qa2.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 *** Test Cases ***
 PriceProposal
-    [Tags]    id=NC_OP_08
+    [Tags]    id=PP_OP_01
     Read All Input Values From PPExcel    ${PPInputExcelPath}
     log to console    ${PPInputExcelPath}
     ${ListIndexIterator}    set variable    0
