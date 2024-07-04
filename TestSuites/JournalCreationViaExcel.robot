@@ -4,7 +4,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 *** Test Cases ***
 
 HandOverFormJournalCreation
-    [Tags]    id=JC_UI_01
+    [Tags]    id=JC_CO_02
     Jouranl Creation Via Handoverform
 
 
@@ -82,4 +82,4 @@ Get ManualEnrichment Percentage
         sleep    2s
     END
     set variable    ${Percentage}    ${Percentage}
-    [Return]    ${Percentage}
+    RETURN    ${Percentage}

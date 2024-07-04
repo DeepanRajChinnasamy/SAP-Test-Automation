@@ -3,6 +3,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library    CustomLib.py
 Suite Setup     Read All Input Values From PPExcel    ${PPInputExcelPath}
 Suite Teardown   close all excel documents
+Test Setup    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
 
 
 *** Variables ***
@@ -57,7 +58,7 @@ Create PP with Society discount
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]WileyPromoCode''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
@@ -68,6 +69,39 @@ Create PP with Society discount
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    PRICE DETERMINED
+                should be equal    ${Typeofpayment}    AuthorPaid
+#                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
+#                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
+#                IF    '${CheckArrowbutton}' == 'True'
+                    seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
+#                END
+                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
+                should be equal    ${Discounttype1}    ArticleType
+                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+                should be equal    ${Discounttype2}    Society
+                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
+                should be equal    ${DisountCondition1}    Research Article
+                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+                should be equal    ${DisountCondition2}    JCASP
+                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
+                should be equal    ${Percentagevalue1}    75%
+                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+                should be equal    ${Percentagevalue2}    5%
+                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
+                should be equal    ${AppliedYes1}    Yes
+                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+                should be equal    ${AppliedYes2}    Yes
+                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
+                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
+                should be equal    ${TaxValue}    0.00USD
+
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${PPInputExcelPath}

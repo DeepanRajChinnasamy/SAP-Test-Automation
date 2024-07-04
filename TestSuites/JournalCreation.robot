@@ -6,6 +6,7 @@ Library    ScreenCapLibrary
 
 *** Test Cases ***
 Journal Creation in STEP
+    [Tags]    JC_CO_01
 #    start video recording     #alias=None    name=Demo    fps=None    screen_percentage=1    embed=True    embed_width=100px  monitor=1
     Read All Input Values From STEP Input    ${Var_STEPInput}    Inputs
     ${GroupCodeCount}=    get length    ${GroupCodeList}

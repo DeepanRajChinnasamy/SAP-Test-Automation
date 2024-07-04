@@ -3,7 +3,7 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 
 
 *** Test Cases ***
-Creata Order via JSON File and Fetch the Status
+Create Order via JSON File and Fetch the Status
 #    ${ExistingMailIdDict}=    get mailid for existing users    ${InputExcelPath}    ExistingUsers
     [Tags]    id=VA_CO_01
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
@@ -174,7 +174,7 @@ Creata Order via JSON File and Fetch the Status
 #    close browser
     close sap connection
 
-Valiadte the Values in DBS and download the PDF
+Validate the Values in DBS and download the PDF
     [Tags]    id=VA_CO_02
 #    close browser
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
@@ -377,3 +377,15 @@ Get Values In VIAX
     ${DiscountCode}=    seleniumlibrary.get text    ${DiscountcodeText}
     ${DiscountType}=    set suite variable    ${DiscountType}
     ${DiscountCode}=    set suite variable    ${DiscountCode}
+
+Extract CreditMemo Number from PDF
+    [Arguments]    ${PDFFilePath}
+    [Documentation]    Extract the billing number from a PDF
+    ${all_text}=    convert pdf to txt    ${PDFFilePath}
+    ${all_text}=    convert to string    ${all_text}
+    @{all_text}=    split to lines    ${all_text}
+    ${all_text}=    get from list    ${all_text}    7
+    @{all_text}=    split string    ${all_text}    :
+    ${all_text}=    get from list    ${all_text}    1
+    log to console    ${all_text}
+    RETURN    ${all_text}

@@ -22,11 +22,11 @@ ${inputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 #${inputExcelPath}     \\AUS-WNASCRMP-03\\Share\\02.TestAutomation\\VIAX\\TD_Inputs.xlsx
 ${SheetName}    Inputs
 #---------------------General Variables-------------------------------
-${BASE_URLQA2}       https://api.wileyas.qa2.viax.io/graphql
-${BASE_URLQA}    https://api.wileyas.qa2.viax.io/graphql
+${BASE_URLQA}       https://api.wileyas.qa2.viax.io/graphql
+#${BASE_URLQA}    https://api.wileyas.qa2.viax.io/graphql
 #${BASE_URL}       https://api.wileyas.qa.viax.io/graphql
 ${EMPTY}
-${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MTk5MzU2MTEsImlhdCI6MTcxOTkyODQxMSwianRpIjoiMDQ2ZWRkMGItOGNmNC00MjI3LWE5OGQtYjdkMTVmZjVhNTJkIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiJkN2ZjMTNjMS05YmQ1LTQwNzAtYTMyMi1jZDg0NjYxNjA1MzIiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiZDdmYzEzYzEtOWJkNS00MDcwLWEzMjItY2Q4NDY2MTYwNTMyIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.XiKb2XnPFNDB2yrbGuvs6hEaJxmtT5fXdDAJ6Od5XrcjiKjE8uFFPrPFplMB1Ct9rb5rM9_OCP7MxGsb89JprcVlfhnP3iJc22LZBCFYofSzpIB8vItpaxkbtaW1mQmTnNp3TQJY8O1lnDBgbPIX0sw1NeWZvZGEqsWUu0CqimHKAGMr93ullOpUnT6Tlqc-0uovW2MbBITZ70X2V3phc8kRQHMf-AtL-ggHJ3Gmr-hRVst98mUHiWK2KTnRIanotBEYBNMFPbwZS28GHJvaIpJLji3RWQ8PHEcZ0kscEIs9xoFOerj88mW8WMqdbLBK1sRgBStZClbeaNOKbLV3hA
+${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MjAwOTkyNDYsImlhdCI6MTcyMDA5MjA0NiwianRpIjoiNjExOTYzODEtMTBiNS00OWZiLWE0YWEtZmUwZGZmZGExZTBkIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiI1ZDQyOGZjZS05NzgxLTQxNTgtOGJmMy1lOTI1ZDU0NjRkMTgiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiNWQ0MjhmY2UtOTc4MS00MTU4LThiZjMtZTkyNWQ1NDY0ZDE4IiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.yCF6AlmLUoDuAiIWQj90BQM0OxI0LMBXwgd9IyVyjYg1E4Lsb6SbZSxFPwolBuGUCKivLxnb0qot4cJMGPSRMoEHMMe_u0-f0EoPVDcUd-rGyV8W8bA20yDq6NwoaB58A7rZuJTQF4PPd3Fz8XAeP7WyBoqjRIIPBf380i6dvSiZHlq6ktK-xksa7KCyHNtdkH2L2E9qO8MSU0SGJRWS8clgRxrCOvroVOtlAn7ORsyfdF7q4rdi9y0R85dR10GbmeirOQTLd3sq6AOQ4dghnjZbOSJZZYI3suZthD04IAK54mbNL_sao-ijO0LgR-F92gvEOQpIADQbVytrzRyZhw
 ${response_text}
 ${True}    True
 ${END}    END
@@ -50,8 +50,8 @@ ${VatNumberList}
 ${green}    00FF00
 ${red}    FF0000
 #--------------------------Chrome---------------------------------------
-${URLQA2}            https://wileyas.qa2.viax.io/orders
-${URLQA}            https://wileyas.stage.viax.io/orders
+${URLQA}            https://wileyas.qa2.viax.io/orders
+#${URLQA}            https://wileyas.stage.viax.io/orders
 #${URLQA}       https://wileyas.qa2.viax.io/orders
 ${Browser}        chrome
 ${username}     dchinnasam@wiley.com
@@ -1055,6 +1055,7 @@ Read All Input Values For Cancel
     set suite variable    ${DynamicIdList}    ${DynamicIdList}
     set suite variable    ${RandomIdList}    ${RandomIdList}
     set suite variable    ${SubmissionIDList}     ${SubmissionIDList}
+    set suite variable    ${CancellationFlagList}    ${CancellationFlagList}
     open excel document    ${inputExcelPath}    docID1
 
 Ready to Publish
