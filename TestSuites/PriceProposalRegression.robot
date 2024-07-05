@@ -9,8 +9,9 @@ Test Setup    go to    ${QA2_Viax}
 *** Variables ***
 ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
-${QA2_Viax}     https://wileyas.qa2.viax.io/price-proposals
-${QA2_Graphql}    https://api.wileyas.qa2.viax.io/graphql
+${QA2_Viax}     https://wileyas.stage.viax.io/price-proposals
+${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
+
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 *** Test Cases ***
 
@@ -160,7 +161,7 @@ Create PP with Promotional discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -270,7 +271,7 @@ Create PP with Institutional discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -348,7 +349,7 @@ Create PP with Editorial discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -426,7 +427,7 @@ Create PP with Referral discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -505,7 +506,7 @@ Create PP with Geographical discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -582,7 +583,7 @@ Create PP with Article type discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -660,7 +661,7 @@ Create PP with Stacked Institutional discount
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -738,7 +739,7 @@ Create PP with multiple Society and Promotional discounts
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -816,7 +817,7 @@ Create PP with same discount Geographical Editorial and Society discounts
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -894,7 +895,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -972,7 +973,7 @@ Create PP with Multiple Insitutional discounts
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1050,7 +1051,7 @@ Create PP with Funder details
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1128,7 +1129,7 @@ Create PP with Manual override required value as Yes
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1206,7 +1207,7 @@ Create PP with Invalid Promotional discount code
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1284,7 +1285,7 @@ Create PP with Invalid Society
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1370,7 +1371,7 @@ Create PP with Invalid Article Type
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1455,7 +1456,7 @@ Create PP with Invalid Editorial
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1541,7 +1542,7 @@ Create PP with Invalid Referal
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1627,7 +1628,7 @@ Create PP with Invalid CountryCode
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1713,7 +1714,7 @@ Create PP with Invalid MailId
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
 #            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
+
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -1828,10 +1829,10 @@ ReadAllValuesFromPPExcel
 
 Switch Case
     [Arguments]    ${value}
-    Run Keyword If    '${value}' == 'QA2'    set suite variable    ${PPURL}     https://wileyas.qa2.viax.io/price-proposals
-    Run Keyword If    '${value}' == 'QA2'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa2.viax.io/graphql
-    Run Keyword If    '${value}' == 'QA'    set suite variable     ${GraphqlURL}    https://api.wileyas.qa.viax.io/graphql
-    Run Keyword If    '${value}' == 'QA'    set suite variable     ${PPURL}    https://wileyas.qa.viax.io/price-proposals
+    Run Keyword If    '${value}' == 'QA2'    set suite variable    ${PPURL}     https://wileyas.stage.viax.io/price-proposals
+    Run Keyword If    '${value}' == 'QA2'    set suite variable    ${GraphqlURL}      https://api.wileyas.stage.viax.io/graphql
+    Run Keyword If    '${value}' == 'QA'    set suite variable     ${GraphqlURL}    https://api.wileyas.stage.viax.io/graphql
+    Run Keyword If    '${value}' == 'QA'    set suite variable     ${PPURL}    https://wileyas.stage.viax.io/price-proposals
     Run Keyword If    '${value}' == '4'    Log    Case 4
     ...    ELSE    Log    Default Case
 
