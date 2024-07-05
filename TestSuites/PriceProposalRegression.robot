@@ -1,14 +1,14 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library    CustomLib.py
-Suite Setup     Read All Input Values From PPExcel    ${PPInputExcelPath}
-Suite Teardown   close all excel documents
-Test Setup    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${QA2_Viax}    ${username}    ${password}
+Suite Teardown   Close Excel and Browser
+Test Setup    go to    ${QA2_Viax}
 
 
 *** Variables ***
 ${file}    \\UploadExcel\\JsonTemplates\\
-${SubId}    24ef<<RandomNum>>-783b-4808-9127-af8e42410<<RandonDynId>>
+${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
 ${QA2_Viax}     https://wileyas.qa2.viax.io/price-proposals
 ${QA2_Graphql}    https://api.wileyas.qa2.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
@@ -21,6 +21,7 @@ Create PP with Society discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+#    go to    ${QA2_Viax}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -50,8 +51,6 @@ Create PP with Society discount
             ${JsonResp}=  Evaluate  ${response.text}
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
-#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
@@ -101,6 +100,7 @@ Create PP with Society discount
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 should be equal    ${TaxValue}    0.00USD
+                go to    ${QA2_Viax}
 
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -129,6 +129,7 @@ Create PP with Promotional discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+#    go to    ${QA2_Viax}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -184,6 +185,38 @@ Create PP with Promotional discount
                     save excel document    ${PPInputExcelPath}
                 END
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    PRICE DETERMINED
+                should be equal    ${Typeofpayment}    AuthorPaid
+#                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
+#                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
+#                IF    '${CheckArrowbutton}' == 'True'
+                    seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
+#                END
+                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
+                should be equal    ${Discounttype1}    ArticleType
+                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+                should be equal    ${Discounttype2}    WileyPromoCode
+                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
+                should be equal    ${DisountCondition1}    Research Article
+                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+                should be equal    ${DisountCondition2}    PROMO50
+                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
+                should be equal    ${Percentagevalue1}    75%
+                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+                should be equal    ${Percentagevalue2}    20%
+                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
+                should be equal    ${AppliedYes1}    Yes
+                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+                should be equal    ${AppliedYes2}    Yes
+                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
+                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
+                should be equal    ${TaxValue}    0.00USD
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -206,6 +239,7 @@ Create PP with Institutional discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+#    go to    ${QA2_Viax}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -283,6 +317,7 @@ Create PP with Editorial discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+#    go to    ${QA2_Viax}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -360,6 +395,7 @@ Create PP with Referral discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+#    go to    ${QA2_Viax}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -432,13 +468,13 @@ Create PP with Referral discount
     END
     save excel document    ${PPInputExcelPath}
 
-
 Create PP with Geographical discount
     [Tags]    id=NC_OP_06
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -514,7 +550,8 @@ Create PP with Article type discount
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
-    ${RowCounter}    set variable    2
+    ${RowCounter}    set variable
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -592,6 +629,7 @@ Create PP with Stacked Institutional discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -669,6 +707,7 @@ Create PP with multiple Society and Promotional discounts
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -746,6 +785,7 @@ Create PP with same discount Geographical Editorial and Society discounts
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -823,6 +863,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -900,6 +941,7 @@ Create PP with Multiple Insitutional discounts
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -977,6 +1019,7 @@ Create PP with Funder details
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -1048,89 +1091,13 @@ Create PP with Funder details
     END
     save excel document    ${PPInputExcelPath}
 
-Create PP with Invalid Promotional discount code
-    [Tags]    id=NC_OP_14
-    ${ListIndexIterator}    set variable    0
-    ${DataIndexIterator}    set variable    0
-    ${JournalIDCount}=    get length    ${JournalIDList}
-    ${RowCounter}    set variable    2
-#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
-    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
-        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
-        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
-        IF    '${ScenarioName}' == 'Create PP with Invalid Promotional discount code'
-            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
-            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
-            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
-            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
-            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
-            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
-            Switch Case    ${Environment}
-            create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
-            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
-            # Getting the content value
-            Log    Status Code: ${response.status_code}
-            Log    Response Content: ${response.content}
-            ${response.status_code}=  convert to string    ${response.status_code}
-            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
-            set variable    ${response.content}
-            set variable    ${response.json()}
-            ${response_text}=    convert to string    ${response.content}
-            ${response.json()}=    convert to string    ${response.json()}
-            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
-            ${JsonResp}=  Evaluate  ${response.text}
-            # Fetch the values from the result Json File
-            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
-#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            log to console    @{list}
-            ${NumberofList}=    get length    ${list}
-            set variable    ${JsonResp}
-            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
-            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-            IF    '${check}' == '${True}'
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-                ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
-                ${error_code}=    convert to string    ${error_code}
-                ${OrderStatus}=    convert to string    ${OrderID}
-                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
-                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
-                ${errormessage}=    convert to string    ${errormessage}
-                IF    '${errormessage}' == 'DataCorrectionRequired' or '${errormessage}' == 'DataCorrectionRequired'
-                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
-                    save excel document    ${PPInputExcelPath}
-                ELSE
-                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
-                    save excel document    ${PPInputExcelPath}
-                END
-                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
-#                should contain  ${check}  True
-            ELSE
-                ${error_code}=  Set Variable  ${json_dict['errors']}
-                ${error_code}=    convert to string    ${error_code}
-                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
-                save excel document    ${PPInputExcelPath}
-#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
-                should contain    ${list}[0]    SUCCESS
-            END
-        END
-        save excel document    ${PPInputExcelPath}
-        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
-        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
-    END
-    save excel document    ${PPInputExcelPath}
-
 Create PP with Manual override required value as Yes
     [Tags]    id=NC_OP_15
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
+
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
@@ -1202,13 +1169,612 @@ Create PP with Manual override required value as Yes
     END
     save excel document    ${PPInputExcelPath}
 
+Create PP with Invalid Promotional discount code
+    [Tags]    id=NC_OP_14
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid Promotional discount code'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'DataCorrectionRequired' or '${errormessage}' == 'DataCorrectionRequired'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid Society
+    [Tags]    id=NC_OP_16
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid Society'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'DataCorrectionRequired'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid Article Type
+    [Tags]    id=NC_OP_17
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid Article Type'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'DataCorrectionRequired'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid Editorial
+    [Tags]    id=NC_OP_18
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid Editorial'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'DataCorrectionRequired'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid Referal
+    [Tags]    id=NC_OP_19
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+    go to    ${QA2_Viax}
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid Referal'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'ReSend'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    ReSend    ReSend
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    RE SEND
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid CountryCode
+    [Tags]    id=NC_OP_20
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid CountryCode'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'ReSend'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    ReSend    ReSend
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    RE SEND
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+Create PP with Invalid MailId
+    [Tags]    id=NC_OP_21
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Create PP with Invalid MailId'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
+            log to console    @{list}
+            ${NumberofList}=    get length    ${list}
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+                IF    '${errormessage}' == 'ReSend'
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+                    save excel document    ${PPInputExcelPath}
+                ELSE
+                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+                    save excel document    ${PPInputExcelPath}
+                END
+                should contain any   ${errormessage}    ReSend    ReSend
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    RE SEND
+                should be equal    ${Typeofpayment}    Undefined
+#                should contain  ${check}  True
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+#                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
+
+
+
 
 *** Keywords ***
 Generate the JSON file PP
     [Arguments]    ${json_content}    ${JournalID}
     ${random_3_digit_number}=    Evaluate    random.randint(100, 999)
+    ${randomnum3digit}=   evaluate    random.randint(100, 999)
+    ${randomnum3digit}=     convert to string    ${randomnum3digit}
     ${random_3_digit_number}=    convert to string    ${random_3_digit_number}
     ${Id}=    replace string    ${SubId}    <<RandonDynId>>    ${random_3_digit_number}
+    ${Id}=    replace string    ${Id}    <<Randomt3digit>>    ${randomnum3digit}
     ${json_content}=    replace string    ${json_content}    <<Id>>    ${Id}
     ${json_content}=    replace string    ${json_content}    <<JournalID>>    ${JournalID}
     ${random_4_digit_number}=    Evaluate    random.randint(1000, 9999)
@@ -1259,44 +1825,6 @@ ReadAllValuesFromPPExcel
     close current excel document
     RETURN    ${ExcelDict}
 
-#Read All Input Values From DataExcel
-#    [Arguments]    ${InputExcel}    ${InputSheet}
-#    ${ExcelDictionary}    ReadAllValuesFromExcel    ${InputExcel}    ${InputSheet}
-#    ${FlagList}    get from dictionary    ${ExcelDictionary}    ExecutionFlag
-#    ${OrderTypeList}    get from dictionary    ${ExcelDictionary}    OrderType
-##    ${NumofOrderList}    get from dictionary    ${ExcelDictionary}    NumberOrderToCreate
-#    ${JsonPathList}     get from dictionary    ${ExcelDictionary}    JsonPath
-#    ${APCList}    get from dictionary    ${ExcelDictionary}    APC
-#    ${AppliedDiscountList}    get from dictionary    ${ExcelDictionary}    AppliedDiscount
-#    ${CurrencyList}    get from dictionary    ${ExcelDictionary}    Currency
-#    ${TAXList}    get from dictionary    ${ExcelDictionary}     Tax
-#    ${CountryCodeList}    get from dictionary    ${ExcelDictionary}    CountryCode
-#    ${DiscountTypeList}    get from dictionary    ${ExcelDictionary}    DiscountType
-#    ${DiscountCodeList}    get from dictionary    ${ExcelDictionary}    DiscountCode
-#    ${AmountList}    get from dictionary    ${ExcelDictionary}    Amount
-#    ${CreditCardTypeList}    get from dictionary    ${ExcelDictionary}    CreditCardType
-#    ${CreditCardTypeIDList}    get from dictionary    ${ExcelDictionary}    CreditCardTypeID
-#    ${VatNumberList}    get from dictionary    ${ExcelDictionary}    VatNumber
-#    ${NewOrderCancellationFlagList}    get from dictionary    ${ExcelDictionary}    NewOrderCancellationFlag
-#    ${ExistingOrderCancellationFlagList}    get from dictionary    ${ExcelDictionary}    ExistingOrderCancellationFlag
-#    set suite variable   ${FlagList}   ${FlagList}
-#    set suite variable    ${NewOrderCancellationFlagList}    ${NewOrderCancellationFlagList}
-#    set suite variable    ${ExistingOrderCancellationFlagList}    ${ExistingOrderCancellationFlagList}
-#    set suite variable    ${OrderTypeList}    ${OrderTypeList}
-##    set suite variable    ${NumofOrderList}    ${NumofOrderList}
-#    set suite variable    ${JsonPathList}    ${JsonPathList}
-#    set suite variable    ${APCList}    ${APCList}
-#    set suite variable    ${AppliedDiscountList}    ${AppliedDiscountList}
-#    set suite variable    ${CurrencyList}    ${CurrencyList}
-#    set suite variable    ${TAXList}    ${TAXList}
-#    set suite variable    ${CountryCodeList}    ${CountryCodeList}
-#    set suite variable    ${DiscountTypeList}    ${DiscountTypeList}
-#    set suite variable    ${DiscountCodeList}    ${DiscountCodeList}
-#    set suite variable    ${AmountList}    ${AmountList}
-#    set suite variable    ${CreditCardTypeList}    ${CreditCardTypeList}
-#    set suite variable    ${CreditCardTypeIDList}    ${CreditCardTypeIDList}
-#    set suite variable    ${VatNumberList}    ${VatNumberList}
-#    open excel document    ${inputExcelPath}    docID
 
 Switch Case
     [Arguments]    ${value}
@@ -1322,3 +1850,13 @@ Get Key Value
     ${parsed_json}=  Evaluate  json.loads('${json_data}')  json
     ${value}=  Get From Dictionary  ${parsed_json}  ${key}
     RETURN  ${value}
+
+Open Excel and DBS
+    [Arguments]    ${PPInputExcelPath}    ${QA2_Viax}    ${username}    ${password}
+     Read All Input Values From PPExcel    ${PPInputExcelPath}
+     Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
+
+
+Close Excel and Browser
+    close all excel documents
+    close browser
