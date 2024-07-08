@@ -6,7 +6,7 @@
       "submissionId": "<<Id>>",
       "edRefCode": "CAM4-2024-04-1853",
       "articleDOI": "",
-      "journalId": "c597beef-e45f-4cc7-b34c-0df812e2ef25",
+      "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
       "baseArticleType": "Data Article",
       "displayArticleType": "Research Article (ABC)",
@@ -33,26 +33,7 @@
             {
               "affiliationIds": [
                 {
-                  "institutionId": "131661",
-                  "institutionIdType": "Ringgold"
-                }
-              ],
-              "orcId": "0000-0003-0888-1984",
-              "addressLocality": "Stavnger",
-              "countryCode": "US",
-              "country": "USA",
-              "institution": "Universidad Nacional De Ingenieria",
-              "department": "SchoolofGeoSciences",
-              "stateProvince": "RogalandFylke",
-              "postalCode": "4036",
-              "streetAddress": [
-                "PoBox2554"
-              ]
-            },
-            {
-              "affiliationIds": [
-                {
-                  "institutionId": "",
+                  "institutionId": "2221",
                   "institutionIdType": "Ringgold"
                 }
               ],

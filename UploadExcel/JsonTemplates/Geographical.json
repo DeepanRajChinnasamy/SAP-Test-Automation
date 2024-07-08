@@ -8,8 +8,8 @@
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
-      "baseArticleType": "OPINION",
-      "displayArticleType": "OPINION",
+      "baseArticleType": "Research Article",
+      "displayArticleType": "Research Article",
       "submissionDate": "2024-03-21",
       "articleAcceptedDate": "2015-09-29",
       "editorialStatus": "TBC",
@@ -19,7 +19,6 @@
       "societyCodes": [],
       "promoCodes": [],
       "discountCodes": [],
-      "editorialDiscountCode": "EMTW5R",
       "authors": [
         {
           "role": "Corresponding Author",
