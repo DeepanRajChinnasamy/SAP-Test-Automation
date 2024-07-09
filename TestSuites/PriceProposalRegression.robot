@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library    CustomLib.py
+Library    Response.py
 Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${QA2_Viax}    ${username}    ${password}
 Suite Teardown   Close Excel and Browser
 Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
@@ -36,7 +37,7 @@ Create PP with Society discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -145,7 +146,7 @@ Create PP with Promotional discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -254,7 +255,7 @@ Create PP with Institutional discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -362,7 +363,7 @@ Create PP with Editorial discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -471,7 +472,7 @@ Create PP with Referral discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -580,7 +581,7 @@ Create PP with Geographical discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -688,7 +689,7 @@ Create PP with Article type discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -784,7 +785,7 @@ Create PP with Stacked Institutional discount
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -896,7 +897,7 @@ Create PP with multiple Society and Promotional discounts
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1009,7 +1010,7 @@ Create PP with same discount Geographical Editorial and Society discounts
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1054,7 +1055,9 @@ Create PP with same discount Geographical Editorial and Society discounts
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
-                sleep    5s
+                sleep    7s
+                ${elemId}=    SeleniumLibrary.Get WebElement    //*[@class="x-order-details__status-wrapper"]
+                wait until element is visible    ${elemId}
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
@@ -1116,7 +1119,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1254,7 +1257,7 @@ Create PP with Multiple Insitutional discounts
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1362,7 +1365,7 @@ Create PP with Funder details
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1446,7 +1449,7 @@ Create PP with Invalid Promotional discount code
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1554,7 +1557,7 @@ Create PP with Manual override required value as Yes
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1649,7 +1652,7 @@ Create PP with Invalid Society
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1735,7 +1738,7 @@ Create PP with Invalid Article Type
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1820,7 +1823,7 @@ Create PP with Invalid Editorial
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1903,7 +1906,7 @@ Create PP with Invalid Referal
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -1986,7 +1989,7 @@ Create PP with Invalid CountryCode
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -2069,7 +2072,7 @@ Create PP with Invalid MailId
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
             Switch Case    ${Environment}
             create session    order_session    ${PPURL}    verify=True
-            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${Token1}
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
             # Getting the content value
             Log    Status Code: ${response.status_code}
@@ -2229,6 +2232,12 @@ Open Excel and DBS
      ${Environment}=    convert to upper case    ${Environment}
      Switch Case    ${Environment}
      Launch and Login DBS    ${PPURL}    ${username}    ${password}
+     ${Environment}=    convert to lower case      ${Environment}
+     ${token}=    get token    auth.wileyas.${Environment}.viax.io
+     ${JsonResp}=  Evaluate  ${token}
+     @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.access_token
+     ${AuthToken}=    set variable    ${list}[0]
+     set suite variable    ${AuthToken}    ${AuthToken}
 
 
 Close Excel and Browser
