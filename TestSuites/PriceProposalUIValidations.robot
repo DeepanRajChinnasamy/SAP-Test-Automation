@@ -20,7 +20,7 @@ ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 *** Test Cases ***
 
 Create PP with Funder Paid with UI Validations
-    [Tags]    UI_VA_01
+    [Tags]    id=UI_VA_01
     ${journalId}=    Get Value from excel columnwise    FunderPaid    JournalID
     ${JSONFileName}=    Get Value from excel columnwise    FunderPaid    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
@@ -191,7 +191,7 @@ Create PP with Funder Paid with UI Validations
     save excel document    ${PPInputExcelPath}
 
 Create PP with Society discount with UI Validations
-    [Tags]    UI_VA_02
+    [Tags]    id=UI_VA_02
     ${journalId}=    Get Value from excel columnwise    Society    JournalID
     ${JSONFileName}=    Get Value from excel columnwise    Society    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
@@ -415,7 +415,7 @@ Create PP with Society discount with UI Validations
     save excel document    ${PPInputExcelPath}
 
 Create PP with Multiple discount with UI Validations
-    [Tags]    UI_VA_03
+    [Tags]    id=UI_VA_03
     ${journalId}=    Get Value from excel columnwise    Multiple    JournalID
     ${JSONFileName}=    Get Value from excel columnwise    Multiple    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
