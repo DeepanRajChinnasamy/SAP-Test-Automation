@@ -2,7 +2,12 @@
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Resource    ../Resource/Keywords/Keywords.robot
 
-*** Test Cases ***
-Openn
+*** Variables ***
+${first_name}      Jim
+${last_name}       Tesson
 
-    open browser    https://www.google.com    chrome
+*** Test Cases ***
+Concatenate Names
+    ${full_name}=    Set Variable    ${first_name} ${last_name}
+    log to console              ${full_name}
+
