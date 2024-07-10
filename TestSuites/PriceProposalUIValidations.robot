@@ -1,7 +1,5 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-#Library    Browser
-Library    ScreenCapLibrary
 Library    CustomLib.py
 Library    Response.py
 Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
