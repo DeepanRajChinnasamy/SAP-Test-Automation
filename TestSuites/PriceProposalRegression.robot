@@ -2,7 +2,7 @@
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library    CustomLib.py
 Library    Response.py
-Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${QA2_Viax}    ${username}    ${password}
+Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
 Suite Teardown   Close Excel and Browser
 Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
 
@@ -10,7 +10,7 @@ Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
 *** Variables ***
 ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
-${QA2_Viax}     https://wileyas.qa2.viax.io/price-proposals
+${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 
@@ -32,6 +32,15 @@ Create PP with Society discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -86,21 +95,22 @@ Create PP with Society discount
                     seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
 #                END
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    Society
+                should be equal    ${Discounttype2}    ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    Research Article
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    JCASP
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    5%
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 should be equal    ${TaxValue}    0.00USD
@@ -139,8 +149,19 @@ Create PP with Promotional discount
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Promotional discount'
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
-            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -199,21 +220,21 @@ Create PP with Promotional discount
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    WileyPromoCode
+                should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    Research Article
+               should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    PROMO50
+                should be equal    ${DisountCondition2}     ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    20%
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -250,6 +271,18 @@ Create PP with Institutional discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -308,23 +341,22 @@ Create PP with Institutional discount
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    Institutional
+                should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    Research Article
+               should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
+                should be equal    ${DisountCondition2}   ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  NA
+                should be equal    ${Percentagevalue2}  ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
-                log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 should be equal    ${TaxValue}    0.00USD
 
@@ -358,6 +390,16 @@ Create PP with Editorial discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -415,21 +457,21 @@ Create PP with Editorial discount
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    EditorialDiscount
+                should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    OPINION
+               should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    CCCAM424
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    20%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  90%
+                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -467,6 +509,17 @@ Create PP with Referral discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -523,21 +576,21 @@ Create PP with Referral discount
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ReferralDiscount
+                should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    Research Article
+               should be equal    ${DisountCondition1}    ${discountcondition1}
 #                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
 #                should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    10%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  15.25%
+                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -576,6 +629,17 @@ Create PP with Geographical discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -633,21 +697,21 @@ Create PP with Geographical discount
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    GeographicalDiscount
+                should be equal    ${Discounttype2}   ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    Research Article
+               should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}   MH - Marshall Islands
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    30%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  100%
+                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -684,6 +748,11 @@ Create PP with Article type discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -739,13 +808,13 @@ Create PP with Article type discount
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
                 ${Discounttype1}=    SeleniumLibrary.get text   //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${DisountCondition1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[2]
-                should be equal    ${DisountCondition1}    RESEARCH ARTICLE
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[3]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[5]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
 #                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
 ##                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
 #                should be equal    ${TaxValue}    0.00USD
@@ -780,6 +849,16 @@ Create PP with Stacked Institutional discount
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -841,21 +920,21 @@ Create PP with Stacked Institutional discount
                     seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
 #                END
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    Institutional
+                should be equal    ${Discounttype2}    ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    Research Article
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    NA
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}     ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 should be equal    ${TaxValue}    0.00GBP
@@ -892,6 +971,20 @@ Create PP with multiple Society and Promotional discounts
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountType3}=  get from list   ${DiscountType3List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountcondition3}=  get from list    ${DiscountCondition3List}   ${ListIndexIterator}
+            ${discountpercentage1}=     get from list       ${DiscountPercentage1List}  ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${discountpercentage3}=     get from list   ${DiscountPercentage3List}   ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+            ${appliedyes3}=    get from list   ${AppliedYes3List}   ${ListIndexIterator}
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -949,29 +1042,29 @@ Create PP with multiple Society and Promotional discounts
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    WileyPromoCode
+                should be equal    ${Discounttype2}    ${discountType2}
                 ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel-59")]/div/div/div/div[4]/div/div/div[2]/div/table/tbody/tr[3]/td[1]
-                should be equal    ${Discounttype3}    Society
+                should be equal    ${Discounttype3}    ${discountType3}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    Research Article
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    PROMO50
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-                should be equal    ${DisountCondition3}    JCASP
+                should be equal    ${DisountCondition3}    ${discountcondition3}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    20%
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${Percentagevalue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-                should be equal    ${Percentagevalue3}    5%
+                should be equal    ${Percentagevalue3}    ${discountpercentage3}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${AppliedYes3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-                should be equal    ${AppliedYes3}    No
+                should be equal    ${AppliedYes3}    ${appliedyes3}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 should be equal    ${TaxValue}    0.00USD
@@ -1005,6 +1098,16 @@ Create PP with same discount Geographical Editorial and Society discounts
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -1064,21 +1167,21 @@ Create PP with same discount Geographical Editorial and Society discounts
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    GeographicalDiscount
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    Society
+                should be equal    ${Discounttype2}    ${discountType2}
                  ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    BO - Bolivia
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    EANM9
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    50%
+                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    50%
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    No
+                should be equal    ${AppliedYes2}    ${appliedyes2}
 
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -1114,6 +1217,33 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountType3}=  get from list   ${DiscountType3List}   ${ListIndexIterator}
+            ${discountType4}=  get from list   ${DiscountType4List}   ${ListIndexIterator}
+            ${discountType5}=  get from list   ${DiscountType5List}   ${ListIndexIterator}
+            ${discountType6}=  get from list   ${DiscountType6List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountcondition3}=  get from list    ${DiscountCondition3List}   ${ListIndexIterator}
+            ${discountcondition4}=  get from list    ${DiscountCondition4List}   ${ListIndexIterator}
+            ${discountcondition5}=  get from list    ${DiscountCondition5List}   ${ListIndexIterator}
+            ${discountcondition6}=  get from list    ${DiscountCondition6List}   ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list   ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${discountpercentage3}=     get from list   ${DiscountPercentage3List}   ${ListIndexIterator}
+            ${discountpercentage4}=     get from list   ${DiscountPercentage4List}   ${ListIndexIterator}
+            ${discountpercentage5}=     get from list   ${DiscountPercentage5List}   ${ListIndexIterator}
+            ${discountpercentage6}=     get from list   ${DiscountPercentage6List}   ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+            ${appliedyes3}=  get from list  ${AppliedYes3List}      ${ListIndexIterator}
+            ${appliedyes4}=  get from list  ${AppliedYes4List}      ${ListIndexIterator}
+            ${appliedyes5}=  get from list  ${AppliedYes5List}      ${ListIndexIterator}
+            ${appliedyes6}=  get from list  ${AppliedYes6List}      ${ListIndexIterator}
+
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -1171,17 +1301,17 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    EditorialDiscount
+                should be equal    ${Discounttype2}    ${discountType2}
                 ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[1]
-                should be equal    ${Discounttype3}    GeographicalDiscount
+                should be equal    ${Discounttype3}    ${discountType3}
                 ${Discounttype4}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[1]
-                should be equal    ${Discounttype4}    ReferralDiscount
+                should be equal    ${Discounttype4}    ${discountType4}
                 ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[1]
-                should be equal    ${Discounttype5}    Society
+                should be equal    ${Discounttype5}    ${discountType5}
                 ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[1]
-                should be equal    ${Discounttype5}    WileyPromoCode
+                should be equal    ${Discounttype5}    ${discountType6}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
                 should be equal    ${DisountCondition1}    RESEARCH ARTICLE
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
@@ -1360,6 +1490,7 @@ Create PP with Funder details
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -1444,6 +1575,16 @@ Create PP with Invalid Promotional discount code
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountType2}=  get from list   ${DiscountType2List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountcondition2}=  get from list    ${DiscountCondition2List}    ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+            ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
+
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -1501,21 +1642,22 @@ Create PP with Invalid Promotional discount code
                 should be equal    ${Typeofpayment}    Undefined
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
+
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    WileyPromoCode
+                should be equal    ${Discounttype2}    ${discountType2}
                  ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    Research Article
+                should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    PRKMO50
+                should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}     ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    NA
+                should be equal    ${Percentagevalue2}    ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    No
+                should be equal    ${AppliedYes2}    ${appliedyes2}
 
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -1552,6 +1694,14 @@ Create PP with Manual override required value as Yes
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${discountType1}=  get from list   ${DiscountType1List}   ${ListIndexIterator}
+            ${discountcondition1}=  get from list    ${DiscountCondition1List}   ${ListIndexIterator}
+            ${discountpercentage1}=     get from list   ${DiscountPercentage1List}   ${ListIndexIterator}
+            ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
+
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -1608,13 +1758,13 @@ Create PP with Manual override required value as Yes
                 should be equal    ${UIStatus}    MANUAL OVERRIDE REQUIRED
                 should be equal    ${Typeofpayment}    Undefined
                 ${Discounttype1}=    SeleniumLibrary.get text   //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[1]
-                should be equal    ${Discounttype1}    ArticleType
+                should be equal    ${Discounttype1}    ${discountType1}
                 ${DisountCondition1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[2]
-                should be equal    ${DisountCondition1}    Research Article
+                should be equal    ${DisountCondition1}     ${discountcondition1}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[3]
-                should be equal    ${Percentagevalue1}    75%
+                should be equal    ${Percentagevalue1}     ${discountpercentage1}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[5]
-                should be equal    ${AppliedYes1}    Yes
+                should be equal    ${AppliedYes1}     ${appliedyes1}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2165,13 +2315,66 @@ Read All Input Values From PPExcel
     ${JSONFileNameList}    get from dictionary    ${ExcelDictionary}  JSONFileName
     ${JournalIDList}    get from dictionary    ${ExcelDictionary}    JournalID
     ${ScenarioList}    get from dictionary    ${ExcelDictionary}    ScenarioList
+    ${DiscountType1List}    get from dictionary    ${ExcelDictionary}   DiscountType1
+    ${DiscountType2List}    get from dictionary    ${ExcelDictionary}   DiscountType2
+    ${DiscountType3List}    get from dictionary    ${ExcelDictionary}   DiscountType3
+    ${DiscountType4List}    get from dictionary    ${ExcelDictionary}   DiscountType4
+    ${DiscountType5List}    get from dictionary    ${ExcelDictionary}   DiscountType5
+    ${DiscountType6List}    get from dictionary    ${ExcelDictionary}   DiscountType6
+    ${DiscountCondition1List}   get from dictionary     ${ExcelDictionary}    DiscountCondition1
+    ${DiscountCondition2List}   get from dictionary     ${ExcelDictionary}  DiscouontCondition2
+    ${DiscountCondition3List}   get from dictionary     ${ExcelDictionary}  DiscountCondition3
+    ${DiscountCondition4List}   get from dictionary     ${ExcelDictionary}  DiscountCondition4
+    ${DiscountCondition5List}   get from dictionary     ${ExcelDictionary}  DiscountCondition5
+    ${DiscountCondition6List}   get from dictionary     ${ExcelDictionary}  DiscountCondition6
+    ${DiscountPercentage1List}  get from dictionary  ${ExcelDictionary}     DiscountPercentage1
+    ${DiscountPercentage2List}  get from dictionary     ${ExcelDictionary}      DiscountPercentage2
+    ${DiscountPercentage3List}  get from dictionary     ${ExcelDictionary}      DiscountPercentage3
+    ${DiscountPercentage4List}  get from dictionary  ${ExcelDictionary}     DiscountPercentage4
+    ${DiscountPercentage5List}  get from dictionary  ${ExcelDictionary}     DiscountPercentage5
+    ${DiscountPercentage6List}  get from dictionary  ${ExcelDictionary}     DiscountPercentage6
+    ${AppliedYes1List}      get from dictionary      ${ExcelDictionary}     AppliedYes1
+    ${AppliedYes2List}      get from dictionary     ${ExcelDictionary}      AppliedYes2
+    ${AppliedYes3List}      get from dictionary      ${ExcelDictionary}     AppliedYes3
+    ${AppliedYes4List}      get from dictionary      ${ExcelDictionary}     AppliedYes4
+    ${AppliedYes5List}      get from dictionary      ${ExcelDictionary}     AppliedYes5
+    ${AppliedYes6List}      get from dictionary      ${ExcelDictionary}     AppliedYes6
+
 #    ${InvoicedStatusList}    get from dictionary    ${ExcelDictionary}    FecthInvoiceStatus
     set suite variable    ${EnvironmentList}    ${EnvironmentList}
     set suite variable   ${JournalIDList}   ${JournalIDList}
     set suite variable    ${ExecutionFlagList}    ${ExecutionFlagList}
     set suite variable    ${JSONFileNameList}    ${JSONFileNameList}
     set suite variable    ${ScenarioList}    ${ScenarioList}
-#    set suite variable    ${OrderIDList}    ${OrderIDList}
+    set suite variable    ${DiscountType1List}   ${DiscountType1List}
+    set suite variable    ${DiscountType2List}   ${DiscountType2List}
+    set suite variable    ${DiscountType3List}   ${DiscountType3List}
+    set suite variable    ${DiscountType4List}   ${DiscountType4List}
+    set suite variable    ${DiscountType5List}   ${DiscountType5List}
+    set suite variable    ${DiscountType6List}   ${DiscountType6List}
+
+    set suite variable    ${DiscountCondition1List}   ${DiscountCondition1List}
+    set suite variable    ${DiscountCondition2List}   ${DiscountCondition2List}
+    set suite variable    ${DiscountCondition3List}   ${DiscountCondition3List}
+    set suite variable    ${DiscountCondition4List}   ${DiscountCondition4List}
+    set suite variable    ${DiscountCondition5List}   ${DiscountCondition5List}
+    set suite variable    ${DiscountCondition6List}   ${DiscountCondition6List}
+
+    set suite variable    ${DiscountPercentage1List}   ${DiscountPercentage1List}
+    set suite variable    ${DiscountPercentage2List}  ${DiscountPercentage2List}
+    set suite variable    ${DiscountPercentage3List}  ${DiscountPercentage3List}
+    set suite variable    ${DiscountPercentage4List}  ${DiscountPercentage4List}
+    set suite variable    ${DiscountPercentage5List}  ${DiscountPercentage5List}
+    set suite variable    ${DiscountPercentage6List}  ${DiscountPercentage6List}
+
+    set suite variable    ${AppliedYes1List}    ${AppliedYes1List}
+    set suite variable    ${AppliedYes2List}       ${AppliedYes2List}
+    set suite variable    ${AppliedYes3List}       ${AppliedYes3List}
+    set suite variable    ${AppliedYes4List}       ${AppliedYes4List}
+    set suite variable    ${AppliedYes5List}       ${AppliedYes5List}
+    set suite variable    ${AppliedYes6List}       ${AppliedYes6List}
+
+
     open excel document    ${InputExcel}    docID
 
 ReadAllValuesFromPPExcel
