@@ -23,7 +23,7 @@ Create PP with Funder Paid with UI Validations
     ${JSONFileName}=    Get Value from excel columnwise    FunderPaid    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
     ${json_content}=    Generate the JSON file PP    ${json_content}    ${journalId}
-    ${Environment}=    Get Value from excel columnwise    FunderPaid    ExecutionEnvironment
+    ${Environment}=    Get Value from excel columnwise    FunderPaid    ExeEnvironment
     Switch Case    ${Environment}
     create session    order_session    ${PPURL}    verify=True
     ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
@@ -210,7 +210,7 @@ Create PP with Society discount with UI Validations
     ${JSONFileName}=    Get Value from excel columnwise    Society    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
     ${json_content}=    Generate the JSON file PP    ${json_content}    ${journalId}
-    ${Environment}=    Get Value from excel columnwise    Society    ExecutionEnvironment
+    ${Environment}=    Get Value from excel columnwise    Society    ExeEnvironment
     Switch Case    ${Environment}
     create session    order_session    ${PPURL}    verify=True
     ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
@@ -469,7 +469,7 @@ Create PP with Multiple discount with UI Validations
     ${JSONFileName}=    Get Value from excel columnwise    Multiple    JSONFileName
     ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
     ${json_content}=    Generate the JSON file PP    ${json_content}    ${journalId}
-    ${Environment}=    Get Value from excel columnwise    Multiple    ExecutionEnvironment
+    ${Environment}=    Get Value from excel columnwise    Multiple    ExeEnvironment
     Switch Case    ${Environment}
     create session    order_session    ${PPURL}    verify=True
     ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
