@@ -70,7 +70,8 @@ Create PP with Funder Paid with UI Validations
 
     #    ${DisplayArticleType}=    Get Value from excel columnwise    FunderPaid    DisplayArticleType
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
-        ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
+#        ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
+        ${SubmissionDate}=    getdate    %Y-%m-%d
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    FunderPaid    ${Rownum}
 
@@ -258,7 +259,8 @@ Create PP with Society discount with UI Validations
     #    ${DisplayArticleType}=    Get Value from excel columnwise    Society    DisplayArticleType
 
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
-        ${SubmissionDate}=    Get Value from excel columnwise    Society    SubmissionDate
+#        ${SubmissionDate}=    Get Value from excel columnwise    Society    SubmissionDate
+        ${SubmissionDate}=    getdate    %Y-%m-%d
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Society    ${Rownum}
 
@@ -514,7 +516,8 @@ Create PP with Multiple discount with UI Validations
         validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    UIValidations    Multiple    ${Rownum}
         should be equal    ${BaseArticleType}    ${UIBaseArticleType}
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
-        ${SubmissionDate}=    Get Value from excel columnwise    Multiple    SubmissionDate
+#        ${SubmissionDate}=    Get Value from excel columnwise    Multiple    SubmissionDate
+        ${SubmissionDate}=    getdate    %Y-%m-%d
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Multiple    ${Rownum}
         should be equal    ${SubmissionDate}    ${UISubmissionDate}
@@ -736,17 +739,6 @@ Create PP with Multiple discount with UI Validations
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 *** Keywords ***
 Read excel values in columnwise
     [Documentation]    Read all Values from the input excel and return dictionary values will
@@ -813,6 +805,8 @@ Generate the JSON file PP
     ${random_4_digit_number}=    convert to string    ${random_4_digit_number}
     ${json_content}=    replace string    ${json_content}    <<RandomNum>>    ${random_4_digit_number}
     ${json_content}=    replace string    ${json_content}    <<scriptId>>    ${random_4_digit_number}
+    ${Formatted_Date}=   getdate    %Y-%m-%d
+    ${json_content}=    replace string    ${json_content}    <<CurrentDate>>    ${Formatted_Date}
     RETURN    ${json_content}
 
 
