@@ -743,9 +743,9 @@ Create PP with Multiple discount with UI Validations
 Read excel values in columnwise
     [Documentation]    Read all Values from the input excel and return dictionary values will
        ...             have all column values as a list and set the dictionary value
-    [Arguments]    ${inputExcelPath}
-    open excel document    ${inputExcelPath}    docID
-    log to console    ${inputExcelPath}
+    [Arguments]    ${PPInputExcelPath}
+    open excel document    ${PPInputExcelPath}    docID
+    log to console    ${PPInputExcelPath}
     ${FirstRow}=    read excel row    1    sheet_name=UIValidations
     ${Columncount}=    get length   ${FirstRow}
     ${Rowcount}=    read excel column    1    sheet_name=UIValidations
@@ -824,7 +824,7 @@ Switch Case
 Open Excel and DBS
     [Arguments]    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
      Read excel values in columnwise    ${PPInputExcelPath}
-     ${Environment}=    Get Value from excel columnwise    FunderPaid    ExecutionEnvironment
+     ${Environment}=    Get Value from excel columnwise    FunderPaid    ExeEnvironment
 #     ${Environment}=    get from list    ${EnvironmentList}    0
      ${Environment}=    convert to upper case    ${Environment}
      Switch Case    ${Environment}
