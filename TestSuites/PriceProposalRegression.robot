@@ -2304,6 +2304,8 @@ Generate the JSON file PP
     ${random_4_digit_number}=    Evaluate    random.randint(1000, 9999)
     ${random_4_digit_number}=    convert to string    ${random_4_digit_number}
     ${json_content}=    replace string    ${json_content}    <<RandomNum>>    ${random_4_digit_number}
+    ${json_content}=    replace string    ${json_content}    <<scriptId>>    ${random_4_digit_number}
+
     RETURN    ${json_content}
 
 

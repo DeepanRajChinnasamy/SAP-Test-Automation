@@ -4,7 +4,7 @@
     "data": {
       "requestId": "4a48d9c8-6b6d-4583-b9ac-1836890cb988",
       "submissionId": "<<Id>>",
-      "edRefCode": "CAM4-2024-04-1853",
+      "edRefCode": "CAM4-2024-04-<<scriptId>>",
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",

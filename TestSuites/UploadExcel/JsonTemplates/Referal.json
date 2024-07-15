@@ -4,7 +4,7 @@
     "data": {
       "requestId": "e5a1358c-2f36-4d02-8c68-fe0b8c46172a",
       "submissionId": "<<Id>>",
-      "edRefCode": "ACN3-2023-06-0432",
+      "edRefCode": "ACN3-2023-06-<<scriptId>>",
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
