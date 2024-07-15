@@ -71,7 +71,7 @@ Create PP with Funder Paid with UI Validations
     #    ${DisplayArticleType}=    Get Value from excel columnwise    FunderPaid    DisplayArticleType
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
-        ${SubmissionDate}=    getdate    %Y-%m-%d
+        ${SubmissionDate}=    getdate    %m-%d-%Y
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    FunderPaid    ${Rownum}
 
@@ -119,7 +119,8 @@ Create PP with Funder Paid with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    FunderPaid    ${Rownum}
 
-        ${MauScriptId}=    Get Value from excel columnwise    FunderPaid    MauScriptId
+#        ${MauScriptId}=    Get Value from excel columnwise    FunderPaid    MauScriptId
+        ${MauScriptId}=    set variable    CAM4-2024-04-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
         validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    UIValidations    FunderPaid    ${Rownum}
@@ -260,7 +261,7 @@ Create PP with Society discount with UI Validations
 
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    Society    SubmissionDate
-        ${SubmissionDate}=    getdate    %Y-%m-%d
+        ${SubmissionDate}=    getdate    %m-%d-%Y
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Society    ${Rownum}
 
@@ -312,7 +313,8 @@ Create PP with Society discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    Society    ${Rownum}
 
-        ${MauScriptId}=    Get Value from excel columnwise    Society    MauScriptId
+#        ${MauScriptId}=    Get Value from excel columnwise    Society    MauScriptId
+        ${MauScriptId}=    set variable    ACN3-2023-06-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
         validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    UIValidations    Society    ${Rownum}
@@ -517,7 +519,7 @@ Create PP with Multiple discount with UI Validations
         should be equal    ${BaseArticleType}    ${UIBaseArticleType}
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    Multiple    SubmissionDate
-        ${SubmissionDate}=    getdate    %Y-%m-%d
+        ${SubmissionDate}=    getdate    %m-%d-%Y
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Multiple    ${Rownum}
         should be equal    ${SubmissionDate}    ${UISubmissionDate}
@@ -573,7 +575,8 @@ Create PP with Multiple discount with UI Validations
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    Multiple    ${Rownum}
         should be equal    ${PublishedIn}    ${UIPublishedIn}
 
-        ${MauScriptId}=    Get Value from excel columnwise    Multiple    MauScriptId
+#        ${MauScriptId}=    Get Value from excel columnwise    Multiple    MauScriptId
+        ${MauScriptId}=    set variable    ACN3-2023-06-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
         validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    UIValidations    Multiple    ${Rownum}
@@ -805,6 +808,7 @@ Generate the JSON file PP
     ${random_4_digit_number}=    convert to string    ${random_4_digit_number}
     ${json_content}=    replace string    ${json_content}    <<RandomNum>>    ${random_4_digit_number}
     ${json_content}=    replace string    ${json_content}    <<scriptId>>    ${random_4_digit_number}
+    set suite variable    ${random_4_digit_number}    ${random_4_digit_number}
     ${Formatted_Date}=   getdate    %Y-%m-%d
     ${json_content}=    replace string    ${json_content}    <<CurrentDate>>    ${Formatted_Date}
     RETURN    ${json_content}
