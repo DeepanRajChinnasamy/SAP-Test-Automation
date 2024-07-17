@@ -2245,8 +2245,6 @@ Create PP with Invalid MailId
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
                 ${error_code}=    convert to string    ${error_code}
