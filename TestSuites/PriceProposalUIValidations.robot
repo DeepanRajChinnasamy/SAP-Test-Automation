@@ -48,14 +48,14 @@ Create PP with Funder Paid with UI Validations
     ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
     IF    '${check}' == '${True}'
         ${error_code}=  Set Variable  ${json_dict['message']}
-        ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+        ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
         ${error_code}=    convert to string    ${error_code}
         ${OrderStatus}=    convert to string    ${OrderID}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderStatus
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
@@ -178,26 +178,26 @@ Create PP with Funder Paid with UI Validations
         ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
         ${Rownum}=    Get excel row number   ${Rowcount}    TotalCharge
         validate the content and update the excel   ${TotalCharge}    ${UITotalCharge}    UIValidations    FunderPaid    ${Rownum}
-        should be equal    ${TotalCharge}    ${UITotalCharge}
-        should be equal    ${Tax}    ${UITax}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
-        should be equal    ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
-        should be equal    ${BaseAPCPrice}    ${UIBaseAPCPrice}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
-        should be equal    ${JournalGroupCode}    ${UIJournalGroupCode}
-        should be equal    ${EditorialStatus}    ${UIEditorialStatus}
-        should be equal    ${FunderId}    ${UIFunderID}
-        should be equal    ${FunderName}    ${UIFunderName}
-        should be equal    ${MauScriptId}    ${UIMauScriptId}
-        should be equal    ${PublishedIn}    ${UIPublishedIn}
-        should be equal    ${CountryCode}    ${UICountry}
-        should be equal    ${Institution}    ${UIInstitution}
-        should be equal    ${InstitutionIdType}    ${UIInstitutionIdType}
-        should be equal    ${EmailID}    ${UIEmailID}
-        should be equal    ${Name}    ${UIName}
-        should be equal    ${ArticleTitle}    ${UIArticleTitle}
-        should be equal    ${SubmissionDate}    ${UISubmissionDate}
-        should be equal    ${BaseArticleType}    ${UIBaseArticleType}
+        run keyword and continue on failure    should be equal   ${TotalCharge}    ${UITotalCharge}
+        run keyword and continue on failure    should be equal   ${Tax}    ${UITax}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
+        run keyword and continue on failure    should be equal   ${BaseAPCPrice}    ${UIBaseAPCPrice}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${JournalGroupCode}    ${UIJournalGroupCode}
+        run keyword and continue on failure    should be equal   ${EditorialStatus}    ${UIEditorialStatus}
+        run keyword and continue on failure    should be equal   ${FunderId}    ${UIFunderID}
+        run keyword and continue on failure    should be equal   ${FunderName}    ${UIFunderName}
+        run keyword and continue on failure    should be equal   ${MauScriptId}    ${UIMauScriptId}
+        run keyword and continue on failure    should be equal   ${PublishedIn}    ${UIPublishedIn}
+        run keyword and continue on failure    should be equal   ${CountryCode}    ${UICountry}
+        run keyword and continue on failure    should be equal   ${Institution}    ${UIInstitution}
+        run keyword and continue on failure    should be equal   ${InstitutionIdType}    ${UIInstitutionIdType}
+        run keyword and continue on failure    should be equal   ${EmailID}    ${UIEmailID}
+        run keyword and continue on failure    should be equal   ${Name}    ${UIName}
+        run keyword and continue on failure    should be equal   ${ArticleTitle}    ${UIArticleTitle}
+        run keyword and continue on failure    should be equal   ${SubmissionDate}    ${UISubmissionDate}
+        run keyword and continue on failure    should be equal   ${BaseArticleType}    ${UIBaseArticleType}
     ELSE
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
@@ -236,14 +236,14 @@ Create PP with Society discount with UI Validations
     ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
     IF    '${check}' == '${True}'
         ${error_code}=  Set Variable  ${json_dict['message']}
-        ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+        ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
         ${error_code}=    convert to string    ${error_code}
         ${OrderStatus}=    convert to string    ${OrderID}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderStatus
         Write Output Excel    UIValidations    Society    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    Society    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
@@ -256,11 +256,7 @@ Create PP with Society discount with UI Validations
         ${BaseArticleType}=    Get Value from excel columnwise    Society    BaseArticleType
         ${UIBaseArticleType}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[3]
         validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    UIValidations    Society    ${Rownum}
-
-    #    ${DisplayArticleType}=    Get Value from excel columnwise    Society    DisplayArticleType
-
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
-#        ${SubmissionDate}=    Get Value from excel columnwise    Society    SubmissionDate
         ${SubmissionDate}=    getdate    %m-%d-%Y
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Society    ${Rownum}
@@ -428,36 +424,36 @@ Create PP with Society discount with UI Validations
 	    validate the content and update the excel   ${Applied1}    ${UIApplied1}    UIValidations    Society    ${Rownum}
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
 	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Society    ${Rownum}
-	    should be equal    ${Applied1}    ${UIApplied1}
-        should be equal    ${Applied2}    ${UIApplied2}
-        should be equal    ${Percentage2}    ${UIPercentage2}
-        should be equal    ${Percentage1}    ${UIPercentage1}
-        should be equal    ${Value2}    ${UIValue2}
-        should be equal    ${Value1}    ${UIValue1}
-        should be equal    ${DiscountCondition1}    ${UIDisountCondition1}
-        should be equal    ${DiscountCondition2}    ${UIDisountCondition2}
-        should be equal    ${DiscountType1}    ${UIDiscountType1}
-        should be equal    ${DiscountType2}    ${UIDiscountType2}
-        should be equal    ${TotalCharge}    ${UITotalCharge}
-        should be equal    ${Tax}    ${UITax}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
-        should be equal    ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
-        should be equal    ${BaseAPCPrice}    ${UIBaseAPCPrice}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
-        should be equal    ${JournalGroupCode}    ${UIJournalGroupCode}
-        should be equal    ${EditorialStatus}    ${UIEditorialStatus}
-        should be equal    ${FunderId}    ${UIFunderID}
-        should be equal    ${FunderName}    ${UIFunderName}
-        should be equal    ${MauScriptId}    ${UIMauScriptId}
-        should be equal    ${PublishedIn}    ${UIPublishedIn}
-        should be equal    ${CountryCode}    ${UICountry}
-        should be equal    ${Institution}    ${UIInstitution}
-        should be equal    ${InstitutionIdType}    ${UIInstitutionIdType}
-        should be equal    ${EmailID}    ${UIEmailID}
-        should be equal    ${Name}    ${UIName}
-        should be equal    ${ArticleTitle}    ${UIArticleTitle}
-        should be equal    ${SubmissionDate}    ${UISubmissionDate}
-        should be equal    ${BaseArticleType}    ${UIBaseArticleType}
+	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}
+        run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
+        run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
+        run keyword and continue on failure    should be equal   ${Percentage1}    ${UIPercentage1}
+        run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
+        run keyword and continue on failure    should be equal   ${Value1}    ${UIValue1}
+        run keyword and continue on failure    should be equal   ${DiscountCondition1}    ${UIDisountCondition1}
+        run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
+        run keyword and continue on failure    should be equal   ${DiscountType1}    ${UIDiscountType1}
+        run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
+        run keyword and continue on failure    should be equal   ${TotalCharge}    ${UITotalCharge}
+        run keyword and continue on failure    should be equal   ${Tax}    ${UITax}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
+        run keyword and continue on failure    should be equal   ${BaseAPCPrice}    ${UIBaseAPCPrice}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${JournalGroupCode}    ${UIJournalGroupCode}
+        run keyword and continue on failure    should be equal   ${EditorialStatus}    ${UIEditorialStatus}
+        run keyword and continue on failure    should be equal   ${FunderId}    ${UIFunderID}
+        run keyword and continue on failure    should be equal   ${FunderName}    ${UIFunderName}
+        run keyword and continue on failure    should be equal   ${MauScriptId}    ${UIMauScriptId}
+        run keyword and continue on failure    should be equal   ${PublishedIn}    ${UIPublishedIn}
+        run keyword and continue on failure    should be equal   ${CountryCode}    ${UICountry}
+        run keyword and continue on failure    should be equal   ${Institution}    ${UIInstitution}
+        run keyword and continue on failure    should be equal   ${InstitutionIdType}    ${UIInstitutionIdType}
+        run keyword and continue on failure    should be equal   ${EmailID}    ${UIEmailID}
+        run keyword and continue on failure    should be equal   ${Name}    ${UIName}
+        run keyword and continue on failure    should be equal   ${ArticleTitle}    ${UIArticleTitle}
+        run keyword and continue on failure    should be equal   ${SubmissionDate}    ${UISubmissionDate}
+        run keyword and continue on failure    should be equal   ${BaseArticleType}    ${UIBaseArticleType}
 	ELSE
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
@@ -496,14 +492,14 @@ Create PP with Multiple discount with UI Validations
     ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
     IF    '${check}' == '${True}'
         ${error_code}=  Set Variable  ${json_dict['message']}
-        ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+        ${OrderID}=  Set Variable   ${json_dict['viaxPriceProposalId']}
         ${error_code}=    convert to string    ${error_code}
         ${OrderStatus}=    convert to string    ${OrderID}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderStatus
         Write Output Excel    UIValidations    Multiple    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    Multiple    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
@@ -516,19 +512,19 @@ Create PP with Multiple discount with UI Validations
         ${BaseArticleType}=    Get Value from excel columnwise    Multiple    BaseArticleType
         ${UIBaseArticleType}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[3]
         validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${BaseArticleType}    ${UIBaseArticleType}
+        run keyword and continue on failure    should be equal   ${BaseArticleType}    ${UIBaseArticleType}
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    Multiple    SubmissionDate
         ${SubmissionDate}=    getdate    %m-%d-%Y
         ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${SubmissionDate}    ${UISubmissionDate}
+        run keyword and continue on failure    should be equal   ${SubmissionDate}    ${UISubmissionDate}
 
         ${ArticleTitle}=    Get Value from excel columnwise    Multiple    ArticleTitle
         ${UIArticleTitle}=    SeleniumLibrary.get text    (//*[@class="x-order-basics-view__value"])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    ArticleTitle
         validate the content and update the excel   ${ArticleTitle}    ${UIArticleTitle}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${ArticleTitle}    ${UIArticleTitle}
+        run keyword and continue on failure    should be equal   ${ArticleTitle}    ${UIArticleTitle}
 
         ${FirstName}=    Get Value from excel columnwise    Multiple    FirstName
         ${LastName}=    Get Value from excel columnwise    Multiple    LastName
@@ -543,44 +539,44 @@ Create PP with Multiple discount with UI Validations
         validate the content and update the excel   ${LastName}    ${UILastName}    UIValidations    Multiple    ${Rownum}
         ${Rownum}=    Get excel row number   ${Rowcount}    Name
         validate the content and update the excel   ${Name}    ${UIName}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${Name}    ${UIName}
+        run keyword and continue on failure    should be equal   ${Name}    ${UIName}
 
         ${EmailID}=    Get Value from excel columnwise    Multiple    EmailID
         ${UIEmailID}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[2]
         ${Rownum}=    Get excel row number   ${Rowcount}    EmailID
         validate the content and update the excel   ${EmailID}    ${UIEmailID}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${EmailID}    ${UIEmailID}
+        run keyword and continue on failure    should be equal   ${EmailID}    ${UIEmailID}
 
         ${InstitutionIdType}=    Get Value from excel columnwise    Multiple    InstitutionIdType
         ${UIInstitutionIdType}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[11]
         ${Rownum}=    Get excel row number   ${Rowcount}    InstitutionIdType
         validate the content and update the excel   ${InstitutionIdType}    ${UIInstitutionIdType}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${InstitutionIdType}    ${UIInstitutionIdType}
+        run keyword and continue on failure    should be equal   ${InstitutionIdType}    ${UIInstitutionIdType}
 
         ${Institution}=    Get Value from excel columnwise    Multiple    Institution
         ${UIInstitution}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[9]
         ${Rownum}=    Get excel row number   ${Rowcount}    Institution
         validate the content and update the excel   ${Institution}    ${UIInstitution}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${Institution}    ${UIInstitution}
+        run keyword and continue on failure    should be equal   ${Institution}    ${UIInstitution}
 
         ${CountryCode}=    Get Value from excel columnwise    Multiple    CountryCode
         ${UICountry}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[10]
         ${Rownum}=    Get excel row number   ${Rowcount}    CountryCode
         validate the content and update the excel   ${CountryCode}    ${UICountry}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${CountryCode}    ${UICountry}
+        run keyword and continue on failure    should be equal   ${CountryCode}    ${UICountry}
 
         ${PublishedIn}=    Get Value from excel columnwise    Multiple    PublishedIn
         ${UIPublishedIn}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${PublishedIn}    ${UIPublishedIn}
+        run keyword and continue on failure    should be equal   ${PublishedIn}    ${UIPublishedIn}
 
 #        ${MauScriptId}=    Get Value from excel columnwise    Multiple    MauScriptId
         ${MauScriptId}=    set variable    ACN3-2023-06-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
         validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${MauScriptId}    ${UIMauScriptId}
+        run keyword and continue on failure    should be equal   ${MauScriptId}    ${UIMauScriptId}
 
         ${SubmittedBy}=    Get Value from excel columnwise    Multiple    SubmittedBy
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmittedBy
@@ -591,92 +587,92 @@ Create PP with Multiple discount with UI Validations
         ${UIFunderName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[13]
         ${Rownum}=    Get excel row number   ${Rowcount}    FunderName
         validate the content and update the excel   ${FunderName}    ${UIFunderName}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${FunderName}    ${UIFunderName}
+        run keyword and continue on failure    should be equal   ${FunderName}    ${UIFunderName}
 
         ${FunderId}=    Get Value from excel columnwise    Multiple    FunderId
         ${UIFunderID}=    SeleniumLibrary.get text     (//*[contains(@id, "single-spa-application:parcel")]//p[2])[14]
         ${Rownum}=    Get excel row number   ${Rowcount}    FunderId
         validate the content and update the excel   ${FunderId}    ${UIFunderID}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${FunderId}    ${UIFunderID}
+        run keyword and continue on failure    should be equal   ${FunderId}    ${UIFunderID}
 
         ${EditorialStatus}=    Get Value from excel columnwise    Multiple    EditorialStatus
         ${UIEditorialStatus}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[7]
         ${Rownum}=    Get excel row number   ${Rowcount}    EditorialStatus
         validate the content and update the excel   ${EditorialStatus}    ${UIEditorialStatus}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${EditorialStatus}    ${UIEditorialStatus}
+        run keyword and continue on failure    should be equal   ${EditorialStatus}    ${UIEditorialStatus}
 
         ${JournalGroupCode}=    Get Value from excel columnwise    Multiple    JournalGroupCode
         ${UIJournalGroupCode}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[6]
         ${Rownum}=    Get excel row number   ${Rowcount}    JournalGroupCode
         validate the content and update the excel   ${JournalGroupCode}    ${UIJournalGroupCode}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${JournalGroupCode}    ${UIJournalGroupCode}
+        run keyword and continue on failure    should be equal   ${JournalGroupCode}    ${UIJournalGroupCode}
 
         ${BaseAPCPrice}=    Get Value from excel columnwise    Multiple    BaseAPCPrice
         ${UIBaseAPCPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[3]
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCPrice
         validate the content and update the excel   ${BaseAPCPrice}    ${UIBaseAPCPrice}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${BaseAPCPrice}    ${UIBaseAPCPrice}
+        run keyword and continue on failure    should be equal   ${BaseAPCPrice}    ${UIBaseAPCPrice}
 
         ${BaseArticleTypeDiscount}=    Get Value from excel columnwise    Multiple    BaseArticleTypeDiscount
         ${UIBaseArticleTypeDiscount}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[2]
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleTypeDiscount
         validate the content and update the excel   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
+        run keyword and continue on failure    should be equal   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}
 
         ${BaseAPCCharge}=    Get Value from excel columnwise    Multiple    BaseAPCCharge
         ${UIAPICharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCCharge
         validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
 
 
         ${FinalNetPrice}=    Get Value from excel columnwise    Multiple    FinalNetPrice
         ${UIFinalNetPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[4]
         ${Rownum}=    Get excel row number   ${Rowcount}    FinalNetPrice
         validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${BaseAPCCharge}    ${UIAPICharge}
+        run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
 
         ${Tax}=    Get Value from excel columnwise    Multiple    Tax
         ${UITax}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    Tax
         validate the content and update the excel   ${Tax}    ${UITax}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${Tax}    ${UITax}
+        run keyword and continue on failure    should be equal   ${Tax}    ${UITax}
 
         ${TotalCharge}=    Get Value from excel columnwise    Multiple    TotalCharge
         ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
         ${Rownum}=    Get excel row number   ${Rowcount}    TotalCharge
         validate the content and update the excel   ${TotalCharge}    ${UITotalCharge}    UIValidations    Multiple    ${Rownum}
-        should be equal    ${TotalCharge}    ${UITotalCharge}
+        run keyword and continue on failure    should be equal   ${TotalCharge}    ${UITotalCharge}
 
 		${DiscountType1}=    Get Value from excel columnwise    Multiple    DiscountType1
 	    ${UIDiscounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType1
 	    validate the content and update the excel   ${DiscountType1}    ${UIDiscountType1}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountType1}    ${UIDiscountType1}
+	    run keyword and continue on failure    should be equal   ${DiscountType1}    ${UIDiscountType1}
 	#
 	    ${DiscountType2}=    Get Value from excel columnwise    Multiple    DiscountType2
 	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
 	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountType2}    ${UIDiscountType2}
+	    run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
 	#
 	    ${DiscountType3}=    Get Value from excel columnwise    Multiple    DiscountType3
 	    ${UIDiscounttype3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[1])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType3
 	    validate the content and update the excel   ${DiscountType3}    ${UIDiscountType3}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountType3}    ${UIDiscountType3}
+	    run keyword and continue on failure    should be equal   ${DiscountType3}    ${UIDiscountType3}
 
 	    ${DiscountCondition1}=    Get Value from excel columnwise    Multiple    DiscountCondition1
 	    ${UIDisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition1
 	    validate the content and update the excel   ${DiscountCondition1}    ${UIDisountCondition1}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountCondition1}    ${UIDisountCondition1}
+	    run keyword and continue on failure    should be equal   ${DiscountCondition1}    ${UIDisountCondition1}
 
 	    ${DiscountCondition2}=    Get Value from excel columnwise    Multiple    DiscountCondition2
 	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
 	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountCondition2}    ${UIDisountCondition2}
+	    run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
 
 
 
@@ -684,23 +680,23 @@ Create PP with Multiple discount with UI Validations
 	    ${UIDisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition3
 	    validate the content and update the excel   ${DiscountCondition3}    ${UIDisountCondition3}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${DiscountCondition3}    ${UIDisountCondition3}
+	    run keyword and continue on failure    should be equal   ${DiscountCondition3}    ${UIDisountCondition3}
 
 	    ${Value1}=    Get Value from excel columnwise    Multiple    Value1
 	    ${UIValue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[4])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value1
 	    validate the content and update the excel   ${Value1}    ${UIValue1}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${Value1}    ${UIValue1}
+	    run keyword and continue on failure    should be equal   ${Value1}    ${UIValue1}
 	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
 	    ${UIValue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[4])[1]
 	    ${Value2}=    Get Value from excel columnwise    Multiple    Value2
 	    ${Value3}=    Get Value from excel columnwise    Multiple    Value3
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
 	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${Value2}    ${UIValue2}
+	    run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value3
 	    validate the content and update the excel   ${Value3}    ${UIValue3}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${Value3}    ${UIValue3}
+	    run keyword and continue on failure    should be equal   ${Value3}    ${UIValue3}
 
 	    ${Percentage1}=    Get Value from excel columnwise    Multiple    Percentage1
 	    ${UIPercentage1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
@@ -715,9 +711,9 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Multiple    ${Rownum}
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage3
 	    validate the content and update the excel   ${Percentage3}    ${UIPercentage3}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${Percentage3}    ${UIPercentage3}
-	    should be equal    ${Percentage2}    ${UIPercentage2}
-	    should be equal    ${Percentage1}    ${UIPercentage1}
+	    run keyword and continue on failure    should be equal   ${Percentage3}    ${UIPercentage3}
+	    run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
+	    run keyword and continue on failure    should be equal   ${Percentage1}    ${UIPercentage1}
 	    ${Applied1}=    Get Value from excel columnwise    Multiple    Applied1
 	    ${UIApplied1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
 	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
@@ -730,9 +726,9 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Multiple    ${Rownum}
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied3
 	    validate the content and update the excel   ${Applied3}    ${UIApplied3}    UIValidations    Multiple    ${Rownum}
-	    should be equal    ${Applied1}    ${UIApplied1}
-	    should be equal    ${Applied2}    ${UIApplied2}
-	    should be equal    ${Applied3}    ${UIApplied3}
+	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}
+	    run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
+	    run keyword and continue on failure    should be equal   ${Applied3}    ${UIApplied3}
 	ELSE
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]

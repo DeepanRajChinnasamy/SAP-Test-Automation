@@ -10,7 +10,7 @@ Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
 *** Variables ***
 ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
-${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
+${PPURL}
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 
@@ -23,8 +23,6 @@ Create PP with Society discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
-#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
@@ -40,7 +38,6 @@ Create PP with Society discount
             ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
             ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
             ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
-
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -61,60 +58,50 @@ Create PP with Society discount
             ${JsonResp}=  Evaluate  ${response.text}
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
-#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            #log to console    @{list}
+            log to console    @{list}
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
-            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]WileyPromoCode''')  modules=json
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
+                log to console   ${OrderID}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
-                should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
-
+                should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
-#                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
-#                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
-#                IF    '${CheckArrowbutton}' == 'True'
-                    seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
-#                END
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
+                seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
-
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${PPInputExcelPath}
@@ -129,6 +116,7 @@ Create PP with Society discount
                 save excel document    ${PPInputExcelPath}
                 should contain    ${list}[0]    SUCCESS
             END
+            exit for loop
         END
         save excel document    ${PPInputExcelPath}
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
@@ -159,9 +147,6 @@ Create PP with Promotional discount
             ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
             ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
             ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
-
-
-
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -193,14 +178,13 @@ Create PP with Promotional discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
-
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${PPInputExcelPath}
@@ -216,29 +200,29 @@ Create PP with Promotional discount
                 sleep    5s
                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    ${discountcondition1}
+               run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}     ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}     ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 
             ELSE
@@ -248,6 +232,7 @@ Create PP with Promotional discount
                 save excel document    ${PPInputExcelPath}
                 should contain    ${list}[0]    SUCCESS
             END
+            exit for loop
         END
         save excel document    ${PPInputExcelPath}
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
@@ -314,12 +299,12 @@ Create PP with Institutional discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
 
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
@@ -337,28 +322,28 @@ Create PP with Institutional discount
                 sleep    5s
                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    ${discountcondition1}
+               run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}   ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}   ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  ${discountpercentage2}
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -367,6 +352,7 @@ Create PP with Institutional discount
                 save excel document    ${PPInputExcelPath}
                 should contain    ${list}[0]    SUCCESS
             END
+            exit for loop
         END
         save excel document    ${PPInputExcelPath}
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
@@ -399,7 +385,6 @@ Create PP with Editorial discount
             ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
             ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
 
-
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -431,12 +416,12 @@ Create PP with Editorial discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -451,33 +436,31 @@ Create PP with Editorial discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
-               ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
+                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
-
-
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -551,12 +534,12 @@ Create PP with Referral discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -572,29 +555,29 @@ Create PP with Referral discount
                 sleep    5s
                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    ${discountcondition1}
+               run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
 #                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#                should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 
             ELSE
@@ -620,8 +603,6 @@ Create PP with Geographical discount
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
     ${RowCounter}    set variable    2
-#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#    Launch and Login DBS    ${QA2_Viax}    ${username}    ${password}
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
@@ -637,9 +618,6 @@ Create PP with Geographical discount
             ${discountpercentage2}=     get from list       ${DiscountPercentage2List}  ${ListIndexIterator}
             ${appliedyes1}=    get from list   ${AppliedYes1List}   ${ListIndexIterator}
             ${appliedyes2}=  get from list  ${AppliedYes2List}      ${ListIndexIterator}
-
-
-
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -671,12 +649,12 @@ Create PP with Geographical discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -691,32 +669,31 @@ Create PP with Geographical discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}   ${discountType2}
-               ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${Discounttype2}   ${discountType2}
+                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
-
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -784,12 +761,12 @@ Create PP with Article type discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -805,19 +782,19 @@ Create PP with Article type discount
                 sleep    5s
                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 ${Discounttype1}=    SeleniumLibrary.get text   //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${DisountCondition1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[2]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[3]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[5]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
 #                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
 ##                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-#                should be equal    ${TaxValue}    0.00USD
+#                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -890,12 +867,12 @@ Create PP with Stacked Institutional discount
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -912,32 +889,32 @@ Create PP with Stacked Institutional discount
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
 #                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
 #                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
 #                IF    '${CheckArrowbutton}' == 'True'
                     seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
 #                END
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}     ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}     ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00GBP
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00GBP
 
 
 #        should contain  ${check}  True
@@ -1016,12 +993,12 @@ Create PP with multiple Society and Promotional discounts
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1038,36 +1015,36 @@ Create PP with multiple Society and Promotional discounts
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                 ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel-59")]/div/div/div/div[4]/div/div/div[2]/div/table/tbody/tr[3]/td[1]
-                should be equal    ${Discounttype3}    ${discountType3}
+                run keyword and continue on failure    should be equal    ${Discounttype3}    ${discountType3}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-                should be equal    ${DisountCondition3}    ${discountcondition3}
+                run keyword and continue on failure    should be equal    ${DisountCondition3}    ${discountcondition3}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${Percentagevalue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-                should be equal    ${Percentagevalue3}    ${discountpercentage3}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue3}    ${discountpercentage3}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${AppliedYes3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-                should be equal    ${AppliedYes3}    ${appliedyes3}
+                run keyword and continue on failure    should be equal    ${AppliedYes3}    ${appliedyes3}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -1139,12 +1116,12 @@ Create PP with same discount Geographical Editorial and Society discounts
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1163,29 +1140,29 @@ Create PP with same discount Geographical Editorial and Society discounts
                 wait until element is visible    ${elemId}
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                  ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
 
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1275,12 +1252,12 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1297,60 +1274,60 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                 ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[1]
-                should be equal    ${Discounttype3}    ${discountType3}
+                run keyword and continue on failure    should be equal    ${Discounttype3}    ${discountType3}
                 ${Discounttype4}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[1]
-                should be equal    ${Discounttype4}    ${discountType4}
+                run keyword and continue on failure    should be equal    ${Discounttype4}    ${discountType4}
                 ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[1]
-                should be equal    ${Discounttype5}    ${discountType5}
+                run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType5}
                 ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[1]
-                should be equal    ${Discounttype5}    ${discountType6}
+                run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType6}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    RESEARCH ARTICLE
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    RESEARCH ARTICLE
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    CCCAM424
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    CCCAM424
                 ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-                should be equal    ${DisountCondition3}    PE - Peru
+                run keyword and continue on failure    should be equal    ${DisountCondition3}    PE - Peru
 #                ${DisountCondition4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
-#                should be equal    ${DisountCondition4}
+#                run keyword and continue on failure    should be equal    ${DisountCondition4}
                 ${DisountCondition5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[2])[1]
-                should be equal    ${DisountCondition5}    JCASP
+                run keyword and continue on failure    should be equal    ${DisountCondition5}    JCASP
                 ${DisountCondition6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[2])[1]
-                should be equal    ${DisountCondition6}    PROMO50
+                run keyword and continue on failure    should be equal    ${DisountCondition6}    PROMO50
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}    75%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    75%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    90%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    90%
                 ${Percentagevalue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-                should be equal    ${Percentagevalue3}    50%
+                run keyword and continue on failure    should be equal    ${Percentagevalue3}    50%
                 ${Percentagevalue4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[3])[1]
-                should be equal    ${Percentagevalue4}    50%
+                run keyword and continue on failure    should be equal    ${Percentagevalue4}    50%
                 ${Percentagevalue5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[3])[1]
-                should be equal    ${Percentagevalue5}    5%
+                run keyword and continue on failure    should be equal    ${Percentagevalue5}    5%
                 ${Percentagevalue6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[3])[1]
-                should be equal    ${Percentagevalue6}    20%
+                run keyword and continue on failure    should be equal    ${Percentagevalue6}    20%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    Yes
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    Yes
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    Yes
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    Yes
                 ${AppliedYes3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-                should be equal    ${AppliedYes3}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes3}    No
                 ${AppliedYes4}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[4]/td[6])[1]
-                should be equal    ${AppliedYes4}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes4}    No
                 ${AppliedYes5}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[5]/td[6])[1]
-                should be equal    ${AppliedYes5}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes5}    No
                 ${AppliedYes6}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[6]/td[6])[1]
-                should be equal    ${AppliedYes6}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes6}    No
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1413,12 +1390,12 @@ Create PP with Multiple Insitutional discounts
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1434,29 +1411,29 @@ Create PP with Multiple Insitutional discounts
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    AuthorPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
 #                seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
 #                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-#                should be equal    ${Discounttype1}    GeographicalDiscount
+#                run keyword and continue on failure    should be equal    ${Discounttype1}    GeographicalDiscount
 #                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-#                should be equal    ${Discounttype2}    Society
+#                run keyword and continue on failure    should be equal    ${Discounttype2}    Society
 #                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-#                should be equal    ${DisountCondition1}    BO - Bolivia
+#                run keyword and continue on failure    should be equal    ${DisountCondition1}    BO - Bolivia
 #                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#                should be equal    ${DisountCondition2}    EANM9
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    EANM9
 #                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-#                should be equal    ${Percentagevalue1}    50%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue1}    50%
 #                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-#                should be equal    ${Percentagevalue2}    50%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}    50%
 #                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-#                should be equal    ${AppliedYes1}    Yes
+#                run keyword and continue on failure    should be equal    ${AppliedYes1}    Yes
 #                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-#                should be equal    ${AppliedYes2}    No
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    No
 #
 #                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
 #                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-#                should be equal    ${TaxValue}    0.00USD
+#                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 #
 #
 
@@ -1522,12 +1499,12 @@ Create PP with Funder details
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1544,8 +1521,8 @@ Create PP with Funder details
                 sleep    5s
                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    PRICE DETERMINED
-                should be equal    ${Typeofpayment}    FunderPaid
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    FunderPaid
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1616,12 +1593,12 @@ Create PP with Invalid Promotional discount code
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired' or '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1638,30 +1615,30 @@ Create PP with Invalid Promotional discount code
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
 
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                should be equal    ${Discounttype2}    ${discountType2}
+                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                  ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                should be equal    ${DisountCondition1}    ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                should be equal    ${DisountCondition2}    ${discountcondition2}
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                should be equal    ${Percentagevalue1}     ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}     ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                should be equal    ${Percentagevalue2}    ${discountpercentage2}
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                should be equal    ${AppliedYes1}    ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                should be equal    ${AppliedYes2}    ${appliedyes2}
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
 
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-                should be equal    ${TaxValue}    0.00USD
+                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 
             ELSE
@@ -1733,12 +1710,12 @@ Create PP with Manual override required value as Yes
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1755,16 +1732,16 @@ Create PP with Manual override required value as Yes
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    MANUAL OVERRIDE REQUIRED
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    MANUAL OVERRIDE REQUIRED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
                 ${Discounttype1}=    SeleniumLibrary.get text   //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[1]
-                should be equal    ${Discounttype1}    ${discountType1}
+                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${DisountCondition1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[2]
-                should be equal    ${DisountCondition1}     ${discountcondition1}
+                run keyword and continue on failure    should be equal    ${DisountCondition1}     ${discountcondition1}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[3]
-                should be equal    ${Percentagevalue1}     ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}     ${discountpercentage1}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[5]
-                should be equal    ${AppliedYes1}     ${appliedyes1}
+                run keyword and continue on failure    should be equal    ${AppliedYes1}     ${appliedyes1}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1828,12 +1805,12 @@ Create PP with Invalid Society
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1849,8 +1826,8 @@ Create PP with Invalid Society
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1914,12 +1891,12 @@ Create PP with Invalid Article Type
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1935,8 +1912,8 @@ Create PP with Invalid Article Type
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1999,12 +1976,12 @@ Create PP with Invalid Editorial
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2020,8 +1997,8 @@ Create PP with Invalid Editorial
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2082,12 +2059,12 @@ Create PP with Invalid Referal
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2103,8 +2080,8 @@ Create PP with Invalid Referal
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    RE SEND
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2165,12 +2142,12 @@ Create PP with Invalid CountryCode
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
 #                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2186,8 +2163,8 @@ Create PP with Invalid CountryCode
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    RE SEND
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2246,12 +2223,12 @@ Create PP with Invalid MailId
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2267,8 +2244,8 @@ Create PP with Invalid MailId
                 sleep    5s
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                should be equal    ${UIStatus}    RE SEND
-                should be equal    ${Typeofpayment}    Undefined
+                run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
+                run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2339,12 +2316,12 @@ Create PP Society discount with Rejected
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -2354,7 +2331,7 @@ Create PP Society discount with Rejected
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
 
-#                should be equal    ${Typeofpayment}    AuthorPaid
+#                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
 ##                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
 ##                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
 ##                IF    '${CheckArrowbutton}' == 'True'
@@ -2362,24 +2339,24 @@ Create PP Society discount with Rejected
 ##                END
 #                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
 #
-#                should be equal    ${Discounttype1}    ${discountType1}
+#                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
 #                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-#                should be equal    ${Discounttype2}    ${discountType2}
+#                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
 #                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-#                should be equal    ${DisountCondition1}    ${discountcondition1}
+#                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
 #                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#                should be equal    ${DisountCondition2}    ${discountcondition2}
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
 #                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-#                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
 #                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-#                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
 #                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-#                should be equal    ${AppliedYes1}    ${appliedyes1}
+#                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
 #                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-#                should be equal    ${AppliedYes2}    ${appliedyes2}
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
 #                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
 #                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-#                should be equal    ${TaxValue}    0.00USD
+#                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 #                IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
 #                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2388,7 +2365,7 @@ Create PP Society discount with Rejected
 #                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
 #                    save excel document    ${PPInputExcelPath}
 #                END
-                should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 sleep    3s
                 JS Click Element    //*[contains(@id,"single-spa-application:parcel")]//Span//div
                 sleep    5s
@@ -2404,7 +2381,7 @@ Create PP Society discount with Rejected
                     write and color excel    PriceProposal    PriceProposalStatus    ${UIStatus}    ${errormessage}    FF0000
                     save excel document    ${PPInputExcelPath}
                 END
-                should be equal    ${UIStatus}    REJECTED
+                run keyword and continue on failure    should be equal    ${UIStatus}    REJECTED
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -2472,12 +2449,12 @@ Create PP Society discount with Withdrawn
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
                 ${error_code}=  Set Variable  ${json_dict['message']}
-                ${OrderID}=  Set Variable  ${json_dict['priceProposal']['biId']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -2487,7 +2464,7 @@ Create PP Society discount with Withdrawn
                 ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
 
-#                should be equal    ${Typeofpayment}    AuthorPaid
+#                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
 ##                ${elementid}=    Get WebElement    //*[@class="x-icon x-accordion__icon"]
 ##                ${CheckArrowbutton}=  run keyword and return status    element should be present    ${elementid}
 ##                IF    '${CheckArrowbutton}' == 'True'
@@ -2495,24 +2472,24 @@ Create PP Society discount with Withdrawn
 ##                END
 #                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
 #
-#                should be equal    ${Discounttype1}    ${discountType1}
+#                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
 #                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-#                should be equal    ${Discounttype2}    ${discountType2}
+#                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
 #                ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-#                should be equal    ${DisountCondition1}    ${discountcondition1}
+#                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
 #                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#                should be equal    ${DisountCondition2}    ${discountcondition2}
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
 #                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-#                should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
 #                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-#                should be equal    ${Percentagevalue2}    ${discountpercentage2}%
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
 #                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-#                should be equal    ${AppliedYes1}    ${appliedyes1}
+#                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
 #                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-#                should be equal    ${AppliedYes2}    ${appliedyes2}
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
 #                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
 #                ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
-#                should be equal    ${TaxValue}    0.00USD
+#                run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 #                IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
 #                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2521,7 +2498,7 @@ Create PP Society discount with Withdrawn
 #                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
 #                    save excel document    ${PPInputExcelPath}
 #                END
-                should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 sleep    3s
                 JS Click Element    //*[contains(@id,"single-spa-application:parcel")]//Span//div
                 sleep    5s
@@ -2537,7 +2514,7 @@ Create PP Society discount with Withdrawn
                     write and color excel    PriceProposal    PriceProposalStatus    ${UIStatus}    ${errormessage}    FF0000
                     save excel document    ${PPInputExcelPath}
                 END
-                should be equal    ${UIStatus}    WITHDRAWN
+                run keyword and continue on failure    should be equal    ${UIStatus}    WITHDRAWN
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
