@@ -16,7 +16,7 @@ ${GraphqlURL}
 
 TC_01 Trigger Invoice Order with New Customer
     [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
-    [Tags]    AU_OC_01
+    [Tags]    id=AU_OC_01
     ${ListIndexIterator}    set variable    0
     ${RowCounter}    set variable    2
     ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
@@ -78,7 +78,7 @@ TC_01 Trigger Invoice Order with New Customer
 
 TC_02 Trigger CreditCard Order with New Customer
     [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
-    [Tags]    AU_OC_02
+    [Tags]    id=AU_OC_02
     ${ListIndexIterator}    set variable    0
     ${RowCounter}    set variable    2
     ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
@@ -140,7 +140,7 @@ TC_02 Trigger CreditCard Order with New Customer
 
 TC_03 Trigger Alipay Order with New Customer
     [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
-    [Tags]    AU_OC_03
+    [Tags]    id=AU_OC_03
     ${ListIndexIterator}    set variable    0
     ${RowCounter}    set variable    2
     ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
