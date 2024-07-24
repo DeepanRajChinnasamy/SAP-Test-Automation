@@ -180,7 +180,7 @@ Create PP with Promotional discount
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
-                ${OrderStatus}=    convert to string    ${OrderID}
+                ${OrderStatus}=    convert to string    ${OrderID}.
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
@@ -2529,6 +2529,91 @@ Create PP Society discount with Withdrawn
     END
     save excel document    ${PPInputExcelPath}
 
+Verify UI Change Data Correction to Price Determined
+    [Tags]    id=NC_OP_24
+    ${ListIndexIterator}    set variable    0
+    ${DataIndexIterator}    set variable    0
+    ${JournalIDCount}=    get length    ${JournalIDList}
+    ${RowCounter}    set variable    2
+    FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
+        ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
+        ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Verify UI Change Data Correction to Price Determined'
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
+            ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
+            Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
+            Switch Case    ${Environment}
+            create session    order_session    ${PPURL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
+            ${response}=     post on session    order_session    url=${GraphqlURL}     data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            ${response.status_code}=  convert to string    ${response.status_code}
+            Validate the content and update the excel    200    ${response.status_code}    PriceProposal    ResponseStatusCode    ${RowCounter}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    PriceProposal    Response    ${RowCounter}    ${response.json()}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+            set variable    ${JsonResp}
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+                ${error_code}=  Set Variable  ${json_dict['message']}
+                ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    convert to string    ${errormessage}
+#                IF    '${errormessage}' == 'DataCorrectionRequired'
+#                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
+#                    save excel document    ${PPInputExcelPath}
+#                ELSE
+#                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    FF0000
+#                    save excel document    ${PPInputExcelPath}
+#                END
+                should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                seleniumlibrary.click element    //*[@title="#${OrderID}"]
+                sleep    5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
+                should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
+                should be equal    ${Typeofpayment}    Undefined
+                seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//table/tr[2]/td[3]/label/span/input
+                seleniumlibrary.click element     //*[contains(@id,"single-spa-application:parcel")]/div/div/div[2]/div/div[1]
+                seleniumlibrary.click element      //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div//div[4]/div[3]/button
+                Reload Page
+                sleep  5s
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                should be equal    ${UIStatus}    PRICE DETERMINED
+                write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    DATA CORRECTION REQUIRED::PRICE DETERMINED    00FF00
+                ${Typeofpayment}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/h2/span
+                should be equal    ${Typeofpayment}    AuthorPaid
+            ELSE
+                ${error_code}=  Set Variable  ${json_dict['errors']}
+                ${error_code}=    convert to string    ${error_code}
+                write and color excel    PriceProposal    OrderStatus    ${RowCounter}    Error in Response    FF0000
+                save excel document    ${PPInputExcelPath}
+                should contain    ${list}[0]    SUCCESS
+            END
+        END
+        save excel document    ${PPInputExcelPath}
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${PPInputExcelPath}
+
 
 *** Keywords ***
 
@@ -2617,8 +2702,6 @@ Read All Input Values From PPExcel
     set suite variable    ${AppliedYes4List}       ${AppliedYes4List}
     set suite variable    ${AppliedYes5List}       ${AppliedYes5List}
     set suite variable    ${AppliedYes6List}       ${AppliedYes6List}
-
-
     open excel document    ${InputExcel}    docID
 
 ReadAllValuesFromPPExcel
