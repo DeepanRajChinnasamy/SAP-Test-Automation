@@ -2,7 +2,7 @@
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library    CustomLib.py
 Library    Response.py
-Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
+Suite Setup     Open Excel and DBS    ${PPUIValidationExcelPath}    ${PPURL}    ${username}    ${password}
 Suite Teardown   Close Excel and Browser
 Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
 
@@ -11,7 +11,7 @@ ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
 ${PPURL}
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
-${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
+${PPUIValidationExcelPath}    ${execdir}\\UploadExcel\\TD_PPUIValidations.xlsx
 
 
 
@@ -203,7 +203,7 @@ Create PP with Funder Paid with UI Validations
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
         should contain    ${list}[0]    SUCCESS
     END
-    save excel document    ${PPInputExcelPath}
+    save excel document    ${PPUIValidationExcelPath}
 
 Create PP with Society discount with UI Validations
     [Tags]    id=UI_VA_02
@@ -459,7 +459,7 @@ Create PP with Society discount with UI Validations
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
         should contain    ${list}[0]    SUCCESS
     END
-    save excel document    ${PPInputExcelPath}
+    save excel document    ${PPUIValidationExcelPath}
 
 Create PP with Multiple discount with UI Validations
     [Tags]    id=UI_VA_03
@@ -734,7 +734,7 @@ Create PP with Multiple discount with UI Validations
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
         should contain    ${list}[0]    SUCCESS
     END
-    save excel document    ${PPInputExcelPath}
+    save excel document    ${PPUIValidationExcelPath}
 
 
 
@@ -742,9 +742,9 @@ Create PP with Multiple discount with UI Validations
 Read excel values in columnwise
     [Documentation]    Read all Values from the input excel and return dictionary values will
        ...             have all column values as a list and set the dictionary value
-    [Arguments]    ${PPInputExcelPath}
-    open excel document    ${PPInputExcelPath}    docID
-    log to console    ${PPInputExcelPath}
+    [Arguments]    ${PPUIValidationExcelPath}
+    open excel document    ${PPUIValidationExcelPath}    docID
+    log to console    ${PPUIValidationExcelPath}
     ${FirstRow}=    read excel row    1    sheet_name=UIValidations
     ${Columncount}=    get length   ${FirstRow}
     ${Rowcount}=    read excel column    1    sheet_name=UIValidations
@@ -822,8 +822,8 @@ Switch Case
 
 
 Open Excel and DBS
-    [Arguments]    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
-     Read excel values in columnwise    ${PPInputExcelPath}
+    [Arguments]    ${PPUIValidationExcelPath}    ${PPURL}    ${username}    ${password}
+     Read excel values in columnwise    ${PPUIValidationExcelPath}
      ${Environment}=    Get Value from excel columnwise    FunderPaid    ExeEnvironment
 #     ${Environment}=    get from list    ${EnvironmentList}    0
      ${Environment}=    convert to upper case    ${Environment}
