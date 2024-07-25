@@ -32,6 +32,9 @@ TC_01 Trigger Invoice Order with New Customer
             ${FirstName}=  set variable     ${UniqueOrderId}Test
             ${LastName}=  set variable     ${UniqueOrderId}Auto
             ${MailId}=  set variable     ${UniqueOrderId}@Wiley.com
+            Write Output Excel    OrderCreationCases    FirstName    ${RowCounter}    ${FirstName}
+            Write Output Excel    OrderCreationCases    LastName    ${RowCounter}    ${LastName}
+            Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
@@ -51,7 +54,7 @@ TC_01 Trigger Invoice Order with New Customer
             # Fetch the values from the result Json File
             @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
             set variable    ${JsonResp}
-            log to console    ${list}[0]
+
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
@@ -94,6 +97,9 @@ TC_02 Trigger CreditCard Order with New Customer
             ${FirstName}=  set variable     ${UniqueOrderId}Test
             ${LastName}=  set variable     ${UniqueOrderId}Auto
             ${MailId}=  set variable     ${UniqueOrderId}@Wiley.com
+            Write Output Excel    OrderCreationCases    FirstName    ${RowCounter}    ${FirstName}
+            Write Output Excel    OrderCreationCases    LastName    ${RowCounter}    ${LastName}
+            Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
@@ -113,7 +119,7 @@ TC_02 Trigger CreditCard Order with New Customer
             # Fetch the values from the result Json File
             @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
             set variable    ${JsonResp}
-            log to console    ${list}[0]
+
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
@@ -156,6 +162,9 @@ TC_03 Trigger Alipay Order with New Customer
             ${FirstName}=  set variable     ${UniqueOrderId}Test
             ${LastName}=  set variable     ${UniqueOrderId}Auto
             ${MailId}=  set variable     ${UniqueOrderId}@Wiley.com
+            Write Output Excel    OrderCreationCases    FirstName    ${RowCounter}    ${FirstName}
+            Write Output Excel    OrderCreationCases    LastName    ${RowCounter}    ${LastName}
+            Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
@@ -175,7 +184,7 @@ TC_03 Trigger Alipay Order with New Customer
             # Fetch the values from the result Json File
             @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
             set variable    ${JsonResp}
-            log to console    ${list}[0]
+
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
@@ -200,9 +209,191 @@ TC_03 Trigger Alipay Order with New Customer
     END
     save excel document    ${InputFilePath}
 
+TC_04 Trigger Alipay Order with Existing Customer
+    [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
+    [Tags]    id=AU_OC_04
+    ${ListIndexIterator}    set variable    0
+    ${RowCounter}    set variable    2
+    ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
+    FOR    ${ScenarioIterator}    IN RANGE    ${TestCaseIDCount}
+        ${ScenarioName}=    get from list    ${TesctCaseNameList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Trigger Alipay Order with Existing Customer'
+            ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+            Get DBS Orders Link    ${EnironmentValue}
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${today}=     get current date
+            Write Output Excel    OrderCreationCases    ExecutionDate    ${RowCounter}    ${today}
+            ${UniqueOrderId}=    Convert Date    ${today}    result_format=%Y%m%d%H%M%S
+            ${FirstName}=  get from list    ${FirstNameList}     ${ListIndexIterator}
+            ${LastName}=  get from list    ${LastNameList}     ${ListIndexIterator}
+            ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            create session    order_session    ${URL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
+            ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    OrderCreationCases    Response    ${RowCounter}    ${response.json()}
+            Validate the content and update the excel    200    ${response.status_code}    OrderCreationCases    ResponseStatusCode    ${RowCounter}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+            set variable    ${JsonResp}
 
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+                ${error_code}=  Set Variable  ${json_dict['result']['biId']}
+                ${OrderStatus}=  Set Variable  ${json_dict['result']['message']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderStatus}
+                Write Output Excel    OrderCreationCases    OrderId    ${RowCounter}    ${error_code}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    ${OrderStatus}
+                ${OrderID}=    set variable    ${error_code}
+                set variable    ${error_code}
+                set variable    ${OrderStatus}
+            ELSE
+                ${errortext}=  Set Variable  ${json_dict['message']}
+                ${errortext}=    convert to string    ${errortext}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    Error-${errortext}
+                set variable   ${errortext}
+            END
+        END
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${InputFilePath}
 
+TC_05 Trigger CreditCard Order with Existing Customer
+    [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
+    [Tags]    id=AU_OC_05
+    ${ListIndexIterator}    set variable    0
+    ${RowCounter}    set variable    2
+    ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
+    FOR    ${ScenarioIterator}    IN RANGE    ${TestCaseIDCount}
+        ${ScenarioName}=    get from list    ${TesctCaseNameList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Trigger CreditCard Order with Existing Customer'
+            ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+            Get DBS Orders Link    ${EnironmentValue}
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${today}=     get current date
+            Write Output Excel    OrderCreationCases    ExecutionDate    ${RowCounter}    ${today}
+            ${UniqueOrderId}=    Convert Date    ${today}    result_format=%Y%m%d%H%M%S
+            ${FirstName}=  get from list    ${FirstNameList}     ${ListIndexIterator}
+            ${LastName}=  get from list    ${LastNameList}     ${ListIndexIterator}
+            ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            create session    order_session    ${URL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
+            ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    OrderCreationCases    Response    ${RowCounter}    ${response.json()}
+            Validate the content and update the excel    200    ${response.status_code}    OrderCreationCases    ResponseStatusCode    ${RowCounter}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+            set variable    ${JsonResp}
 
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+                ${error_code}=  Set Variable  ${json_dict['result']['biId']}
+                ${OrderStatus}=  Set Variable  ${json_dict['result']['message']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderStatus}
+                Write Output Excel    OrderCreationCases    OrderId    ${RowCounter}    ${error_code}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    ${OrderStatus}
+                ${OrderID}=    set variable    ${error_code}
+                set variable    ${error_code}
+                set variable    ${OrderStatus}
+            ELSE
+                ${errortext}=  Set Variable  ${json_dict['message']}
+                ${errortext}=    convert to string    ${errortext}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    Error-${errortext}
+                set variable   ${errortext}
+            END
+        END
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${InputFilePath}
+
+TC_06 Trigger Invoice Order with Existing Customer
+    [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
+    [Tags]    id=AU_OC_06
+    ${ListIndexIterator}    set variable    0
+    ${RowCounter}    set variable    2
+    ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
+    FOR    ${ScenarioIterator}    IN RANGE    ${TestCaseIDCount}
+        ${ScenarioName}=    get from list    ${TesctCaseNameList}   ${ListIndexIterator}
+        IF    '${ScenarioName}' == 'Trigger Invoice Order with Existing Customer'
+            ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+            Get DBS Orders Link    ${EnironmentValue}
+            ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${today}=     get current date
+            Write Output Excel    OrderCreationCases    ExecutionDate    ${RowCounter}    ${today}
+            ${UniqueOrderId}=    Convert Date    ${today}    result_format=%Y%m%d%H%M%S
+            ${FirstName}=  get from list    ${FirstNameList}     ${ListIndexIterator}
+            ${LastName}=  get from list    ${LastNameList}     ${ListIndexIterator}
+            ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
+            ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
+            ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            create session    order_session    ${URL}    verify=True
+            ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
+            ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
+            # Getting the content value
+            Log    Status Code: ${response.status_code}
+            Log    Response Content: ${response.content}
+            set variable    ${response.content}
+            set variable    ${response.json()}
+            ${response_text}=    convert to string    ${response.content}
+            ${response.json()}=    convert to string    ${response.json()}
+            Write Output Excel    OrderCreationCases    Response    ${RowCounter}    ${response.json()}
+            Validate the content and update the excel    200    ${response.status_code}    OrderCreationCases    ResponseStatusCode    ${RowCounter}
+            ${JsonResp}=  Evaluate  ${response.text}
+            # Fetch the values from the result Json File
+            @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
+            set variable    ${JsonResp}
+
+            ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
+            ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
+            IF    '${check}' == '${True}'
+                ${error_code}=  Set Variable  ${json_dict['result']['biId']}
+                ${OrderStatus}=  Set Variable  ${json_dict['result']['message']}
+                ${error_code}=    convert to string    ${error_code}
+                ${OrderStatus}=    convert to string    ${OrderStatus}
+                Write Output Excel    OrderCreationCases    OrderId    ${RowCounter}    ${error_code}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    ${OrderStatus}
+                ${OrderID}=    set variable    ${error_code}
+                set variable    ${error_code}
+                set variable    ${OrderStatus}
+            ELSE
+                ${errortext}=  Set Variable  ${json_dict['message']}
+                ${errortext}=    convert to string    ${errortext}
+                Write Output Excel    OrderCreationCases    OrderStatus    ${RowCounter}    Error-${errortext}
+                set variable   ${errortext}
+            END
+        END
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+    END
+    save excel document    ${InputFilePath}
 
 *** Keywords ***
 
@@ -249,10 +440,16 @@ Read All Input Values From OrderCreationCases
     ${ExecutionEnvironmentList}    get from dictionary    ${ExcelDictionary}    ExecutionEnvironment
     ${CountryList}   get from dictionary    ${ExcelDictionary}    Country
     ${JSONFileNameList}    get from dictionary     ${ExcelDictionary}    JSONFileName
+    ${FirstNameList}    get from dictionary     ${ExcelDictionary}    FirstName
+    ${LastNameList}    get from dictionary     ${ExcelDictionary}    LastName
+    ${MailList}    get from dictionary     ${ExcelDictionary}    MailId
     set suite variable   ${TesctCaseNameList}   ${TesctCaseNameList}
     set suite variable    ${ExecutionEnvironmentList}    ${ExecutionEnvironmentList}
     set suite variable    ${CountryList}    ${CountryList}
     set suite variable    ${JSONFileNameList}    ${JSONFileNameList}
+    set suite variable    ${FirstNameList}    ${FirstNameList}
+    set suite variable    ${LastNameList}    ${LastNameList}
+    set suite variable    ${MailList}    ${MailList}
     ${Environment}=    get from list    ${ExecutionEnvironmentList}    0
     ${Environment}=    convert to upper case    ${Environment}
     Get DBS Orders Link    ${Environment}
