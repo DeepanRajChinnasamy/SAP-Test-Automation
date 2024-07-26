@@ -1455,4 +1455,4 @@ ReLaunch DBS
 getdate
     [Arguments]   ${date_format}
     ${Formatted_Date}       Get Current Date     result_format=${date_format}
-    [Return]       ${Formatted_Date}
+    RETURN       ${Formatted_Date}
