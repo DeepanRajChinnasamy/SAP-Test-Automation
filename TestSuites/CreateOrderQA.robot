@@ -4,7 +4,6 @@ Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 
 *** Test Cases ***
 Create Order via JSON File and Fetch the Status
-#    ${ExistingMailIdDict}=    get mailid for existing users    ${InputExcelPath}    ExistingUsers
     [Tags]    id=VA_CO_01
     Read All Input Values From DataExcel    ${InputExcelPath}    HappyFlowData
     close all excel documents
@@ -13,8 +12,6 @@ Create Order via JSON File and Fetch the Status
     ${DataIndexIterator}    set variable    0
     ${OrderTypeCount}=    get length    ${FlagList}
     ${RowCounter}    set variable    2
-#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#    Launch and Login DBS    ${URLQA}    ${username}    ${password}
     FOR    ${dataIterator}    IN RANGE    ${OrderTypeCount}
         ${EnironmentValue}=    get from list    ${EnvironmentList}     ${ListIndexIterator}
         Get Environmet    ${EnironmentValue}
