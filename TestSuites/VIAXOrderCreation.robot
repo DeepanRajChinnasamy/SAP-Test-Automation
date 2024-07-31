@@ -11,7 +11,6 @@ ${file}    \\UploadExcel\\JsonTemplates_New\\
 ${URL}
 ${GraphqlURL}
 
-
 *** Test Cases ***
 
 TC_01 Trigger Invoice Order with New Customer

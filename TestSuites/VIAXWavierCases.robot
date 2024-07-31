@@ -1001,8 +1001,6 @@ Create PP - Funder Affiliation with Article Type Discount
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
-
-
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${WaiverCaseFilePath}
