@@ -11,7 +11,7 @@ ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
 ${PPURL}
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
-${PPUIValidationExcelPath}    ${execdir}\\UploadExcel\\TD_PPUIValidations.xlsx
+${PPUIValidationExcelPath}    ${execdir}\\UploadExcel\\PPUIValidations\\TD_PPUIValidations.xlsx
 
 
 
@@ -55,7 +55,7 @@ Create PP with Funder Paid with UI Validations
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
@@ -243,7 +243,7 @@ Create PP with Society discount with UI Validations
         Write Output Excel    UIValidations    Society    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    Society    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
@@ -499,7 +499,7 @@ Create PP with Multiple discount with UI Validations
         Write Output Excel    UIValidations    Multiple    ${Rownum}    ${error_code}
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    Multiple    ${Rownum}    ${OrderID}
-        ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+        ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
         ${errormessage}=    convert to string    ${errormessage}
         should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
         #Validation in UI
