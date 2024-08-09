@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-Library    CustomLib.py
-Library    Response.py
+Library     ../Resource/ObjectRepositories/CustomLib.py
+Library     ../Resource/ObjectRepositories/Response.py
 Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
 Suite Teardown   Close Excel and Browser
 Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
@@ -66,11 +66,14 @@ Create PP with Society discount
             IF    '${check}' == '${True}'
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
+                ${SubmissionID}=     set variable    ${json_dict['priceProposal']['submissionId']}
                 log to console   ${OrderID}
                 ${error_code}=    convert to string    ${error_code}
+                ${SubmissionID}=    convert to string     ${SubmissionID}
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
-                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
+                Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${SubmissionID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
@@ -198,7 +201,7 @@ Create PP with Promotional discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid

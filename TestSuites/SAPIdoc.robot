@@ -19,141 +19,135 @@ ValidatSAP
 #     run transaction    /nVA03
 #     sapguilibrary.input text    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBAK-VBELN    60081314
 #     send vkey    0
-##     sapguilibrary.input text     ${idocnumberwe02}    135317794
-##     sapguilibrary.input text    /app/con[0]/ses[0]/wnd[0]/usr/tabsTABSTRIP_IDOCTABBL/tabpSOS_TAB/ssub%_SUBSCREEN_IDOCTABBL:RSEIDOC2:1100/ctxtCREDAT-LOW    ${EMPTY}
-##     send vkey    8
 #     send vkey    5
-##     select node link    /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]    000001    Spalte1
-##     ${ItemId}=    convert to string    "          5","&Hierarchy"
-###     set suite variable    ${ItemId}    ("          5", "&Hierarchy")
-#     slectTree    /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]
-##     select node link    /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]     "          5"    "&Hierarchy"
-#    ${envi}=    convert to lower case    ${envi}
-#    ${token}=    get token    auth.wileyas.${envi}.viax.io
-#    ${JsonResp}=  Evaluate  ${token}
-#    @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.access_token
-#    log to console    ${list}[0]
-#    log    ${list}[0]
-#    ExcelLibrary.read excel cell
-
-    Read excel values in columnwise    ${PPInputExcelPath}     MasterData
-
-    ${journalId}=    Get Value from excel columnwise    FunderPaid    JournalID
-    ${JSONFileName}=    Get Value from excel columnwise    FunderPaid    JSONFileName
-
-    ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleType
-    ${BaseArticleType}=    Get Value from excel columnwise    FunderPaid    BaseArticleType
-    ${UIBaseArticleType}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[3]
-    validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    ${sheetname}    BaseArticleType    ${Rownum}
-
-#    ${DisplayArticleType}=    Get Value from excel columnwise    FunderPaid    DisplayArticleType
-
-    ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
-    ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
-    ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
-    validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    ${sheetname}    SubmissionDate    ${Rownum}
-
-    ${ArticleTitle}=    Get Value from excel columnwise    FunderPaid    ArticleTitle
-    ${UIArticleTitle}=    SeleniumLibrary.get text    (//*[@class="x-order-basics-view__value"])[5]
-    ${Rownum}=    Get excel row number   ${Rowcount}    ArticleTitle
-    validate the content and update the excel   ${ArticleTitle}    ${UIArticleTitle}    ${sheetname}    ArticleTitle    ${Rownum}
-
-    ${FirstName}=    Get Value from excel columnwise    FunderPaid    FirstName
-    ${LastName}=    Get Value from excel columnwise    FunderPaid    LastName
-    ${Name}=    evaluate    ${FirstName}${SPACE}${LastName}
-    ${UIName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[1]
-    ${Rownum}=    Get excel row number   ${Rowcount}    Name
-    validate the content and update the excel   ${Name}    ${UIName}    ${sheetname}    Name    ${Rownum}
-
-    ${EmailID}=    Get Value from excel columnwise    FunderPaid    EmailID
-    ${UIEmailID}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[2]
-    ${Rownum}=    Get excel row number   ${Rowcount}    EmailID
-    validate the content and update the excel   ${EmailID}    ${UIEmailID}    ${sheetname}    EmailID    ${Rownum}
-
-    ${InstitutionIdType}=    Get Value from excel columnwise    FunderPaid    InstitutionIdType
-    ${UIInstitutionIdType}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[11]
-    ${Rownum}=    Get excel row number   ${Rowcount}    InstitutionIdType
-    validate the content and update the excel   ${InstitutionIdType}    ${UIInstitutionIdType}    ${sheetname}    InstitutionIdType    ${Rownum}
-
-
-#    ${InstitutionId}=    Get Value from excel columnwise    FunderPaid    InstitutionId
-    ${Institution}=    Get Value from excel columnwise    FunderPaid    Institution
-    ${UIInstitution}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[9]
-    ${Rownum}=    Get excel row number   ${Rowcount}    Institution
-    validate the content and update the excel   ${Institution}    ${UIInstitution}    ${sheetname}    Institution    ${Rownum}
+#     slectInvoiceTree        /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]
+#     send vkey    8
+    ${value}=    set variable    1
+     WHILE    ${value} != 2
+        log to console    ${value}
+        ${value}=    evaluate    ${value} + 1
+     END
 
 
 
-    ${CountryCode}=    Get Value from excel columnwise    FunderPaid    CountryCode
-    ${UICountry}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[10]
-    ${Rownum}=    Get excel row number   ${Rowcount}    CountryCode
-    validate the content and update the excel   ${CountryCode}    ${UICountry}    ${sheetname}    CountryCode    ${Rownum}
-
-    ${PublishedIn}=    Get Value from excel columnwise    FunderPaid    PublishedIn
-    ${UIPublishedIn}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[5]
-    ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
-    validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    ${sheetname}    PublishedIn    ${Rownum}
-
-    ${MauScriptId}=    Get Value from excel columnwise    FunderPaid    MauScriptId
-    ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
-    ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
-    validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    ${sheetname}    MauScriptId    ${Rownum}
-
-#    ${SubmittedBy}=    Get Value from excel columnwise    FunderPaid    SubmittedBy
-    ${FunderName}=    Get Value from excel columnwise    FunderPaid    FunderName
-    ${UIFunderName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[13]
-    ${Rownum}=    Get excel row number   ${Rowcount}    FunderName
-    validate the content and update the excel   ${FunderName}    ${UIFunderName}    ${sheetname}    FunderName    ${Rownum}
-
-    ${FunderId}=    Get Value from excel columnwise    FunderPaid    FunderId
-    ${UIFunderID}=    SeleniumLibrary.get text     (//*[contains(@id, "single-spa-application:parcel")]//p[2])[14]
-    ${Rownum}=    Get excel row number   ${Rowcount}    FunderId
-    validate the content and update the excel   ${FunderId}    ${UIFunderID}    ${sheetname}    FunderId    ${Rownum}
-
-    ${EditorialStatus}=    Get Value from excel columnwise    FunderPaid    EditorialStatus
-    ${UIEditorialStatus}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[7]
-    ${Rownum}=    Get excel row number   ${Rowcount}    EditorialStatus
-    validate the content and update the excel   ${EditorialStatus}    ${UIEditorialStatus}    ${sheetname}    EditorialStatus    ${Rownum}
-
-    ${JournalGroupCode}=    Get Value from excel columnwise    FunderPaid    JournalGroupCode
-    ${UIJournalGroupCode}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[6]
-    ${Rownum}=    Get excel row number   ${Rowcount}    JournalGroupCode
-    validate the content and update the excel   ${JournalGroupCode}    ${UIJournalGroupCode}    ${sheetname}    JournalGroupCode    ${Rownum}
-
-
-    ${BaseAPCPrice}=    Get Value from excel columnwise    FunderPaid    BaseAPCPrice
-    ${UIBaseAPCPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[3]
-    ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCPrice
-    validate the content and update the excel   ${BaseAPCPrice}    ${UIBaseAPCPrice}    ${sheetname}    BaseAPCPrice    ${Rownum}
-
-
-    ${BaseArticleTypeDiscount}=    Get Value from excel columnwise    FunderPaid    BaseArticleTypeDiscount
-    ${UIBaseArticleTypeDiscount}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")[2]
-    ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleTypeDiscount
-    validate the content and update the excel   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}    ${sheetname}    BaseArticleTypeDiscount    ${Rownum}
-
-    ${BaseAPCCharge}=    Get Value from excel columnwise    FunderPaid    BaseAPCCharge
-    ${UIAPICharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[1]
-    ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCCharge
-    validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    ${sheetname}    BaseAPCCharge    ${Rownum}
-
-
-    ${FinalNetPrice}=    Get Value from excel columnwise    FunderPaid    FinalNetPrice
-    ${UIFinalNetPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[4]
-    ${Rownum}=    Get excel row number   ${Rowcount}    FinalNetPrice
-    validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    ${sheetname}    FinalNetPrice    ${Rownum}
-
-
-    ${Tax}=    Get Value from excel columnwise    FunderPaid    Tax
-    ${UITax}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[5]
-    ${Rownum}=    Get excel row number   ${Rowcount}    Tax
-    validate the content and update the excel   ${Tax}    ${UITax}    ${sheetname}    Tax    ${Rownum}
-
-    ${TotalCharge}=    Get Value from excel columnwise    FunderPaid    TotalCharge
-    ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
-    ${Rownum}=    Get excel row number   ${Rowcount}    TotalCharge
-    validate the content and update the excel   ${TotalCharge}    ${UITotalCharge}    ${sheetname}    TotalCharge    ${Rownum}
-
+#    Read excel values in columnwise    ${PPInputExcelPath}     MasterData
+#
+#    ${journalId}=    Get Value from excel columnwise    FunderPaid    JournalID
+#    ${JSONFileName}=    Get Value from excel columnwise    FunderPaid    JSONFileName
+#
+#    ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleType
+#    ${BaseArticleType}=    Get Value from excel columnwise    FunderPaid    BaseArticleType
+#    ${UIBaseArticleType}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[3]
+#    validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    ${sheetname}    BaseArticleType    ${Rownum}
+#
+##    ${DisplayArticleType}=    Get Value from excel columnwise    FunderPaid    DisplayArticleType
+#
+#    ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
+#    ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
+#    ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
+#    validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    ${sheetname}    SubmissionDate    ${Rownum}
+#
+#    ${ArticleTitle}=    Get Value from excel columnwise    FunderPaid    ArticleTitle
+#    ${UIArticleTitle}=    SeleniumLibrary.get text    (//*[@class="x-order-basics-view__value"])[5]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    ArticleTitle
+#    validate the content and update the excel   ${ArticleTitle}    ${UIArticleTitle}    ${sheetname}    ArticleTitle    ${Rownum}
+#
+#    ${FirstName}=    Get Value from excel columnwise    FunderPaid    FirstName
+#    ${LastName}=    Get Value from excel columnwise    FunderPaid    LastName
+#    ${Name}=    evaluate    ${FirstName}${SPACE}${LastName}
+#    ${UIName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[1]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    Name
+#    validate the content and update the excel   ${Name}    ${UIName}    ${sheetname}    Name    ${Rownum}
+#
+#    ${EmailID}=    Get Value from excel columnwise    FunderPaid    EmailID
+#    ${UIEmailID}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[2]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    EmailID
+#    validate the content and update the excel   ${EmailID}    ${UIEmailID}    ${sheetname}    EmailID    ${Rownum}
+#
+#    ${InstitutionIdType}=    Get Value from excel columnwise    FunderPaid    InstitutionIdType
+#    ${UIInstitutionIdType}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[11]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    InstitutionIdType
+#    validate the content and update the excel   ${InstitutionIdType}    ${UIInstitutionIdType}    ${sheetname}    InstitutionIdType    ${Rownum}
+#
+#
+##    ${InstitutionId}=    Get Value from excel columnwise    FunderPaid    InstitutionId
+#    ${Institution}=    Get Value from excel columnwise    FunderPaid    Institution
+#    ${UIInstitution}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[9]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    Institution
+#    validate the content and update the excel   ${Institution}    ${UIInstitution}    ${sheetname}    Institution    ${Rownum}
+#
+#
+#
+#    ${CountryCode}=    Get Value from excel columnwise    FunderPaid    CountryCode
+#    ${UICountry}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[10]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    CountryCode
+#    validate the content and update the excel   ${CountryCode}    ${UICountry}    ${sheetname}    CountryCode    ${Rownum}
+#
+#    ${PublishedIn}=    Get Value from excel columnwise    FunderPaid    PublishedIn
+#    ${UIPublishedIn}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[5]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
+#    validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    ${sheetname}    PublishedIn    ${Rownum}
+#
+#    ${MauScriptId}=    Get Value from excel columnwise    FunderPaid    MauScriptId
+#    ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
+#    validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    ${sheetname}    MauScriptId    ${Rownum}
+#
+##    ${SubmittedBy}=    Get Value from excel columnwise    FunderPaid    SubmittedBy
+#    ${FunderName}=    Get Value from excel columnwise    FunderPaid    FunderName
+#    ${UIFunderName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[13]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    FunderName
+#    validate the content and update the excel   ${FunderName}    ${UIFunderName}    ${sheetname}    FunderName    ${Rownum}
+#
+#    ${FunderId}=    Get Value from excel columnwise    FunderPaid    FunderId
+#    ${UIFunderID}=    SeleniumLibrary.get text     (//*[contains(@id, "single-spa-application:parcel")]//p[2])[14]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    FunderId
+#    validate the content and update the excel   ${FunderId}    ${UIFunderID}    ${sheetname}    FunderId    ${Rownum}
+#
+#    ${EditorialStatus}=    Get Value from excel columnwise    FunderPaid    EditorialStatus
+#    ${UIEditorialStatus}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[7]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    EditorialStatus
+#    validate the content and update the excel   ${EditorialStatus}    ${UIEditorialStatus}    ${sheetname}    EditorialStatus    ${Rownum}
+#
+#    ${JournalGroupCode}=    Get Value from excel columnwise    FunderPaid    JournalGroupCode
+#    ${UIJournalGroupCode}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[6]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    JournalGroupCode
+#    validate the content and update the excel   ${JournalGroupCode}    ${UIJournalGroupCode}    ${sheetname}    JournalGroupCode    ${Rownum}
+#
+#
+#    ${BaseAPCPrice}=    Get Value from excel columnwise    FunderPaid    BaseAPCPrice
+#    ${UIBaseAPCPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[3]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCPrice
+#    validate the content and update the excel   ${BaseAPCPrice}    ${UIBaseAPCPrice}    ${sheetname}    BaseAPCPrice    ${Rownum}
+#
+#
+#    ${BaseArticleTypeDiscount}=    Get Value from excel columnwise    FunderPaid    BaseArticleTypeDiscount
+#    ${UIBaseArticleTypeDiscount}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")[2]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleTypeDiscount
+#    validate the content and update the excel   ${BaseArticleTypeDiscount}    ${UIBaseArticleTypeDiscount}    ${sheetname}    BaseArticleTypeDiscount    ${Rownum}
+#
+#    ${BaseAPCCharge}=    Get Value from excel columnwise    FunderPaid    BaseAPCCharge
+#    ${UIAPICharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[1]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    BaseAPCCharge
+#    validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    ${sheetname}    BaseAPCCharge    ${Rownum}
+#
+#
+#    ${FinalNetPrice}=    Get Value from excel columnwise    FunderPaid    FinalNetPrice
+#    ${UIFinalNetPrice}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[4]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    FinalNetPrice
+#    validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    ${sheetname}    FinalNetPrice    ${Rownum}
+#
+#
+#    ${Tax}=    Get Value from excel columnwise    FunderPaid    Tax
+#    ${UITax}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[5]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    Tax
+#    validate the content and update the excel   ${Tax}    ${UITax}    ${sheetname}    Tax    ${Rownum}
+#
+#    ${TotalCharge}=    Get Value from excel columnwise    FunderPaid    TotalCharge
+#    ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
+#    ${Rownum}=    Get excel row number   ${Rowcount}    TotalCharge
+#    validate the content and update the excel   ${TotalCharge}    ${UITotalCharge}    ${sheetname}    TotalCharge    ${Rownum}
+#
 
 #    ${DiscountType1}=    Get Value from excel columnwise    FunderPaid    DiscountType1
 #    ${UIDiscounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
@@ -250,50 +244,50 @@ ValidatSAP
 #     log to console    ${val}
 
 
-*** Keywords ***
-Read excel values in columnwise
-    [Documentation]    Read all Values from the input excel and return dictionary values will
-       ...             have all column values as a list and set the dictionary value
-    [Arguments]    ${inputExcelPath}    ${Sheetname}
-    open excel document    ${inputExcelPath}    docID
-    log to console    ${inputExcelPath}
-    ${FirstRow}=    read excel row    1    sheet_name=${Sheetname}
-    ${Columncount}=    get length   ${FirstRow}
-    ${Rowcount}=    read excel column    1    sheet_name=${Sheetname}
-    ${Rowcount}=    get length    ${Rowcount}
-    set suite variable    ${Columncount}    ${Columncount}
-    set suite variable    ${Rowcount}    ${Rowcount}
-
-Get Value from excel columnwise
-    [Arguments]    ${ColumnName}    ${HeaderName}
-    FOR    ${rowiterator}    IN RANGE    0    ${Columncount}
-        ${rowiterator}=    evaluate    ${rowiterator}+int(${1})
-        ${ColumnNameinExcel}=    read excel cell    1    ${rowiterator}
-        IF    '${ColumnNameinExcel}' == '${ColumnName}'
-            FOR    ${FirstRow1iter}    IN RANGE    0    ${Rowcount}
-                ${FirstRow1iter}=    evaluate    ${FirstRow1iter}+int(${1})
-                ${Header}=    read excel cell   ${FirstRow1iter}    1
-                IF    '${Header}' == '${HeaderName}'
-                    ${columnnum}=    evaluate    ${rowiterator}+int(${1})
-                    ${Excelvalue}=    read excel cell    ${FirstRow1iter}    ${columnnum}
-                    ${Excelvalue}=    set variable    ${Excelvalue}
-                END
-            END
-        END
-    END
-    RETURN    ${Excelvalue}
-
-Get excel row number
-    [Arguments]    ${Rowcount}    ${RowValue}
-    FOR    ${rowiterator}    IN RANGE    0    ${Rowcount}
-        ${rowiterator}=    evaluate    ${rowiterator}+int(${1})
-        ${Header}=    read excel cell   ${rowiterator}    1
-        IF    '${Header}' == '${RowValue}'
-            ${rownumber}=    set variable    ${rowiterator}
-            exit for loop
-        END
-    END
-    RETURN    ${rownumber}
+#*** Keywords ***
+#Read excel values in columnwise
+#    [Documentation]    Read all Values from the input excel and return dictionary values will
+#       ...             have all column values as a list and set the dictionary value
+#    [Arguments]    ${inputExcelPath}    ${Sheetname}
+#    open excel document    ${inputExcelPath}    docID
+#    log to console    ${inputExcelPath}
+#    ${FirstRow}=    read excel row    1    sheet_name=${Sheetname}
+#    ${Columncount}=    get length   ${FirstRow}
+#    ${Rowcount}=    read excel column    1    sheet_name=${Sheetname}
+#    ${Rowcount}=    get length    ${Rowcount}
+#    set suite variable    ${Columncount}    ${Columncount}
+#    set suite variable    ${Rowcount}    ${Rowcount}
+#
+#Get Value from excel columnwise
+#    [Arguments]    ${ColumnName}    ${HeaderName}
+#    FOR    ${rowiterator}    IN RANGE    0    ${Columncount}
+#        ${rowiterator}=    evaluate    ${rowiterator}+int(${1})
+#        ${ColumnNameinExcel}=    read excel cell    1    ${rowiterator}
+#        IF    '${ColumnNameinExcel}' == '${ColumnName}'
+#            FOR    ${FirstRow1iter}    IN RANGE    0    ${Rowcount}
+#                ${FirstRow1iter}=    evaluate    ${FirstRow1iter}+int(${1})
+#                ${Header}=    read excel cell   ${FirstRow1iter}    1
+#                IF    '${Header}' == '${HeaderName}'
+#                    ${columnnum}=    evaluate    ${rowiterator}+int(${1})
+#                    ${Excelvalue}=    read excel cell    ${FirstRow1iter}    ${columnnum}
+#                    ${Excelvalue}=    set variable    ${Excelvalue}
+#                END
+#            END
+#        END
+#    END
+#    RETURN    ${Excelvalue}
+#
+#Get excel row number
+#    [Arguments]    ${Rowcount}    ${RowValue}
+#    FOR    ${rowiterator}    IN RANGE    0    ${Rowcount}
+#        ${rowiterator}=    evaluate    ${rowiterator}+int(${1})
+#        ${Header}=    read excel cell   ${rowiterator}    1
+#        IF    '${Header}' == '${RowValue}'
+#            ${rownumber}=    set variable    ${rowiterator}
+#            exit for loop
+#        END
+#    END
+#    RETURN    ${rownumber}
 
 
 

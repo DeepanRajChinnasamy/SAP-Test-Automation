@@ -1,11 +1,11 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-Library    CustomLib.py
-Library    Response.py
+Library     ../Resource/ObjectRepositories/CustomLib.py
+Library     ../Resource/ObjectRepositories/Response.py
 Suite Setup    Read All Input Values From OrderCreationCases    ${InputFilePath}    OrderCreationCases
 
 *** Variables ***
-${json_file_path}    \\UploadExcel\\JsonTemplates_New\\UnPaidNewCustomer.json
+#${json_file_path}    \\UploadExcel\\JsonTemplates_New\\UnPaidNewCustomer.json
 ${InputFilePath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 ${file}    \\UploadExcel\\JsonTemplates_New\\
 ${URL}
@@ -25,6 +25,10 @@ TC_01 Trigger Invoice Order with New Customer
             ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
             Get DBS Orders Link    ${EnironmentValue}
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
             ${today}=     get current date
             Write Output Excel    OrderCreationCases    ExecutionDate    ${RowCounter}    ${today}
             ${UniqueOrderId}=    Convert Date    ${today}    result_format=%Y%m%d%H%M%S
@@ -36,7 +40,29 @@ TC_01 Trigger Invoice Order with New Customer
             Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+
+
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
+
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -53,7 +79,6 @@ TC_01 Trigger Invoice Order with New Customer
             # Fetch the values from the result Json File
             @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
             set variable    ${JsonResp}
-
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
@@ -101,7 +126,26 @@ TC_02 Trigger CreditCard Order with New Customer
             Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${DBSURL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -166,7 +210,26 @@ TC_03 Trigger Alipay Order with New Customer
             Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -228,7 +291,26 @@ TC_04 Trigger Alipay Order with Existing Customer
             ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -290,7 +372,26 @@ TC_05 Trigger CreditCard Order with Existing Customer
             ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -352,7 +453,26 @@ TC_06 Trigger Invoice Order with Existing Customer
             ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -417,7 +537,26 @@ TC_07 Trigger Proforma Order with New Customer
             Write Output Excel    OrderCreationCases    MailId    ${RowCounter}    ${MailId}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -479,7 +618,26 @@ TC_08 Trigger Proforma Order with Existing Customer
             ${MailId}=  get from list    ${MailList}     ${ListIndexIterator}
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Create JSON File    ${json_content}   ${FirstName}    ${LastName}    ${MailId}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+            ${countrycode}=    get from list    ${CountryList}    ${ListIndexIterator}
+            ${JournalID}=    get from list   ${JournalIDList}    ${ListIndexIterator}
+            ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+            ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+            ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+            ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+            ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+            ${json_content}=    replace string    ${json_content}    <<DiscountCode>>    ${DiscountCode}
+            ${json_content}=    replace string    ${json_content}    <<APC>>    ${APC}
+            ${json_content}=    replace string    ${json_content}    <<Tax>>    ${Tax}
+            ${json_content}=    replace string    ${json_content}    <<AppliedDiscount>>    ${Discount}
+            ${json_content}=    replace string    ${json_content}    <<DiscountType>>    ${DiscountType}
+            ${json_content}=    replace string    ${json_content}    <<Currency>>    ${Currency}
+            ${json_content}=    replace string    ${json_content}    <<TotalAmount>>    ${TotalAmount}
+            ${json_content}=    replace string     ${json_content}    <<journalId>>    ${JournalID}
+            ${json_content}=    replace string     ${json_content}    <<countrycode>>    ${countrycode}
             Write Output Excel    OrderCreationCases    JSONText    ${RowCounter}    ${json_content}
+            Write Output Excel    OrderCreationCases    SubmissionID    ${RowCounter}    ${SubmissionId}
             create session    order_session    ${URL}    verify=True
             ${headers}=    Create Dictionary    Content-Type=application/json    Authorization=Bearer ${AuthToken}
             ${response}=     post on session    order_session    url=${GraphqlURL}    data=${json_content}     headers=${headers}
@@ -550,6 +708,7 @@ Create JSON File
     # Replace the Values in JSON File
     ${json_content}=    replace string    ${json_content}    <<OrderId>>    ${UniqueOrderId}
     ${json_content}=    replace string    ${json_content}    <<Sub>>    ${SubmissionId}
+    set suite variable    ${SubmissionId}    ${SubmissionId}
     ${json_content}=    replace string    ${json_content}    <<FIRSTNAME>>    ${FisrtName}
     ${json_content}=    replace string    ${json_content}    <<LASTNAME>>    ${LastName}
     ${json_content}=    replace string    ${json_content}    <<MailId>>    ${MailId}
@@ -570,7 +729,25 @@ Read All Input Values From OrderCreationCases
     ${FirstNameList}    get from dictionary     ${ExcelDictionary}    FirstName
     ${LastNameList}    get from dictionary     ${ExcelDictionary}    LastName
     ${MailList}    get from dictionary     ${ExcelDictionary}    MailId
-    set suite variable   ${TesctCaseNameList}   ${TesctCaseNameList}
+    ${JournalIDList}    get from dictionary    ${ExcelDictionary}    JournalID
+    ${CountryList}    get from dictionary    ${ExcelDictionary}    Country
+    ${CurrencyList}    get from dictionary    ${ExcelDictionary}    Currency
+    ${TaxList}    get from dictionary    ${ExcelDictionary}    Tax
+    ${TotalAmountList}    get from dictionary    ${ExcelDictionary}    TotalAmount
+    ${DiscountList}    get from dictionary    ${ExcelDictionary}    Discount
+    ${DiscountTypeList}    get from dictionary    ${ExcelDictionary}    DiscountType
+    ${DiscountCodeList}    get from dictionary    ${ExcelDictionary}    DiscountCode
+    ${APCList}    get from dictionary    ${ExcelDictionary}    APC
+    set suite variable    ${DiscountCodeList}    ${DiscountCodeList}
+    set suite variable    ${APCList}     ${APCList}
+    set suite variable    ${DiscountTypeList}  ${DiscountTypeList}
+    set suite variable    ${DiscountList}  ${DiscountList}
+    set suite variable    ${TesctCaseNameList}   ${TesctCaseNameList}
+    set suite variable    ${JournalIDList}    ${JournalIDList}
+    set suite variable    ${CountryList}    ${CountryList}
+    set suite variable    ${CurrencyList}    ${CurrencyList}
+    set suite variable    ${TaxList}    ${TaxList}
+    set suite variable    ${TotalAmountList}     ${TotalAmountList}
     set suite variable    ${ExecutionEnvironmentList}    ${ExecutionEnvironmentList}
     set suite variable    ${CountryList}    ${CountryList}
     set suite variable    ${JSONFileNameList}    ${JSONFileNameList}

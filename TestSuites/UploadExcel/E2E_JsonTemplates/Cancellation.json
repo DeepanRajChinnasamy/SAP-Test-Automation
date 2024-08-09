@@ -1,0 +1,3 @@
+{
+  "query": "mutation testFunction { testFunction(input: { name: \"receive-cancel-order-from-as\" data: { id: \"<<ID>>\", eventType: \"order.cancelled\", source: \"as-order-service\", specVersion: \"1.0\", eventDate: \"2022-08-29T12:08:56.235-0700\", dataContentType: \"application/json\", orderUniqueId: \"<<ORDERID>>\", cancellationDate: \"<<CDATE>> 01:44:51\", dhId: \"<<DHID>>\", submissionId: \"<<Sub>>\", cancellationReasonCode: \"Duplicate\", cancellationReason: \"Duplicate\", upfrontRefundConducted: true, refundDetails: { refundType: \"Invoice\", totalRefundedAmount: <<TOTALAMT>> , taxRefundedAmount: <<TAXAMT>>, currency: \"USD\", refundDate: \"<<RDATE>> 10:06:07.000\" refundOperationAuthCode:\"045785\" } } }) { status data }}"
+}

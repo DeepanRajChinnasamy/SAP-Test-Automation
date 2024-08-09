@@ -1,7 +1,7 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-Library    CustomLib.py
-Library    Response.py
+Library     ../Resource/ObjectRepositories/CustomLib.py
+Library     ../Resource/ObjectRepositories/Response.py
 Suite Setup     Open Excel and DBS    ${PPUIValidationExcelPath}    ${PPURL}    ${username}    ${password}
 Suite Teardown   Close Excel and Browser
 Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}

@@ -1,5 +1,7 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
+Library    CustomLib.py
+Library    Response.py
 
 
 *** Test Cases ***
