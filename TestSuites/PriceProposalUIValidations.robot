@@ -11,7 +11,7 @@ ${file}    \\UploadExcel\\JsonTemplates\\
 ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
 ${PPURL}
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
-${PPUIValidationExcelPath}    ${execdir}\\UploadExcel\\PPUIValidations\\TD_PPUIValidations.xlsx
+${PPUIValidationExcelPath}    ${execdir}\\UploadExcel\\TD_PPUIValidations.xlsx
 
 
 
