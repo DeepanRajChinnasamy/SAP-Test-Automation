@@ -1,0 +1,75 @@
+mutation placeOrder {
+    testFunction(
+        input: {
+            name: "receive-event-from-kafka"
+            data: {
+                id: "<<ID>>"
+                eventType: "order.submitted"
+                source: "as-order-service"
+                specVersion: "1.0"
+                eventDate: "<<DATE>>T12:08:56.235-0700"
+                dataContentType: "application/json"
+                orderUniqueId: <<OrderId>>
+                submittedDate: "<<DATE>>T15:00:14-05"
+                createdDate: "<<DATE>>15:00:14-05"
+                cancelDate: "<<DATE>>T15:00:14-05"
+                paymentDate: "<<DATE>>T15:00:14-05"
+                revenueModel: "OA"
+                type: "AuthorPaid"
+                paymentMethod: "Invoice"
+                upfrontPaymentDate: "<<DATE>>T15:00:14-05"
+                upfrontPaymentStatus: "Unpaid"
+                onesourceTaxCode: "sAPC"
+                PONumber: "Invoice order form"
+        specialNotes: "<<countrycode>> invoice order form"
+                apc: <<APC>>
+                appliedDiscount: <<AppliedDiscount>>
+            discountCode: "<<DiscountCode>>"
+				discountType: "<<DiscountType>>",
+                estimatedTax: <<Tax>>
+                totalChargedAmount: <<TotalAmount>>
+                currency: "<<Currency>>"
+                taxExceptionNumber: ""
+                taxExceptionExpirationDate: "2024-12-31"
+                vatIdNumber: ""
+                countryCode: "<<countrycode>>"
+                journalId: "<<journalId>>"
+                article: {
+                    submissionId: "<<Sub>>"
+                    title: "Secrets of nature"
+                    dhId: "<<DHID>>"
+                    jpcmsAID: "IBI38363"
+                    jpcmsArticleIdentifier: "IBI.38363.ART"
+                    articleDOI: "10.1111/ibi.38363"
+                }
+                soldToDetails: {
+                    firstName: "<<FIRSTNAME>>"
+                    lastName: "<<LASTNAME>>"
+                    email: "<<MailId>>"
+                    userId: "ALM-6b045551-a5fc-4fdb-9a43-ae56ece8f82a"
+                    participantId: "6b045551-a5fc-4fdb-9a43-ae56ece8f82a"
+                }
+                billToDetails: [
+                    {
+                        chargedAmount: <<TotalAmount>>,
+                        billingAddress: {
+                            firstName: "<<FIRSTNAME>>"
+                            lastName: "<<LASTNAME>>"
+                          streetAddress: ["328 TUBBS ST"]
+                            addressLocality: "SAN FRANCISCO"
+                            addressRegion: "CA"
+                            countryCode: "<<countrycode>>"
+                            postalCode: "94107-3422"
+                            phoneNumber: "8195559803"
+                            email: "<<MailId>>"
+                        }
+                        organization: { id: "63cec34e-2e56-43da-b21c-64c4083243d7" }
+                    }
+                ]
+            }
+        }
+    ) {
+        status
+        data
+    }
+}
