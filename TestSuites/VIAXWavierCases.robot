@@ -67,7 +67,7 @@ Create PP with Geo Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -149,7 +149,7 @@ Create PP with Society Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -233,7 +233,7 @@ Create PP with ArticleType Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -317,7 +317,7 @@ Create PP with Editorial Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -401,7 +401,7 @@ Create PP with Promotional Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -485,7 +485,7 @@ Create PP - Funder Affiliation with Geo Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -569,7 +569,7 @@ Create PP - Funder Affiliation with Editorial Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -653,7 +653,7 @@ Create PP - Funder Affiliation with Article Type Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -737,7 +737,7 @@ PP - Funder Affiliation with Society Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -822,7 +822,7 @@ PP - Funder Affiliation with Promo Waiver
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -906,7 +906,7 @@ Create PP - Funder Affiliation with Geo Discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -990,7 +990,7 @@ Create PP - Funder Affiliation with Article Type Discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -1072,7 +1072,7 @@ Create PP - Funder Affiliation with Editorial Discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -1156,7 +1156,7 @@ Create PP - Funder Affiliation with Society Discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -1240,7 +1240,7 @@ Create PP - Funder Affiliation with Promotional Discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
