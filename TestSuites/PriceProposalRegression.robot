@@ -1025,7 +1025,7 @@ Create PP with multiple Society and Promotional discounts
                 run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
                 ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
                 run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
-                ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel-59")]/div/div/div/div[4]/div/div/div[2]/div/table/tbody/tr[3]/td[1]
+                ${Discounttype3}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[4]/div/div/div[2]/div/table/tbody/tr[3]/td[1]
                 run keyword and continue on failure    should be equal    ${Discounttype3}    ${discountType3}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
