@@ -258,7 +258,7 @@ Create PP with Society discount with UI Validations
         validate the content and update the excel   ${BaseArticleType}    ${UIBaseArticleType}    UIValidations    Society    ${Rownum}
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
         ${SubmissionDate}=    getdate    %m-%d-%Y
-        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
+        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="submitted-details"]//*[@class="x-order-basics-view__value"])[1]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Society    ${Rownum}
 
         ${ArticleTitle}=    Get Value from excel columnwise    Society    ArticleTitle
@@ -516,7 +516,7 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    Multiple    SubmissionDate
         ${SubmissionDate}=    getdate    %m-%d-%Y
-        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
+        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="submitted-details"]//*[@class="x-order-basics-view__value"])[1]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${SubmissionDate}    ${UISubmissionDate}
 
