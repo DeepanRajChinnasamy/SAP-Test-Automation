@@ -72,7 +72,7 @@ Create PP with Funder Paid with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmissionDate
 #        ${SubmissionDate}=    Get Value from excel columnwise    FunderPaid    SubmissionDate
         ${SubmissionDate}=    getdate    %m-%d-%Y
-        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[9]
+        ${UISubmissionDate}=    seleniumlibrary.get text    (//*[@class="submitted-details"]//*[@class="x-order-basics-view__value"])[1]
         validate the content and update the excel   ${SubmissionDate}    ${UISubmissionDate}    UIValidations    FunderPaid    ${Rownum}
 
         ${ArticleTitle}=    Get Value from excel columnwise    FunderPaid    ArticleTitle
