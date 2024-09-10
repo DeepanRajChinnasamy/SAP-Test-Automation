@@ -1,24 +1,22 @@
 {
-  "query": "mutation testFn($data: Object) { testFunction(input: {name: \"receive-price-proposal-from-kafka\", data: {apiversion: \"1.0.1\", tenant: \"0d961334-8e06-4973-9c4a-5524ebd33f55\", id: \"51014872-8dfd-11ed-a1eb-0242ac120002\", type: \"priceproposal.requested\", source: \"urn:appcat:cmh-eeolink\", specversion: \"1.0\", subject: \"0d961334-8e06-4973-9c4a-5524ebd33f55\", time: \"2019-08-24T14:15:22Z\", datacontenttype: \"application/json\", data: $data}}) { status data }}",
+  "query": "mutation testFn( $data: Object) { testFunction(input: { name: \"receive-price-proposal-from-kafka\" data: { apiversion: \"1.0.1\" tenant: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" id: \"51014872-8dfd-11ed-a1eb-0242ac120002\" type: \"priceproposal.requested\" source: \"urn:appcat:cmh-eeolink\" specversion: \"1.0\" subject: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" time: \"2019-08-24T14:15:22Z\" datacontenttype: \"application/json\" data: $data } } ) { status data }}",
   "variables": {
     "data": {
-      "requestId": "e5a1358c-2f36-4d12-8c68-fe0b8c46172a",
+      "requestId": "e5a1358c-2f36-4d12-8c69-fe0b8c44002a",
       "submissionId": "<<Id>>",
       "edRefCode": "ACN3-2023-06-<<scriptId>>",
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
-      "baseArticleType": "Research Article",
-      "displayArticleType": "Research Article",
+      "baseArticleType": "OPINION",
+      "displayArticleType": "Research Article (ABC)",
       "submissionDate": "<<CurrentDate>>",
       "articleAcceptedDate": "2015-09-29",
-      "editorialStatus": "ACCEPTED",
+      "editorialStatus": "TBC",
       "articleTitle": "Seismic slip history of the Pizzalto fault (Central Apennines Italy) using in situ-produced Clcosmic ray exposure dating and rare earth element concentrations.",
       "isManualOverrideRequired": false,
       "manualOverrideInstructions": "string",
-      "societyCodes": [
-        
-      ],
+      "societyCodes": [],
       "promoCodes": [],
       "discountCodes": [],
       "authors": [
@@ -30,7 +28,7 @@
           "lastName": "TESSON",
           "honorificPrefix": "Mr.",
           "honorificSuffix": "",
-          "email": "TestAutomation@Wiley.com",
+          "email": "rbenny.wiley.com",
           "affiliationIdType": "Ringgold",
           "affiliations": [
             {
@@ -46,7 +44,7 @@
               "institution": "Grant Institute",
               "department": "School of GeoSciences",
               "stateProvince": "New Jersey",
-              "postalCode": "07030",
+              "postalCode": "90210",
               "streetAddress": [
                 "1832 Colvin Ave"
               ]

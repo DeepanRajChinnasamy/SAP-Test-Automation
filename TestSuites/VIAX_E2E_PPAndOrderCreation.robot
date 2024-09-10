@@ -24,6 +24,9 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
     ${RowCounter}    set variable    2
     FOR    ${ScenarioIterator}    IN RANGE    ${JournalIDCount}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
+#        ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+#        ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
+#        Get DBS Orders Link    ${EnironmentValue}
         IF    '${ScenarioName}' == 'Create a PP without any discounts and create an invoice order with P1 sales ares, Verify the order got completed succesfully in Viax'
             ${PPJsonName}=    get from list    ${PPJsonList}    ${ListIndexIterator}
             ${OrderJson}=    get from list    ${OrderJsonList}    ${ListIndexIterator}
@@ -62,14 +65,14 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
             IF    '${check}' == '${True}'
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${PPOrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
-                ${SubmissionID}=     set variable    ${json_dict['priceProposal']['submissionId']}
+                ${SubmissionID}=     set variable    ${json_dict['priceProposal']['wAsSubmissionId']}
                 log to console   ${PPOrderID}
                 ${error_code}=    convert to string    ${error_code}
                 ${SubmissionID}=    convert to string     ${SubmissionID}
                 ${OrderStatus}=    convert to string    ${PPOrderID}
                 Write Output Excel    E2E    PPID    ${RowCounter}    ${PPOrderID}
                 Write Output Excel    E2E    SubmissionID    ${RowCounter}    ${SubmissionID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${PPOrderID}
@@ -142,13 +145,82 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
                         SeleniumLibrary.input text    ${SearchBox}   ${PPOrderID}
                         sleep    5s
                         seleniumlibrary.click element    //*[@title="#${PPOrderID}"]
-                        sleep    5s
+                        sleep    10s
                         ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
                         ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                         run keyword and continue on failure    should be equal    ${UIStatus}    CLOSED WITH ORDER
                         run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
-                         Write Output Excel    E2E    PPStatus    ${RowCounter}    ${UIStatus}
+                        Write Output Excel    E2E    PPStatus    ${RowCounter}    ${UIStatus}
+                        go to    ${DBSURL}
+                        sleep    5s
+                        SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                        sleep    5s
+                        ${text}=    SeleniumLibrary.get text    ${statustext}
+                        FOR    ${waitIterator}    IN RANGE    1    150
+                            IF    '${text}' != 'Invoiced' or '${text}' != 'Completed'
+                                reload page
+                                sleep    10s
+                                ${text}=    SeleniumLibrary.get text    ${statustext}
+                                ${text}=    set variable   ${text}
+                                IF    '${text}' == 'Invoiced' or '${text}' == 'Completed'
+                                    sleep    10s
+                                    exit for loop
+                                END
+                            ELSE
+                               exit for loop
+                            END
+                        END
+                        run keyword    should contain any    ${text}    Invoiced    Completed
+                        Write Output Excel    E2E    OrderStatus    ${RowCounter}    ${text}
+                        IF    '${text}' == 'Invoiced' or '${text}' == 'Completed'
+                            sleep    10s
+                            seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
+                            sleep    5s
+                            ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
+                            sleep    5s
+                            ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
+                            Write Output Excel    E2E    WileyOrderId    ${RowCounter}    ${wileyorderId}
+                            Write Output Excel    E2E    SAPOrderID    ${RowCounter}    ${saporderId}
+                            save excel document    ${PPInputExcelPath}
+#                            go back
+                            open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+                            run transaction    /nVA03
+                            sapguilibrary.input text    ${Var_OrderIDTextbox}      ${saporderId}
+                            send vkey    0
+                            ${SAPCurreny}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/ctxtVBAK-WAERK
+                            Validate the content and update the excel    ${Currency}    ${SAPCurreny}    E2E    Currency    ${RowCounter}
+                            sapguilibrary.click element    ${Var_ItemOverview}
+                            select table row   ${Var_ItemOverviewTableId}       0
+                            sapguilibrary.click element    ${Var_OpenItem}
+                            sapguilibrary.click element    ${Var_SalesATab}
+                            ${Material}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4451/ctxtVBAP-MATWA
+                            sapguilibrary.click element    ${Var_SalesBTab}
+                            ${MaterialGroup}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-MATKL
+                            ${Division}=     SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-SPART
+                            sapguilibrary.click element    ${Var_Shipping}
+                            ${Plant}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV45A:4452/ctxtVBAP-WERKS
+                            SapGuiLibrary.click element    ${Var_Conditions}
+                            ${NetPrice}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-NETWR
+                            ${TaxValue}=   SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-MWSBP
+                            sapguilibrary.click element    ${Var_OrderData}
+                            ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
 
+                            ${DBSOrderID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ_E
+                            Validate the content and update the excel    ${DBSOrderID}    ${OrderId}    E2E    OrderID    ${RowCounter}
+                            sapguilibrary.click element    ${Var_DataB}
+                            ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
+                            Validate the content and update the excel    ${ArticleNumber}    ${SubmissionID}    E2E    SubmissionID    ${RowCounter}
+                            send vkey    3
+                            send vkey    5
+                            slectInvoiceTree        ${Var_InvoiceElement}
+                            send vkey    8
+                            ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
+                            write output excel    E2E    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}
+                            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT
+                            sapguilibrary.select table row    /app/con[0]/ses[0]/wnd[0]/usr/tblSAPDV70ATC_NAST3    0
+                            send vkey    5
+                            send vkey    3
+                        END
                     ELSE
                         ${errortext}=  Set Variable  ${json_dict['message']}
                         ${errortext}=    convert to string    ${errortext}
@@ -170,7 +242,74 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${PPInputExcelPath}
+    Close SAP Connection
 
+#    close all excel documents
+#    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
+#    ${ListIndexIterator}    set variable    0
+#    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+#    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
+#    Get DBS Orders Link    ${EnironmentValue}
+#    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
+#    ${OrderIdCount}=    get length    ${OrderIdList}
+#    ${RowCounter}    set variable    2
+#    FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
+#        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
+#        IF    '${Flag}' == 'Yes'
+#            ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
+#            IF  '${OrderId}' != 'None'
+#                sleep    5s
+#                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+#                sleep    5s
+#                ${text}=    SeleniumLibrary.get text    ${statustext}
+#                Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
+#                 seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
+#                sleep    5s
+#                ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
+#                sleep    3s
+#                ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
+#                Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
+#                Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
+#                save excel document    ${InputFilePath}
+#                go back
+#            END
+#        END
+#        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+#        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+#        save excel document    ${InputFilePath}
+#        sleep    5s
+#    END
+#    save excel document    ${InputFilePath}
+#    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+#    run transaction    /nVA03
+#    sapguilibrary.input text    ${Var_OrderIDTextbox}      8000042395
+#    send vkey    0
+#    ${Curreny}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/ctxtVBAK-WAERK
+#    sapguilibrary.click element    ${Var_ItemOverview}
+#    select table row   ${Var_ItemOverviewTableId}       0
+#    sapguilibrary.click element    ${Var_OpenItem}
+#    sapguilibrary.click element    ${Var_SalesATab}
+#    ${Material}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4451/ctxtVBAP-MATWA
+#    sapguilibrary.click element    ${Var_SalesBTab}
+#    ${MaterialGroup}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-MATKL     ${Division}=     SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-SPART
+#    sapguilibrary.click element    ${Var_Shipping}
+#    ${Plant}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV45A:4452/ctxtVBAP-WERKS
+#    SapGuiLibrary.click element    ${Var_Conditions}
+#    ${NetPrice}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-NETWR
+#    ${TaxValue}=   SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-MWSBP     sapguilibrary.click element    ${Var_OrderData}
+#    ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
+#    ${DBSOrderID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ_E
+#    sapguilibrary.click element    ${Var_DataB}
+#    ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
+#    send vkey    3
+#    send vkey    5
+#    slectInvoiceTree        ${Var_InvoiceElement}
+#    send vkey    8
+#    ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
+#    sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT
+#    sapguilibrary.select table row    /app/con[0]/ses[0]/wnd[0]/usr/tblSAPDV70ATC_NAST3    0
+#    send vkey    5
+#    send vkey    3
 
 
 
@@ -296,11 +435,11 @@ ReLaunch DBS
     [Arguments]    ${PPURL}    ${username}    ${password}
     go to    ${PPURL}
     sleep    5s
-    ${LoginCheck}=    run keyword and return status    element text should be    //*[@id="kc-page-title"]    Sign In
-    IF    '${LoginCheck}' == 'True'
-        Launch and Login DBS    ${PPURL}    ${username}    ${password}
-        sleep    5s
-    END
+#    ${LoginCheck}=    run keyword and return status    element text should be    //*[@id="kc-page-title"]    Sign In
+#    IF    '${LoginCheck}' == 'True'
+#        Launch and Login DBS    ${PPURL}    ${username}    ${password}
+#        sleep    5s
+#    END
 
 
 getdate

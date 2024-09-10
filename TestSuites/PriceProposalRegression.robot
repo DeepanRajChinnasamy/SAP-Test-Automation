@@ -73,7 +73,7 @@ Create PP with Society discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
-                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${SubmissionID}
+                Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
@@ -1517,7 +1517,7 @@ Create PP with Funder details
                     save excel document    ${PPInputExcelPath}
                 END
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
-
+                sleep    5s
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]

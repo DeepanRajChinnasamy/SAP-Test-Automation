@@ -11,22 +11,81 @@ ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynI
 ${QA2_Viax}     https://wileyas.qa2.viax.io/price-proposals
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
-
+${Var_SalesATab}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\01
+${Var_SalesBTab}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02
+${Var_ContractData}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\03
+${Var_Shipping}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\04
+${Var_Billing}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\05
+${Var_Conditions}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06
+${Var_AccountAssign}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\07
+${Var_Media}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\08
+${Var_Partners}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\09
+${Var_Texts}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\10
+${Var_OrderData}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11
+${Var_status}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\12
+${Var_Structure}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\13
+${Var_DataA}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\14
+${Var_DataB}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15
+${Var_HeaderSalesATab}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\01
+${Var_HeaderContractData}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\02
+${Var_HeaderShipping}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\03
+${Var_HeaderBilling}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\04
+${Var_HeaderAccount}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\05
+${Var_HeaderConditions}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\06
+${Var_HeaderAccountAssign}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\07
+${Var_HeaderPartners}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\08
+${Var_HeaderTexts}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\09
+${Var_HeaderOrderData}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\10
+${Var_Headerstatus}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\11
+${Var_HeaderDataA}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\12
+${Var_HeaderDataB}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\13
+${Var_ItemOverview}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02
+${Var_ItemOverviewTableId}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4401/subSUBSCREEN_TC:SAPMV45A:4900/tblSAPMV45ATCTRL_U_ERF_AUFTRAG
+${Var_OpenItem}    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4401/subSUBSCREEN_TC:SAPMV45A:4900/subSUBSCREEN_BUTTONS:SAPMV45A:4050/btnBT_ITEM
+${Var_InvoiceElement}    /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]
+${Var_OrderIDTextbox}    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBAK-VBELN
 
 *** Test Cases ***
 ValidatSAP
-#     open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
-#     run transaction    /nVA03
-#     sapguilibrary.input text    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBAK-VBELN    60081314
-#     send vkey    0
-#     send vkey    5
-#     slectInvoiceTree        /app/con[0]/ses[0]/wnd[0]/usr/shell/shellcont[1]/shell[1]
-#     send vkey    8
-    ${value}=    set variable    1
-     WHILE    ${value} != 2
-        log to console    ${value}
-        ${value}=    evaluate    ${value} + 1
-     END
+     open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+     run transaction    /nVA03
+     sapguilibrary.input text    ${Var_OrderIDTextbox}      8000042395
+     send vkey    0
+     ${Curreny}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/subSUBSCREEN_HEADER:SAPMV45A:4021/ctxtVBAK-WAERK
+     sapguilibrary.click element    ${Var_ItemOverview}
+     select table row   ${Var_ItemOverviewTableId}       0
+     sapguilibrary.click element    ${Var_OpenItem}
+     sapguilibrary.click element    ${Var_SalesATab}
+     ${Material}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\01/ssubSUBSCREEN_BODY:SAPMV45A:4451/ctxtVBAP-MATWA
+     sapguilibrary.click element    ${Var_SalesBTab}
+     ${MaterialGroup}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-MATKL
+     ${Division}=     SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV45A:4458/ctxtVBAP-SPART
+     sapguilibrary.click element    ${Var_Shipping}
+     ${Plant}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV45A:4452/ctxtVBAP-WERKS
+     SapGuiLibrary.click element    ${Var_Conditions}
+     ${NetPrice}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-NETWR
+     ${TaxValue}=   SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-MWSBP
+     sapguilibrary.click element    ${Var_OrderData}
+     ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
+     ${DBSOrderID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ_E
+     sapguilibrary.click element    ${Var_DataB}
+     ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
+     send vkey    3
+     send vkey    5
+     slectInvoiceTree        ${Var_InvoiceElement}
+     send vkey    8
+     ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
+     sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT
+     sapguilibrary.select table row    /app/con[0]/ses[0]/wnd[0]/usr/tblSAPDV70ATC_NAST3    0
+     send vkey    5
+     send vkey    3
+
+
+#    ${value}=    set variable    1robot
+#     WHILE    ${value} != 2
+#        log to console    ${value}
+#        ${value}=    evaluate    ${value} + 1
+#     END
 
 
 

@@ -203,15 +203,15 @@ Validate the Values in DBS and download the PDF
             seleniumlibrary.click element    ${wileyorderdetails}
             sleep    5s
 #            wait until element is visible    ${wileyordersearchbox}
-            seleniumlibrary.click element    ${wileyordersearchbox}
+            seleniumlibrary.click element    ${wileyordersearchbox}     #//*[@class="x-search__field"]
             sleep    5s
             IF    '${InvoiceStatus}' == 'Invoiced'
 #                wait until element is visible    ${wileyinvoicetab}
-                SeleniumLibrary.click element    ${wileyinvoicetab}
+                SeleniumLibrary.click element    ${wileyinvoicetab}    #(//*[@class="x-select-entity-item__product-title"])[2]
             END
-             IF    '${InvoiceStatus}' == 'Completed'
-                wait until element is visible    ${wileypaymentreceipt}
-                SeleniumLibrary.click element    ${wileypaymentreceipt}
+            IF    '${InvoiceStatus}' == 'Completed'
+                wait until element is visible    ${wileypaymentreceipt} #(//*[@class="x-select-entity-item__product-title"])[3]
+                SeleniumLibrary.click element    ${wileypaymentreceipt} #(//*[@class="x-select-entity-item__product-title"])[3]
             END
             sleep    5s
 #            wait until element is visible    ${wileyinvoicelink}
