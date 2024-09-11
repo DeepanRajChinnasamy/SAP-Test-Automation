@@ -168,7 +168,6 @@ Create Order with Society Discount Value P4 with Alipay HOA Order
 Create Order
     [Arguments]    ${TestCaseName}
     [Documentation]      This case will create a VIAX Invoice Order Via API and Validate in DBS
-    [Tags]    id=TC_OC_01
     ${ListIndexIterator}    set variable    0
     ${RowCounter}    set variable    2
     ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
