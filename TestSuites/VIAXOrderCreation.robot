@@ -9,6 +9,14 @@ ${InputFilePath}    ${execdir}\\UploadExcel\\TD_RegOrderCreation.xlsx
 ${file}    \\UploadExcel\\OrderCreationAPI\\
 ${URL}
 ${GraphqlURL}
+${Var_OrderType}    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[2]
+${Var_DiscountType}    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[3]
+${Var_DiscountCode}    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[4]
+${Var_Price}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[1]
+${Var_Discount}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[2]
+${Var_Subtotal}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[3]
+${Var_Tax}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[4]
+${Var_Total}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[5]
 
 *** Test Cases ***
 
@@ -116,50 +124,106 @@ Create Order with Institutional Discount P4 with Invoice HOA Order
 Create Order with Society Discount Value P4 with Alipay HOA Order
     [Tags]    id=CO_NW_32
     Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
-
     close all excel documents
-#
-
-#Validate the Order Status in DBS
-#    [Tags]    id=TC_OC_02
-##    sleep    400
-#    close all excel documents
-#    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
-#    ${ListIndexIterator}    set variable    0
-#    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
-#    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
-#    Get DBS Orders Link    ${EnironmentValue}
-#    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
-#    ${OrderIdCount}=    get length    ${OrderIdList}
-#    ${RowCounter}    set variable    2
-#    FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
-#        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
+Validate the Order Status in DBS
+    [Tags]    id=CO_NW_33
+    sleep    400
+    close all excel documents
+    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
+    ${ListIndexIterator}    set variable    0
+    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
+    Get DBS Orders Link    ${EnironmentValue}
+    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
+    ${OrderIdCount}=    get length    ${OrderIdList}
+    ${RowCounter}    set variable    2
+    FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
+        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
 #        IF    '${Flag}' == 'Yes'
-#            ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
-#            IF  '${OrderId}' != 'None'
-#                sleep    5s
-#                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
-#                sleep    5s
-#                ${text}=    SeleniumLibrary.get text    ${statustext}
-#                Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
-#                 seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
-#                sleep    5s
-#                ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
-#                sleep    3s
-#                ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
-#                Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
-#                Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
-#                save excel document    ${InputFilePath}
-#                go back
-#            END
+            ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
+            IF  '${OrderId}' != 'None'
+                sleep    5s
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                ${text}=    SeleniumLibrary.get text    ${statustext}
+                FOR    ${waitIterator}    IN RANGE    1    30
+                    IF    '${text}' != 'Invoiced' or '${text}' != 'Completed' or '${text}' != 'Proforma Created'
+                        reload page
+                        sleep    10s
+                        ${text}=    SeleniumLibrary.get text    ${statustext}
+                        ${text}=    set variable   ${text}
+                        IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
+                            sleep    10s
+                            exit for loop
+                        END
+                    ELSE
+                       exit for loop
+                    END
+                END
+                run keyword and continue on failure    should contain any    ${text}    Invoiced    Completed    Proforma Created
+                IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
+                    Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
+                    sleep    7s
+                    seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
+                    sleep    7s
+                    ${UITax}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[4]
+                    ${UIDiscount}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[2]
+                    ${UIAPC}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[1]
+                    ${UITotal}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[5]
+                    @{UITaxValue}=    split string    ${UITax}    ${SPACE}
+                    ${UITax}=    set variable    ${UITaxValue}[0]
+                    ${UICurrency}=    set variable    ${UITaxValue}[1]
+                    ${UITax}=    replace string    ${UITax}    ,    ${EMPTY}
+                    ${UITax}=    convert to string    ${UITax}
+                    @{UIDiscountValue}=    split string    ${UIDiscount}    ${SPACE}
+                    ${UIDiscount}=    set variable    ${UIDiscountValue}[0]
+                    ${UIDiscount}=    replace string    ${UIDiscount}    ,    ${EMPTY}
+                    ${UIDiscount}=    replace string    ${UIDiscount}    (    ${EMPTY}
+                    ${UIDiscount}=    replace string    ${UIDiscount}    )    ${EMPTY}
+                    ${UIDiscount}=    convert to string    ${UIDiscount}
+                    @{UIAPCValue}=    split string    ${UIAPC}    ${SPACE}
+                    ${UIAPC}=    set variable    ${UIAPCValue}[0]
+                    ${UIAPC}=    replace string    ${UIAPC}    ,    ${EMPTY}
+                    ${UIAPC}=    convert to string    ${UIAPC}
+                    @{UITotalValue}=    split string    ${UITotal}    ${SPACE}
+                    ${UITotal}=    set variable    ${UITotalValue}[0]
+                    ${UITotal}=    replace string    ${UITotal}    ,    ${EMPTY}
+                    ${UITotal}=    convert to string    ${UITotal}
+                    ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+                    ${APC}=    get from list    ${APCList}    ${ListIndexIterator}
+                    ${Tax}=    get from list    ${TaxList}    ${ListIndexIterator}
+                    ${Discount}=    get from list    ${DiscountList}    ${ListIndexIterator}
+                    ${DiscountCode}=    get from list    ${DiscountCodeList}    ${ListIndexIterator}
+                    ${UIDiscountType}=    seleniumlibrary.get text    ${Var_DiscountType}
+                    ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
+                    ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+                    Validate the content and update the excel   ${Currency}   ${UICurrency}    Data    Currency    ${RowCounter}
+                    Validate the content and update the excel   ${UIDiscountType}   ${DiscountType}    Data    DiscountType  ${RowCounter}
+                    IF    '${DiscountCode}' != 'None'
+                       ${UIDiscountCode}=    seleniumlibrary.get text    ${Var_DiscountCode}
+                       Validate the content and update the excel   ${UIDiscountCode}   ${DiscountCode}    Data    DiscountCode  ${RowCounter}
+                    END
+                    Validate the content and update the excel    ${Tax}    ${UITax}    Data    Tax    ${RowCounter}
+                    Validate the content and update the excel    ${TotalAmount}    ${UITotal}    Data    TotalAmount    ${RowCounter}
+                    Validate the content and update the excel    ${APC}    ${UIAPC}    Data    APC    ${RowCounter}
+                    Validate the content and update the excel    ${Discount}    ${UIDiscount}    Data    Discount    ${RowCounter}
+                    ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
+                    sleep    3s
+                    ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
+                    Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
+                    Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
+                    save excel document    ${InputFilePath}
+                    go back
+                END
+            END
 #        END
-#        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
-#        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
-#        save excel document    ${InputFilePath}
-#        sleep    5s
-#    END
-#    save excel document    ${InputFilePath}
-#    close all excel documents
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+        save excel document    ${InputFilePath}
+        sleep    5s
+    END
+    save excel document    ${InputFilePath}
+    close all excel documents
 
 
 

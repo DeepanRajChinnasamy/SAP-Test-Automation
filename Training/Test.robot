@@ -1,23 +1,28 @@
-#*** Settings ***
-#Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-#Library    ../TestSuites/CustomLib.py
-#Library    ../TestSuites/Response.py
+*** Settings ***
+Resource    ../Resource/ObjectRepositories/CustomVariables.robot
+Library    ../TestSuites/CustomLib.py
+Library    ../TestSuites/Response.py
 #Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
 ##Suite Teardown   Close Excel and Browser
 ##Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
 #
 #
-#*** Variables ***
+*** Variables ***
 #${file}    \\UploadExcel\\JsonTemplates\\
 #${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
 #${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
 #${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 #${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
+${UITax}    1,990.00 USD
 
 
+*** Test Cases ***
 
-
-#Create PP with Society discount
+Create PP with Society discount
+    @{UITaxValue}=    split string    ${UITax}    ${SPACE}
+    ${UITax}=    set variable    ${UITaxValue}[0]
+    ${UITax}=    replace string    ${UITax}    ,    ${EMPTY}
+    log to console    ${UITax}
 #    [Tags]    id=NC_OP_01
 #    log to console    ${PPInputExcelPath}
 #    ${ListIndexIterator}    set variable    0
