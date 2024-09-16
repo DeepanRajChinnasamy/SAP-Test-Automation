@@ -138,7 +138,7 @@ Validate the Order Status in DBS
     ${OrderIdCount}=    get length    ${OrderIdList}
     ${RowCounter}    set variable    2
     FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
-        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
+#        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
 #        IF    '${Flag}' == 'Yes'
             ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
             IF  '${OrderId}' != 'None'
@@ -306,7 +306,7 @@ Create Order
     ${TestCaseIDCount}=   get length    ${TesctCaseNameList}
     FOR    ${ScenarioIterator}    IN RANGE    ${TestCaseIDCount}
         ${ScenarioName}=    get from list    ${TesctCaseNameList}   ${ListIndexIterator}
-        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
+#        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
         IF    '${TestCaseName}' == '${ScenarioName}'
             ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
             Get DBS Orders Link    ${EnironmentValue}
@@ -470,7 +470,7 @@ Read All Input Values From OrderCreationCases
     ${DiscountCodeList}    get from dictionary    ${ExcelDictionary}    DiscountCode
     ${APCList}    get from dictionary    ${ExcelDictionary}    APC
     ${VATIDList}    get from dictionary    ${ExcelDictionary}    VATID
-    ${FlagList}    get from dictionary    ${ExcelDictionary}    Flag
+#    ${FlagList}    get from dictionary    ${ExcelDictionary}    Flag
     ${PostalCodeList}    get from dictionary    ${ExcelDictionary}    PostalCode
     ${OrderIdList}    get from dictionary    ${ExcelDictionary}    OrderId
     ${OrderTypeList}    get from dictionary    ${ExcelDictionary}    OrderType
@@ -481,7 +481,7 @@ Read All Input Values From OrderCreationCases
     set suite variable    ${OrderTypeList}    ${OrderTypeList}
     set suite variable    ${AddressRegionList}    ${AddressRegionList}
     set suite variable    ${DiscountCodeList}    ${DiscountCodeList}
-    set suite variable    ${FlagList}     ${FlagList}
+#    set suite variable    ${FlagList}     ${FlagList}
     set suite variable    ${VATIDList}    ${VATIDList}
     set suite variable    ${APCList}     ${APCList}
     set suite variable    ${DiscountTypeList}  ${DiscountTypeList}
