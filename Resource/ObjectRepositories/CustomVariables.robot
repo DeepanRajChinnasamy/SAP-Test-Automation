@@ -88,7 +88,7 @@ ${InputExcelSheet}      Inputs
 ${pathtosave}    C:\\Users\\dchinnasam\\OneDrive\\Documents\\VIAXDocs\\
 #---------------------------SAPLogo on-------------------------------
 ${SAPGUIPATH}    C:/Program Files (x86)/SAP/FrontEnd/SAPgui/saplogon.exe
-${CONNECTION}    EQ2-Load Balancer
+${CONNECTION}    EQ2-Load balancer
 ${SAPCLIENT}      100
 ${SAPUSERNAME}    SAPQA_APP1
 ${SAPPASSWORD}    Quality75#
