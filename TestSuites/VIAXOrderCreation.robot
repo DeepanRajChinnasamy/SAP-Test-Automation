@@ -163,7 +163,7 @@ Validate the Order Status in DBS
                 run keyword and continue on failure    should contain any    ${text}    Invoiced    Completed    Proforma Created
                 IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                     Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
-                    sleep    7s
+                    sleep    10s
                     seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
                     sleep    7s
                     ${UITax}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[4]
@@ -227,7 +227,6 @@ Validate the Order Status in DBS
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
         save excel document    ${InputFilePath}
-        sleep    5s
     END
     save excel document    ${InputFilePath}
     close all excel documents
@@ -268,7 +267,7 @@ SAPValidations
             ${NetPrice}=    evaluate  ${NetPrice} + ${TaxValue}
             ${NetPrice}=    Evaluate    "{:.2f}".format(${NetPrice})
             ${NetPrice}=    convert to string    ${NetPrice}
-            run keyword and continue on failure    ${NetPrice}    ${TotalAmount}
+            run keyword and continue on failure    should be equal    ${NetPrice}    ${TotalAmount}
             Validate the content and update the excel    ${NetPrice}    ${TotalAmount}    Data    SAPPrice    ${RowCounter}
             sapguilibrary.click element    ${Var_OrderData}
             ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
@@ -293,7 +292,6 @@ SAPValidations
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
         save excel document    ${InputFilePath}
-        sleep    5s
     END
     save excel document    ${InputFilePath}
     close all excel documents
