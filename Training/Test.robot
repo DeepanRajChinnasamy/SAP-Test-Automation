@@ -1,28 +1,61 @@
 *** Settings ***
-Resource    ../Resource/ObjectRepositories/CustomVariables.robot
-Library    ../TestSuites/CustomLib.py
-Library    ../TestSuites/Response.py
-#Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
-##Suite Teardown   Close Excel and Browser
-##Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
-#
-#
-*** Variables ***
-#${file}    \\UploadExcel\\JsonTemplates\\
-#${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
-#${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
-#${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
-#${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
-${UITax}    1,990.00 USD
+Library           OperatingSystem
+Library    Process
 
+*** Variables ***
+${SAP_PROCESS_NAME}   saplogon.exe
+${SAP_EXECUTABLE_PATH}   C:/Program Files (x86)/SAP/FrontEnd/SAPgui/saplogon.exe
 
 *** Test Cases ***
+Open SAP If Not Open
+    ${is_running}=    Check If SAP Is Running
+    Run Keyword If    '${is_running}'=='False'    Open SAP
 
-Create PP with Society discount
-    @{UITaxValue}=    split string    ${UITax}    ${SPACE}
-    ${UITax}=    set variable    ${UITaxValue}[0]
-    ${UITax}=    replace string    ${UITax}    ,    ${EMPTY}
-    log to console    ${UITax}
+*** Keywords ***
+Check If SAP Is Running
+    ${result}=    Run Process    tasklist    shell=True    stdout=PIPE    stderr=PIPE
+    ${output}=    Get File    ${result.stdout}
+    Log    ${output}
+    ${is_running}=    Run Keyword And Return Status    Should Contain    ${output}    ${SAP_PROCESS_NAME}
+    [Return]    ${is_running}
+
+Open SAP
+    Run Process    ${SAP_EXECUTABLE_PATH}    shell=True
+
+
+
+
+
+
+
+
+
+
+#*** Settings ***
+#Resource    ../Resource/ObjectRepositories/CustomVariables.robot
+#Library    ../TestSuites/CustomLib.py
+#Library    ../TestSuites/Response.py
+##Suite Setup     Open Excel and DBS    ${PPInputExcelPath}    ${PPURL}    ${username}    ${password}
+###Suite Teardown   Close Excel and Browser
+###Test Setup    ReLaunch DBS    ${PPURL}    ${username}    ${password}
+##
+##
+#*** Variables ***
+##${file}    \\UploadExcel\\JsonTemplates\\
+##${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynId>>
+##${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
+##${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
+##${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
+#${UITax}    1,990.00 USD
+#
+#
+#*** Test Cases ***
+
+#Create PP with Society discount
+#    @{UITaxValue}=    split string    ${UITax}    ${SPACE}
+#    ${UITax}=    set variable    ${UITaxValue}[0]
+#    ${UITax}=    replace string    ${UITax}    ,    ${EMPTY}
+#    log to console    ${UITax}
 #    [Tags]    id=NC_OP_01
 #    log to console    ${PPInputExcelPath}
 #    ${ListIndexIterator}    set variable    0

@@ -146,7 +146,7 @@ Validate the Order Status in DBS
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
                 ${text}=    SeleniumLibrary.get text    ${statustext}
-                FOR    ${waitIterator}    IN RANGE    1    30
+                FOR    ${waitIterator}    IN RANGE    1    50
                     IF    '${text}' != 'Invoiced' or '${text}' != 'Completed' or '${text}' != 'Proforma Created'
                         reload page
                         sleep    10s
@@ -197,12 +197,19 @@ Validate the Order Status in DBS
                     ${UIDiscountType}=    seleniumlibrary.get text    ${Var_DiscountType}
                     ${DiscountType}=    get from list    ${DiscountTypeList}    ${ListIndexIterator}
                     ${Currency}=    get from list    ${CurrencyList}    ${ListIndexIterator}
+                    run keyword and continue on failure    should be equal    ${Currency}   ${UICurrency}
+                    run keyword and continue on failure    should be equal    ${UIDiscountType}   ${DiscountType}
                     Validate the content and update the excel   ${Currency}   ${UICurrency}    Data    Currency    ${RowCounter}
                     Validate the content and update the excel   ${UIDiscountType}   ${DiscountType}    Data    DiscountType  ${RowCounter}
                     IF    '${DiscountCode}' != 'None'
                        ${UIDiscountCode}=    seleniumlibrary.get text    ${Var_DiscountCode}
+                       run keyword and continue on failure    should be equal    ${UIDiscountCode}   ${DiscountCode}
                        Validate the content and update the excel   ${UIDiscountCode}   ${DiscountCode}    Data    DiscountCode  ${RowCounter}
                     END
+                    run keyword and continue on failure    should be equal    ${Tax}    ${UITax}
+                    run keyword and continue on failure    should be equal    ${TotalAmount}    ${UITotal}
+                    run keyword and continue on failure    should be equal    ${APC}    ${UIAPC}
+                    run keyword and continue on failure    should be equal    ${Discount}    ${UIDiscount}
                     Validate the content and update the excel    ${Tax}    ${UITax}    Data    Tax    ${RowCounter}
                     Validate the content and update the excel    ${TotalAmount}    ${UITotal}    Data    TotalAmount    ${RowCounter}
                     Validate the content and update the excel    ${APC}    ${UIAPC}    Data    APC    ${RowCounter}
@@ -224,8 +231,72 @@ Validate the Order Status in DBS
     END
     save excel document    ${InputFilePath}
     close all excel documents
-
-
+SAPValidations
+    [Tags]    id=CO_NW_34
+    close all excel documents
+    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
+    ${ListIndexIterator}    set variable    0
+    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
+    Get DBS Orders Link    ${EnironmentValue}
+#    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
+    ${OrderIdCount}=    get length    ${OrderIdList}
+    ${RowCounter}    set variable    2
+    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+    FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
+        ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
+        ${OrderStatus}=    get from list    ${OrderStatusList}    ${ListIndexIterator}
+        IF    '${OrderStatus}' == 'Invoiced' or '${OrderStatus}' == 'Completed' or '${OrderStatus}' == 'Proforma Created'
+            ${saporderId}=    get from list    ${SapOrderIdList}    ${ListIndexIterator}
+            ${SubmissionID}=    get from list    ${SubmissionIDList}    ${ListIndexIterator}
+            run transaction    /nVA03
+            sapguilibrary.input text    ${Var_OrderIDTextbox}      ${saporderId}
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[0]
+            sapguilibrary.click element    ${Var_ItemOverview}
+            select table row   ${Var_ItemOverviewTableId}       0
+            sapguilibrary.click element    ${Var_OpenItem}
+            SapGuiLibrary.click element    ${Var_Conditions}
+            ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
+            ${NetPrice}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-NETWR
+            ${TaxValue}=   SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-MWSBP
+            @{NetPrice}=    split string    ${NetPrice}    ${SPACE}
+            ${NetPrice}=    set variable    ${NetPrice}[0]
+            ${NetPrice}=    replace string    ${NetPrice}    ,    ${EMPTY}
+            @{TaxValue}=    split string    ${TaxValue}    ${SPACE}
+            ${TaxValue}=    set variable    ${TaxValue}[0]
+            ${TaxValue}=    replace string    ${TaxValue}    ,    ${EMPTY}
+            ${NetPrice}=    evaluate  ${NetPrice} + ${TaxValue}
+            ${NetPrice}=    Evaluate    "{:.2f}".format(${NetPrice})
+            ${NetPrice}=    convert to string    ${NetPrice}
+            run keyword and continue on failure    ${NetPrice}    ${TotalAmount}
+            Validate the content and update the excel    ${NetPrice}    ${TotalAmount}    Data    SAPPrice    ${RowCounter}
+            sapguilibrary.click element    ${Var_OrderData}
+            ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
+            ${DBSOrderID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ_E
+            run keyword and continue on failure    should be equal    ${DBSOrderID}    ${OrderId}
+            Validate the content and update the excel    ${DBSOrderID}    ${OrderId}    Data    OrderId    ${RowCounter}
+            sapguilibrary.click element    ${Var_DataB}
+            ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
+            run keyword and continue on failure    should be equal    ${ArticleNumber}    ${SubmissionID}
+            Validate the content and update the excel    ${ArticleNumber}    ${SubmissionID}    Data    SubmissionID    ${RowCounter}
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
+            slectInvoiceTree        ${Var_InvoiceElement}
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[8]
+            ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
+            write output excel    Data    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT
+            sapguilibrary.select table row    /app/con[0]/ses[0]/wnd[0]/usr/tblSAPDV70ATC_NAST3    0
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
+            sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
+        END
+        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+        save excel document    ${InputFilePath}
+        sleep    5s
+    END
+    save excel document    ${InputFilePath}
+    close all excel documents
 
 
 *** Keywords ***
@@ -357,6 +428,7 @@ Create JSON File
     ${FromDate}=    Convert Date    ${today}    result_format=%Y-%m-%d
     ${UniqueOrderId}=    convert to string    ${UniqueOrderId}
     ${SubmissionId}=    convert to string    ${SubmissionId}
+#    set suite variable    ${SubmissionId}    ${SubmissionId}
     ${FisrtName}=    convert to string    ${FirstName}
     ${LastName}=    convert to string    ${LastName}
     ${MailId}=    convert to string    ${MailId}
@@ -381,6 +453,9 @@ Read All Input Values From OrderCreationCases
     [Arguments]    ${InputExcel}    ${InputSheet}
     ${ExcelDictionary}    ReadAllValuesFromExcel    ${InputExcel}    ${InputSheet}
     ${TesctCaseNameList}    get from dictionary    ${ExcelDictionary}    TesctCaseName
+    ${SapOrderIdList}    get from dictionary    ${ExcelDictionary}    SAPOrderID
+    ${OrderStatusList}    get from dictionary    ${ExcelDictionary}    OrderStatus
+    set suite variable    ${OrderStatusList}     ${OrderStatusList}
     ${ExecutionEnvironmentList}    get from dictionary    ${ExcelDictionary}    ExecutionEnvironment
     ${CountryList}   get from dictionary    ${ExcelDictionary}    Country
     ${JSONFileNameList}    get from dictionary     ${ExcelDictionary}    JSONFileName
@@ -402,6 +477,8 @@ Read All Input Values From OrderCreationCases
     ${OrderIdList}    get from dictionary    ${ExcelDictionary}    OrderId
     ${OrderTypeList}    get from dictionary    ${ExcelDictionary}    OrderType
     ${AddressRegionList}    get from dictionary    ${ExcelDictionary}    AddressRegion
+    ${SubmissionIDList}    get from dictionary    ${ExcelDictionary}    SubmissionID
+    set suite variable    ${SubmissionIDList}    ${SubmissionIDList}
     set suite variable    ${OrderIdList}    ${OrderIdList}
     set suite variable    ${OrderTypeList}    ${OrderTypeList}
     set suite variable    ${AddressRegionList}    ${AddressRegionList}
@@ -424,6 +501,7 @@ Read All Input Values From OrderCreationCases
     set suite variable    ${LastNameList}    ${LastNameList}
     set suite variable    ${MailList}    ${MailList}
     set suite variable    ${PostalCodeList}    ${PostalCodeList}
+    set suite variable    ${SapOrderIdList}    ${SapOrderIdList}
     ${Environment}=    get from list    ${ExecutionEnvironmentList}    0
     ${Environment}=    convert to upper case    ${Environment}
     Get DBS Orders Link    ${Environment}
