@@ -410,7 +410,7 @@ Open SAP Logon Window
     [Arguments]    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
     Start Process    ${SAPGUIPATH}    saplogon
     sleep    10s
-    connect to session
+     SapGuiLibrary.Connect To Session
     open connection    ${CONNECTION}
     sapguilibrary.input text      /app/con[0]/ses[0]/wnd[0]/usr/txtRSYST-BNAME    ${SAPUSERNAME}
     sleep    2s
