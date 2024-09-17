@@ -281,7 +281,6 @@ SAPValidations
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
             SapGuiLibrary.selectInvoiceTree     ${Var_InvoiceElement}
-            select node    ${Var_InvoiceElement}    ("          2", "&Hierarchy")   expand=True
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[8]
             ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
             write output excel    Data    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}
