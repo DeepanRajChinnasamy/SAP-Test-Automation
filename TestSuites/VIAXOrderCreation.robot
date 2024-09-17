@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../Resource/ObjectRepositories/CustomVariables.robot
 Library     ../Resource/ObjectRepositories/CustomLib.py
+Library     ../Resource/ObjectRepositories/CustomSAPGuiLib.py
 Library     ../Resource/ObjectRepositories/Response.py
 Suite Setup    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
 
@@ -280,7 +281,7 @@ SAPValidations
             Validate the content and update the excel    ${ArticleNumber}    ${SubmissionID}    Data    SubmissionID    ${RowCounter}
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
-            slectInvoiceTree        ${Var_InvoiceElement}
+            CustomSAPGuiLib.selectInvoiceTree        ${Var_InvoiceElement}
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[8]
             ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
             write output excel    Data    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}
