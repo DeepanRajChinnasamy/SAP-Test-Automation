@@ -1,7 +1,7 @@
 import pythoncom
 import win32com.client
 import time
-#from pythoncom import com_error
+from pythoncom import com_error
 import robot.libraries.Screenshot as screenshot
 import os
 from robot.api import logger
