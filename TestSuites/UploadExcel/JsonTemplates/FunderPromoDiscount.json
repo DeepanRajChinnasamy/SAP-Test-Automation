@@ -2,14 +2,14 @@
   "query": "mutation testFn( $data: Object) { testFunction(input: { name: \"receive-price-proposal-from-kafka\" data: { apiversion: \"1.0.1\" tenant: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" id: \"51014872-8dfd-11ed-a1eb-0242ac120002\" type: \"priceproposal.requested\" source: \"urn:appcat:cmh-eeolink\" specversion: \"1.0\" subject: \"0d961334-8e06-4973-9c4a-5524ebd33f55\" time: \"2019-08-24T14:15:22Z\" datacontenttype: \"application/json\" data: $data } } ) { status data }}",
   "variables": {
     "data": {
-      "requestId": "e5a1358c-2f36-4d12-8c69-fe0b8c44002a",
+      "requestId": "4a48d9c8-6b6d-4583-b9ac-1836890cb988",
       "submissionId": "<<Id>>",
-      "edRefCode": "ACN3-2023-06-0432",
+      "edRefCode": "CAM4-2024-04-1853",
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
-      "baseArticleType": "EDUCATION",
-      "displayArticleType": "Research Article (ABC)",
+      "baseArticleType": "Education",
+      "displayArticleType": "Education (ABC)",
       "submissionDate": "<<CurrentDate>>",
       "articleAcceptedDate": "2015-09-29",
       "editorialStatus": "TBC",
@@ -17,36 +17,52 @@
       "isManualOverrideRequired": false,
       "manualOverrideInstructions": "string",
       "societyCodes": [],
-      "promoCodes": [],
+      "promoCodes": [
+        "JAAL"
+      ],
       "discountCodes": [],
+      "wAsManualDiscountAmount": 0,
       "authors": [
         {
-          "role": "Corresponding Author",
+          "role": "CorrespondingAuthor",
           "authorSequenceNumber": 1,
           "firstName": "Jim",
           "middleName": "M.",
           "lastName": "TESSON",
-          "honorificPrefix": "Mr.",
-          "honorificSuffix": "",
           "email": "rbenny@wiley.com",
           "affiliationIdType": "Ringgold",
           "affiliations": [
             {
               "affiliationIds": [
                 {
-                  "institutionId": "",
+                  "institutionId": "2221",
                   "institutionIdType": "Ringgold"
                 }
               ],
-              "addressLocality": "Aix en Provence",
-              "countryCode": "BZ",
-              "country": "BZ",
-              "institution": "Grant Institute",
-              "department": "School of GeoSciences",
-              "stateProvince": "New Jersey",
-              "postalCode": "90210",
+              "orcId": "0000-0003-0888-1984",
+              "addressLocality": "Stavnger",
+              "countryCode": "US",
+              "country": "US",
+              "institution": "UNIVERSITY COLLEGE CORK NATIONAL UNIVERSITY OF IRELAND",
+              "department": "SchoolofGeoSciences",
+              "stateProvince": "RogalandFylke",
+              "postalCode": "4036",
               "streetAddress": [
-                "1832 Colvin Ave"
+                "PoBox2554"
+              ]
+            }
+          ]
+        }
+      ],
+      "funders": [
+        {
+          "name": "Bill and Melinda Gates Foundation",
+          "funderId": "10.13039/100000865",
+          "grants": [
+            {
+              "grantNumber": "124566AA",
+              "grantRecipient": [
+                "PhilipJ.Cameron-Smith"
               ]
             }
           ]

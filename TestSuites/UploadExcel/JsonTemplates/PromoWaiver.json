@@ -17,7 +17,9 @@
       "isManualOverrideRequired": false,
       "manualOverrideInstructions": "string",
       "societyCodes": [],
-      "promoCodes": [],
+      "promoCodes": [
+        "AMVET"
+      ],
       "discountCodes": [],
       "authors": [
         {
@@ -39,8 +41,8 @@
                 }
               ],
               "addressLocality": "Aix en Provence",
-              "countryCode": "BZ",
-              "country": "BZ",
+              "countryCode": "US",
+              "country": "US",
               "institution": "Grant Institute",
               "department": "School of GeoSciences",
               "stateProvince": "New Jersey",

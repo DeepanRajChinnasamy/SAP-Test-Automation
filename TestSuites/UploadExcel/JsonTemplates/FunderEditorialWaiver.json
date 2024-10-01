@@ -19,6 +19,7 @@
       "societyCodes": [],
       "promoCodes": [],
       "discountCodes": [],
+      "editorialDiscountCode": "CWJCSM24",
       "authors": [
         {
           "role": "Corresponding Author",
@@ -34,13 +35,13 @@
             {
               "affiliationIds": [
                 {
-                  "institutionId": "",
+                  "institutionId": "2221",
                   "institutionIdType": "Ringgold"
                 }
               ],
               "addressLocality": "Aix en Provence",
-              "countryCode": "BZ",
-              "country": "BZ",
+              "countryCode": "US",
+              "country": "US",
               "institution": "Grant Institute",
               "department": "School of GeoSciences",
               "stateProvince": "New Jersey",

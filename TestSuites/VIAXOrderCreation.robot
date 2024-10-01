@@ -153,7 +153,7 @@ Validate the Order Status in DBS
                         ${text}=    SeleniumLibrary.get text    ${statustext}
                         ${text}=    set variable   ${text}
                         IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
-                            sleep    10s
+                            #sleep    10s
                             exit for loop
                         END
                     ELSE
@@ -163,7 +163,7 @@ Validate the Order Status in DBS
                 run keyword and continue on failure    should contain any    ${text}    Invoiced    Completed    Proforma Created
                 IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                     Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
-                    sleep    10s
+                    #sleep    10s
                     seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
                     sleep    7s
                     ${UITax}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[4]
@@ -215,7 +215,7 @@ Validate the Order Status in DBS
                     Validate the content and update the excel    ${APC}    ${UIAPC}    Data    APC    ${RowCounter}
                     Validate the content and update the excel    ${Discount}    ${UIDiscount}    Data    Discount    ${RowCounter}
                     ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
-                    sleep    3s
+                    #sleep    3s
                     ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
                     Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
                     Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
@@ -321,6 +321,9 @@ Create Order
             ${FirstName}=  set variable     ${UniqueOrderId}Test
             ${LastName}=  set variable     ${UniqueOrderId}Auto
             ${MailId}=  set variable     ${UniqueOrderId}@Wiley.com
+#            ${FirstName}=  set variable     20240919155523Test
+#            ${LastName}=  set variable     20240919155523Auto
+#            ${MailId}=  set variable     20240919155523@Wiley.com
             Write Output Excel    Data    FirstName    ${RowCounter}    ${FirstName}
             Write Output Excel    Data    LastName    ${RowCounter}    ${LastName}
             Write Output Excel    Data    MailId    ${RowCounter}    ${MailId}

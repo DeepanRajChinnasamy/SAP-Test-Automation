@@ -138,6 +138,7 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
                         ${error_code}=    convert to string    ${error_code}
                         ${OrderStatus}=    convert to string    ${OrderStatus}
                         Write Output Excel    E2E    OrderID    ${RowCounter}    ${error_code}
+                        save excel document    ${PPInputExcelPath}
                         ${OrderID}=    set variable    ${error_code}
                         set variable    ${error_code}
                         set variable    ${OrderStatus}
@@ -157,12 +158,12 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
                         sleep    5s
                         ${text}=    SeleniumLibrary.get text    ${statustext}
                         FOR    ${waitIterator}    IN RANGE    1    150
-                            IF    '${text}' != 'Invoiced' or '${text}' != 'Completed'
+                            IF    '${text}' != 'Invoiced' or '${text}' != 'Completed' or '${text}' == 'Proforma Created'
                                 reload page
                                 sleep    10s
                                 ${text}=    SeleniumLibrary.get text    ${statustext}
                                 ${text}=    set variable   ${text}
-                                IF    '${text}' == 'Invoiced' or '${text}' == 'Completed'
+                                IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                                     sleep    10s
                                     exit for loop
                                 END
@@ -172,7 +173,7 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
                         END
                         run keyword    should contain any    ${text}    Invoiced    Completed
                         Write Output Excel    E2E    OrderStatus    ${RowCounter}    ${text}
-                        IF    '${text}' == 'Invoiced' or '${text}' == 'Completed'
+                        IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                             sleep    10s
                             seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
                             sleep    5s
@@ -212,7 +213,7 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
                             Validate the content and update the excel    ${ArticleNumber}    ${SubmissionID}    E2E    SubmissionID    ${RowCounter}
                             send vkey    3
                             send vkey    5
-                            slectInvoiceTree        ${Var_InvoiceElement}
+                            selectInvoiceTree        ${Var_InvoiceElement}
                             send vkey    8
                             ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
                             write output excel    E2E    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}

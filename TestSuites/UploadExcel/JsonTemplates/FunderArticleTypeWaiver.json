@@ -8,10 +8,10 @@
       "articleDOI": "",
       "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
-      "baseArticleType": "EDUCATION",
-      "displayArticleType": "Research Article (ABC)",
-      "submissionDate": "<<CurrentDate>>",
-      "articleAcceptedDate": "2015-09-29",
+      "baseArticleType": "Commentary",
+      "displayArticleType": "Commentary(ABC)",
+      "submissionDate": "2024-04-17",
+      "articleAcceptedDate": "<<CurrentDate>>",
       "editorialStatus": "TBC",
       "articleTitle": "Seismic slip history of the Pizzalto fault (Central Apennines Italy) using in situ-produced Clcosmic ray exposure dating and rare earth element concentrations.",
       "isManualOverrideRequired": false,
@@ -34,13 +34,13 @@
             {
               "affiliationIds": [
                 {
-                  "institutionId": "",
+                  "institutionId": "2221",
                   "institutionIdType": "Ringgold"
                 }
               ],
               "addressLocality": "Aix en Provence",
-              "countryCode": "BZ",
-              "country": "BZ",
+              "countryCode": "US",
+              "country": "US",
               "institution": "Grant Institute",
               "department": "School of GeoSciences",
               "stateProvince": "New Jersey",

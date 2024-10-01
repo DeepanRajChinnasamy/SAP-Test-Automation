@@ -76,6 +76,7 @@ Create PP with Society discount
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
+                write output excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
@@ -337,9 +338,9 @@ Create PP with Institutional discount
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition2}   ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
                 run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
@@ -908,9 +909,9 @@ Create PP with Stacked Institutional discount
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
                 run keyword and continue on failure    should be equal    ${AppliedYes1}     ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
@@ -1293,41 +1294,41 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[1]
                 run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType6}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition1}    RESEARCH ARTICLE
+                run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition2}    CCCAM424
+                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition3}    PE - Peru
+                run keyword and continue on failure    should be equal    ${DisountCondition3}    ${discountcondition3}
 #                ${DisountCondition4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
 #                run keyword and continue on failure    should be equal    ${DisountCondition4}
                 ${DisountCondition5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition5}    JCASP
+                run keyword and continue on failure    should be equal    ${DisountCondition5}    ${discountcondition5}
                 ${DisountCondition6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition6}    PROMO50
+                run keyword and continue on failure    should be equal    ${DisountCondition6}    ${discountcondition6}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue1}    75%
+                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}    90%
+                run keyword and continue on failure    should be equal    ${Percentagevalue2}    ${discountpercentage2}
                 ${Percentagevalue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue3}    50%
+                run keyword and continue on failure    should be equal    ${Percentagevalue3}    ${discountpercentage3}
                 ${Percentagevalue4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue4}    50%
+                run keyword and continue on failure    should be equal    ${Percentagevalue4}    ${discountpercentage4}
                 ${Percentagevalue5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue5}    5%
+                run keyword and continue on failure    should be equal    ${Percentagevalue5}    ${discountpercentage5}
                 ${Percentagevalue6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue6}    20%
+                run keyword and continue on failure    should be equal    ${Percentagevalue6}    ${discountpercentage6}
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes1}    Yes
+                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
                 ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes2}    Yes
+                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${AppliedYes3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes3}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes3}    ${appliedyes3}
                 ${AppliedYes4}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[4]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes4}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes4}    ${appliedyes4}
                 ${AppliedYes5}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[5]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes5}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes5}    ${appliedyes5}
                 ${AppliedYes6}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[6]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes6}    No
+                run keyword and continue on failure    should be equal    ${AppliedYes6}    ${appliedyes6}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
