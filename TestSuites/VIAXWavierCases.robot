@@ -113,7 +113,6 @@ Create PP with Society Waiver
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
-
             ${json_content}=  Get File  ${execdir}${file}${JSONFileName}.json
             ${json_content}=    Generate the JSON file PP    ${json_content}    ${JournalID}
             Write Output Excel    PriceProposal    JSONText    ${RowCounter}    ${json_content}
@@ -134,15 +133,11 @@ Create PP with Society Waiver
             ${JsonResp}=  Evaluate  ${response.text}
             # Fetch the values from the result Json File
             @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
-#            @{list}=    Get Key Value    ${JsonResp}    $.data.testFunction.data
-            #log to console    @{list}
             ${NumberofList}=    get length    ${list}
             set variable    ${JsonResp}
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]WileyPromoCode''')  modules=json
-#                ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
                 ${error_code}=  Set Variable  ${json_dict['message']}
                 ${OrderID}=  Set Variable  ${json_dict['viaxPriceProposalId']}
                 ${error_code}=    convert to string    ${error_code}
@@ -160,8 +155,6 @@ Create PP with Society Waiver
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
-
-
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${WaiverCaseFilePath}

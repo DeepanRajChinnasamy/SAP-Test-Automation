@@ -3,14 +3,14 @@
   "variables": {
     "data": {
       "requestId": "e5a1358c-2f36-4d12-8c69-fe0b8c44002a",
-      "submissionId": "20ef1961-409b-1208-9111-af8e43260461",
+      "submissionId": "<<Id>>",
       "edRefCode": "ACN3-2023-06-0432",
       "articleDOI": "",
-      "journalId": "f4c16e81-bdcb-4795-9dce-3b36416eb748",
+      "journalId": "<<JournalID>>",
       "sourceSystem": "EM",
       "baseArticleType": "Commentary",
       "displayArticleType": "Commentary(ABC)",
-      "submissionDate": "2024-04-17",
+      "submissionDate": "<<CurrentDate>>",
       "articleAcceptedDate": "2015-09-29",
       "editorialStatus": "TBC",
       "articleTitle": "Seismic slip history of the Pizzalto fault (Central Apennines Italy) using in situ-produced Clcosmic ray exposure dating and rare earth element concentrations.",
