@@ -327,7 +327,6 @@ TC_04 Trigger Alipay Order with Existing Customer
             # Fetch the values from the result Json File
             @{list}=    CustomLib.Get Value From Json    ${JsonResp}    $.data.testFunction.data
             set variable    ${JsonResp}
-
             ${check}=    run keyword and return status    should contain    ${list}[0]    SUCCESS
             ${json_dict}=  Evaluate  json.loads('''${list}[0]''')  modules=json
             IF    '${check}' == '${True}'
