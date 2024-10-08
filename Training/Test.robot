@@ -1,27 +1,17 @@
 *** Settings ***
-Library           OperatingSystem
-Library    Process
+Library    SeleniumLibrary
 
 *** Variables ***
-${SAP_PROCESS_NAME}   saplogon.exe
-${SAP_EXECUTABLE_PATH}   C:/Program Files (x86)/SAP/FrontEnd/SAPgui/saplogon.exe
+${OrderId}    8000029806
 
-*** Test Cases ***
-Open SAP If Not Open
-    ${is_running}=    Check If SAP Is Running
-    Run Keyword If    '${is_running}'=='False'    Open SAP
+*** Test Case ***
+GetPaymentTerms
 
-*** Keywords ***
-Check If SAP Is Running
-    ${result}=    Run Process    tasklist    shell=True    stdout=PIPE    stderr=PIPE
-    ${output}=    Get File    ${result.stdout}
-    Log    ${output}
-    ${is_running}=    Run Keyword And Return Status    Should Contain    ${output}    ${SAP_PROCESS_NAME}
-    [Return]    ${is_running}
-
-Open SAP
-    Run Process    ${SAP_EXECUTABLE_PATH}    shell=True
-
+    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
+    run transaction    /nVA03
+    sapguilibrary.input text    ${Var_OrderIDTextbox}      ${saporderId}
+    sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[0]
+    sapguilibrary.click element    ${Var_ItemOverview}
 
 
 
