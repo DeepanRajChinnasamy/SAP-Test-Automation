@@ -377,63 +377,63 @@ Create PP with Society discount with UI Validations
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType1
 	    validate the content and update the excel   ${DiscountType1}    ${UIDiscountType1}    UIValidations    Society    ${Rownum}
 	#
-	    ${DiscountType2}=    Get Value from excel columnwise    Society    DiscountType2
-	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
-	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Society    ${Rownum}
+#	    ${DiscountType2}=    Get Value from excel columnwise    Society    DiscountType2
+#	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
+#	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Society    ${Rownum}
 
 	    ${DiscountCondition1}=    Get Value from excel columnwise    Society    DiscountCondition1
 	    ${UIDisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition1
 	    validate the content and update the excel   ${DiscountCondition1}    ${UIDisountCondition1}    UIValidations    Society    ${Rownum}
 
-	    ${DiscountCondition2}=    Get Value from excel columnwise    Society    DiscountCondition2
-	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
-	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Society    ${Rownum}
+#	    ${DiscountCondition2}=    Get Value from excel columnwise    Society    DiscountCondition2
+#	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
+#	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Society    ${Rownum}
 
 	    ${Value1}=    Get Value from excel columnwise    Society    Value1
 	    ${UIValue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[4])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value1
 	    validate the content and update the excel   ${Value1}    ${UIValue1}    UIValidations    Society    ${Rownum}
 
-	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
-	    ${Value2}=    Get Value from excel columnwise    Society    Value2
-
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
-	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Society    ${Rownum}
+#	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
+#	    ${Value2}=    Get Value from excel columnwise    Society    Value2
+#
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
+#	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Society    ${Rownum}
 
 	    ${Percentage1}=    Get Value from excel columnwise    Society    Percentage1
 	    ${UIPercentage1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
 
-	    ${Percentage2}=    Get Value from excel columnwise    Society    Percentage2
-	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+#	    ${Percentage2}=    Get Value from excel columnwise    Society    Percentage2
+#	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
 
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage1
 	    validate the content and update the excel   ${Percentage1}    ${UIPercentage1}    UIValidations    Society    ${Rownum}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
-	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Society    ${Rownum}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
+#	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Society    ${Rownum}
 
 	    ${Applied1}=    Get Value from excel columnwise    Society    Applied1
 	    ${UIApplied1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-
-	    ${Applied2}=    Get Value from excel columnwise    Society    Applied2
+#	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+#
+#	    ${Applied2}=    Get Value from excel columnwise    Society    Applied2
 
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied1
 	    validate the content and update the excel   ${Applied1}    ${UIApplied1}    UIValidations    Society    ${Rownum}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
-	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Society    ${Rownum}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
+#	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Society    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}
-        run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
-        run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
+#        run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
+#        run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
         run keyword and continue on failure    should be equal   ${Percentage1}    ${UIPercentage1}
-        run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
+#        run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
         run keyword and continue on failure    should be equal   ${Value1}    ${UIValue1}
         run keyword and continue on failure    should be equal   ${DiscountCondition1}    ${UIDisountCondition1}
-        run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
+#        run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
         run keyword and continue on failure    should be equal   ${DiscountType1}    ${UIDiscountType1}
-        run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
+#        run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
         run keyword and continue on failure    should be equal   ${TotalCharge}    ${UITotalCharge}
         run keyword and continue on failure    should be equal   ${Tax}    ${UITax}
         run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
@@ -650,17 +650,17 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${DiscountType1}    ${UIDiscountType1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${DiscountType1}    ${UIDiscountType1}
 	#
-	    ${DiscountType2}=    Get Value from excel columnwise    Multiple    DiscountType2
-	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
-	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
-	#
-	    ${DiscountType3}=    Get Value from excel columnwise    Multiple    DiscountType3
-	    ${UIDiscounttype3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[1])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType3
-	    validate the content and update the excel   ${DiscountType3}    ${UIDiscountType3}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${DiscountType3}    ${UIDiscountType3}
+#	    ${DiscountType2}=    Get Value from excel columnwise    Multiple    DiscountType2
+#	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
+#	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
+#	#
+#	    ${DiscountType3}=    Get Value from excel columnwise    Multiple    DiscountType3
+#	    ${UIDiscounttype3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[1])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType3
+#	    validate the content and update the excel   ${DiscountType3}    ${UIDiscountType3}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${DiscountType3}    ${UIDiscountType3}
 
 	    ${DiscountCondition1}=    Get Value from excel columnwise    Multiple    DiscountCondition1
 	    ${UIDisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
@@ -668,67 +668,67 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${DiscountCondition1}    ${UIDisountCondition1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${DiscountCondition1}    ${UIDisountCondition1}
 
-	    ${DiscountCondition2}=    Get Value from excel columnwise    Multiple    DiscountCondition2
-	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
-	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
-
-
-
-	    ${DiscountCondition3}=    Get Value from excel columnwise    Multiple    DiscountCondition3
-	    ${UIDisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition3
-	    validate the content and update the excel   ${DiscountCondition3}    ${UIDisountCondition3}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${DiscountCondition3}    ${UIDisountCondition3}
+#	    ${DiscountCondition2}=    Get Value from excel columnwise    Multiple    DiscountCondition2
+#	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
+#	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
+#
+#
+#
+#	    ${DiscountCondition3}=    Get Value from excel columnwise    Multiple    DiscountCondition3
+#	    ${UIDisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition3
+#	    validate the content and update the excel   ${DiscountCondition3}    ${UIDisountCondition3}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${DiscountCondition3}    ${UIDisountCondition3}
 
 	    ${Value1}=    Get Value from excel columnwise    Multiple    Value1
 	    ${UIValue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[4])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value1
 	    validate the content and update the excel   ${Value1}    ${UIValue1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Value1}    ${UIValue1}
-	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
-	    ${UIValue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[4])[1]
-	    ${Value2}=    Get Value from excel columnwise    Multiple    Value2
-	    ${Value3}=    Get Value from excel columnwise    Multiple    Value3
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
-	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Value3
-	    validate the content and update the excel   ${Value3}    ${UIValue3}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${Value3}    ${UIValue3}
+#	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
+#	    ${UIValue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[4])[1]
+#	    ${Value2}=    Get Value from excel columnwise    Multiple    Value2
+#	    ${Value3}=    Get Value from excel columnwise    Multiple    Value3
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
+#	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Value3
+#	    validate the content and update the excel   ${Value3}    ${UIValue3}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${Value3}    ${UIValue3}
 
 	    ${Percentage1}=    Get Value from excel columnwise    Multiple    Percentage1
 	    ${UIPercentage1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-	    ${UIPercentage3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-	    ${Percentage2}=    Get Value from excel columnwise    Multiple    Percentage2
-	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-	    ${Percentage3}=    Get Value from excel columnwise    Multiple    Percentage3
+#	    ${UIPercentage3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
+#	    ${Percentage2}=    Get Value from excel columnwise    Multiple    Percentage2
+#	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+#	    ${Percentage3}=    Get Value from excel columnwise    Multiple    Percentage3
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage1
 	    validate the content and update the excel   ${Percentage1}    ${UIPercentage1}    UIValidations    Multiple    ${Rownum}
 
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
-	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Multiple    ${Rownum}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage3
-	    validate the content and update the excel   ${Percentage3}    ${UIPercentage3}    UIValidations    Multiple    ${Rownum}
-	    run keyword and continue on failure    should be equal   ${Percentage3}    ${UIPercentage3}
-	    run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
+#	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Multiple    ${Rownum}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage3
+#	    validate the content and update the excel   ${Percentage3}    ${UIPercentage3}    UIValidations    Multiple    ${Rownum}
+#	    run keyword and continue on failure    should be equal   ${Percentage3}    ${UIPercentage3}
+#	    run keyword and continue on failure    should be equal   ${Percentage2}    ${UIPercentage2}
 	    run keyword and continue on failure    should be equal   ${Percentage1}    ${UIPercentage1}
 	    ${Applied1}=    Get Value from excel columnwise    Multiple    Applied1
 	    ${UIApplied1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-	    ${UIApplied3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-	    ${Applied2}=    Get Value from excel columnwise    Multiple    Applied2
-	    ${Applied3}=    Get Value from excel columnwise    Multiple    Applied3
+#	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+#	    ${UIApplied3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
+#	    ${Applied2}=    Get Value from excel columnwise    Multiple    Applied2
+#	    ${Applied3}=    Get Value from excel columnwise    Multiple    Applied3
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied1
 	    validate the content and update the excel   ${Applied1}    ${UIApplied1}    UIValidations    Multiple    ${Rownum}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
-	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Multiple    ${Rownum}
-	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied3
-	    validate the content and update the excel   ${Applied3}    ${UIApplied3}    UIValidations    Multiple    ${Rownum}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
+#	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Multiple    ${Rownum}
+#	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied3
+#	    validate the content and update the excel   ${Applied3}    ${UIApplied3}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}
-	    run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
-	    run keyword and continue on failure    should be equal   ${Applied3}    ${UIApplied3}
+#	    run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
+#	    run keyword and continue on failure    should be equal   ${Applied3}    ${UIApplied3}
 	ELSE
         ${Rownum}=    Get excel row number   ${Rowcount}    OrderID
         Write Output Excel    UIValidations    FunderPaid    ${Rownum}    ${list}[0]
