@@ -30,8 +30,8 @@ Create PP with Geo Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Geo Waiver'
-            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
-            Create Document
+#            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
+#            Create Document
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -111,8 +111,8 @@ Create PP with Geo Waiver
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${WaiverCaseFilePath}
-    save document    ${FILE_NAME}
-    close document
+#    save document    ${FILE_NAME}
+#    close document
 
 Create PP with Society Waiver
     [Tags]    id=WA_OP_02
@@ -125,8 +125,8 @@ Create PP with Society Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Society Waiver'
-            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
-            Create Document
+#            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
+#            Create Document
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -198,8 +198,8 @@ Create PP with Society Waiver
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${WaiverCaseFilePath}
-    save document    ${FILE_NAME}
-    close document
+#    save document    ${FILE_NAME}
+#    close document
 
 Create PP with ArticleType Waiver
     [Tags]    id=WA_OP_03
