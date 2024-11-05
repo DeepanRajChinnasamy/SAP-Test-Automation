@@ -28,6 +28,8 @@ ${BASE_URLQA}       https://api.wileyas.qa2.viax.io/graphql
 ${EMPTY}
 ${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MjA0NjYwNzMsImlhdCI6MTcyMDQ1ODg3MywianRpIjoiY2E2MjFkM2QtNjNiYi00Y2ZjLWI3MGEtOTMzMmEyOTNjNDU2IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiI1ODhlN2U0ZC1lOWFmLTQ5NDUtYjFmMC04MjJlNjcyNDJjNzAiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiNTg4ZTdlNGQtZTlhZi00OTQ1LWIxZjAtODIyZTY3MjQyYzcwIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.gO-I1yUvS1kKpdElahXR7bsie_BsR0gbgKBQ2ulJkkSILrUGg9UFrfxkBP9CbYgR_S8IkN5MiUv2BcDroRRj6lo6NeJj-IVNWKBxeKZnSVCxhCJqX8j1kY70ppr5brYoIMtC_AuuyXcuMVObl716P5zhdC8IsIXElUFr5wrp71CfoFzievv6j18cGpuWvjvJ_Pi-m8-E_8OX04ZdU9wl5w88RBSgQB7wt8WYJkc_t7O7dUpXRmjPIXTgxC3Con2NQphcV9HOzrhCq_EwcCRs8bWA-GzSX-rx0ubdB-x5vMMZeBakq6zSZxkaW9YQ_4Sp0Lv5r6PddO80uKS1Huj9Vg
 ${response_text}
+${Screenshotdir}    ${execdir}\\Screenshots\\
+${Screenshotfolder}    ${execdir}\\Screenshots\\
 ${True}    True
 ${END}    END
 ${LastNameList}
@@ -1153,11 +1155,20 @@ Read All Input Values From STEP Input
 #    open excel document    ${Var_STEPInput}    docID
 
 Save ScreenShot
+    [Arguments]    ${Folderpath}
     ${screenshotname}=   get time
     ${screenshotname}=    replace string   ${screenshotname}    -    ${EMPTY}
     ${screenshotname}=    replace string   ${screenshotname}    :    ${EMPTY}
     ${screenshotname}=    replace string   ${screenshotname}    ${SPACE}    ${EMPTY}
-    capture page screenshot    ${execdir}\\Screenshots\\${screenshotname}.png
+    capture page screenshot    ${Folderpath}\\${screenshotname}.png
+#    add image    ${Folderpath}\\${screenshotname}.png
+
+GetTimeStamp
+    ${screenshotname}=   get time
+    ${screenshotname}=    replace string   ${screenshotname}    -    ${EMPTY}
+    ${screenshotname}=    replace string   ${screenshotname}    :    ${EMPTY}
+    ${timestamp}=    replace string   ${screenshotname}    ${SPACE}    ${EMPTY}
+    RETURN    ${timestamp}
 
 
 Read All Input Values HandoverForm

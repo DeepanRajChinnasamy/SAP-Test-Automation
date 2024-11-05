@@ -13,11 +13,13 @@ ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynI
 ${PPURL}
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 ${PPInputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
+${Screenshotfolder}    ${execdir}\\\Screenshots\\
 
 *** Test Cases ***
 
 Create PP with Society discount
     [Tags]    id=NC_OP_01
+#    set screenshot folder
     log to console    ${PPInputExcelPath}
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
@@ -80,9 +82,13 @@ Create PP with Society discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+#                ${date}=    get current date
+#                ${timestamp}=    get time    epoch
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
+                customvariables.save screenshot    ${Screenshotfolder}
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -105,6 +111,7 @@ Create PP with Society discount
 #                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
+                customvariables.save screenshot    ${Screenshotfolder}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -199,10 +206,12 @@ Create PP with Promotional discount
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                customvariables.save screenshot    ${Screenshotfolder}
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
+                customvariables.save screenshot    ${Screenshotfolder}
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -226,6 +235,7 @@ Create PP with Promotional discount
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
+                customvariables.save screenshot    ${Screenshotfolder}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
 
 
@@ -324,10 +334,13 @@ Create PP with Institutional discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+               ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
+               customvariables.save screenshot    ${Screenshotfolder}
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
                 run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
@@ -348,6 +361,7 @@ Create PP with Institutional discount
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -440,7 +454,7 @@ Create PP with Editorial discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -557,9 +571,11 @@ Create PP with Referral discount
                 sleep    5s
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+               ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                customvariables.save screenshot    ${Screenshotfolder}
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
@@ -582,6 +598,7 @@ Create PP with Referral discount
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
 
             ELSE
@@ -671,9 +688,11 @@ Create PP with Geographical discount
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -698,6 +717,7 @@ Create PP with Geographical discount
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -782,12 +802,15 @@ Create PP with Article type discount
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
+                customvariables.save screenshot    ${Screenshotfolder}
 #                ${Discounttype1}=    SeleniumLibrary.get text   //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[1]
 #                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
 #                ${DisountCondition1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[2]
@@ -889,9 +912,11 @@ Create PP with Stacked Institutional discount
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -919,6 +944,7 @@ Create PP with Stacked Institutional discount
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00GBP
+                customvariables.save screenshot    ${Screenshotfolder}
 
 
 #        should contain  ${check}  True
@@ -1015,9 +1041,11 @@ Create PP with multiple Society and Promotional discounts
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -1049,6 +1077,7 @@ Create PP with multiple Society and Promotional discounts
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -1138,11 +1167,13 @@ Create PP with same discount Geographical Editorial and Society discounts
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    7s
-                ${elemId}=    SeleniumLibrary.Get WebElement    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${elemId}=    SeleniumLibrary.Get WebElement   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 wait until element is visible    ${elemId}
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -1167,6 +1198,7 @@ Create PP with same discount Geographical Editorial and Society discounts
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1274,9 +1306,11 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -1332,6 +1366,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1411,9 +1446,11 @@ Create PP with Multiple Insitutional discounts
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -1521,9 +1558,11 @@ Create PP with Funder details
                 sleep    5s
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-               ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    FunderPaid
@@ -1615,9 +1654,11 @@ Create PP with Invalid Promotional discount code
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
@@ -1643,6 +1684,7 @@ Create PP with Invalid Promotional discount code
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
+                customvariables.save screenshot    ${Screenshotfolder}
 
 
             ELSE
@@ -1732,9 +1774,11 @@ Create PP with Manual override required value as Yes
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    MANUAL OVERRIDE REQUIRED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
@@ -1746,6 +1790,7 @@ Create PP with Manual override required value as Yes
                 run keyword and continue on failure    should be equal    ${Percentagevalue1}     ${discountpercentage1}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[2]/table/tbody/tr/td[5]
                 run keyword and continue on failure    should be equal    ${AppliedYes1}     ${appliedyes1}
+                customvariables.save screenshot    ${Screenshotfolder}
 
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1826,12 +1871,15 @@ Create PP with Invalid Society
                 should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
+                customvariables.save screenshot    ${Screenshotfolder}
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1912,12 +1960,15 @@ Create PP with Invalid Article Type
                 should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
+                customvariables.save screenshot    ${Screenshotfolder}
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -1997,12 +2048,15 @@ Create PP with Invalid Editorial
                 should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
+                customvariables.save screenshot    ${Screenshotfolder}
 #                should contain  ${check}  True
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
@@ -2080,9 +2134,11 @@ Create PP with Invalid Referal
                 should contain any   ${errormessage}    ReSend    ReSend
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
@@ -2163,9 +2219,11 @@ Create PP with Invalid CountryCode
                 should contain any   ${errormessage}    ReSend    ReSend
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
@@ -2244,9 +2302,11 @@ Create PP with Invalid MailId
                 should contain any   ${errormessage}    ReSend    ReSend
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    RE SEND
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    Undefined
@@ -2330,9 +2390,11 @@ Create PP Society discount with Rejected
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
 
 #                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -2371,13 +2433,16 @@ Create PP Society discount with Rejected
 #                END
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 sleep    3s
+                customvariables.save screenshot    ${Screenshotfolder}
                 JS Click Element    //*[contains(@id,"single-spa-application:parcel")]//Span//div
                 sleep    5s
                 JS Click Element    (//*[contains(@id,"single-spa-application:parcel")]//div[2]/div/div[1]/div)[3]
                 JS Click Element    //*[@class="x-button x-button_type_primary"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${UIStatus}=    convert to upper case    ${UIStatus}
+                customvariables.save screenshot    ${Screenshotfolder}
                 IF    '${UIStatus}' == 'REJECTED'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${UIStatus}    00FF00
                     save excel document    ${PPInputExcelPath}
@@ -2463,9 +2528,11 @@ Create PP Society discount with Withdrawn
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
 
 #                run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
@@ -2504,12 +2571,14 @@ Create PP Society discount with Withdrawn
 #                END
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 sleep    3s
+                customvariables.save screenshot    ${Screenshotfolder}
                 JS Click Element    //*[contains(@id,"single-spa-application:parcel")]//Span//div
                 sleep    5s
                 JS Click Element    (//*[contains(@id,"single-spa-application:parcel")]//div[2]/div/div[2]/div)[3]
                 JS Click Element    //*[@class="x-button x-button_type_primary"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${UIStatus}=    convert to upper case    ${UIStatus}
                 IF    '${UIStatus}' == 'WITHDRAWN'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${UIStatus}    00FF00
@@ -2519,6 +2588,7 @@ Create PP Society discount with Withdrawn
                     save excel document    ${PPInputExcelPath}
                 END
                 run keyword and continue on failure    should be equal    ${UIStatus}    WITHDRAWN
+                customvariables.save screenshot    ${Screenshotfolder}
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -2588,9 +2658,11 @@ Verify UI Change Data Correction to Price Determined
                 should contain any   ${errormessage}    DataCorrectionRequired    DataCorrectionRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    DATA CORRECTION REQUIRED
                 should be equal    ${Typeofpayment}    Undefined
@@ -2599,11 +2671,13 @@ Verify UI Change Data Correction to Price Determined
                 seleniumlibrary.click element      //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div//div[4]/div[3]/button
                 Reload Page
                 sleep  5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 should be equal    ${UIStatus}    PRICE DETERMINED
+                customvariables.save screenshot    ${Screenshotfolder}
                 write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    DATA CORRECTION REQUIRED::PRICE DETERMINED    00FF00
                 ${Typeofpayment}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/h2/span
                 should be equal    ${Typeofpayment}    AuthorPaid
+                customvariables.save screenshot    ${Screenshotfolder}
             ELSE
                 ${error_code}=  Set Variable  ${json_dict['errors']}
                 ${error_code}=    convert to string    ${error_code}
@@ -2793,3 +2867,4 @@ getdate
     [Arguments]   ${date_format}
     ${Formatted_Date}       Get Current Date     result_format=${date_format}
     RETURN       ${Formatted_Date}
+
