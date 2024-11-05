@@ -13,6 +13,7 @@ ${SubId}    24ef<<RandomNum>>-<<Randomt3digit>>b-4808-9127-af8e42410<<RandonDynI
 ${PPURL}     #https://wileyas.qa2.viax.io/price-proposals
 ${QA2_Graphql}    https://api.wileyas.stage.viax.io/graphql
 ${WaiverCaseFilePath}    ${execdir}\\UploadExcel\\TD_WavierCases.xlsx
+${Screenshotdir}    ${execdir}\\Screenshots\\
 
 
 
@@ -29,6 +30,8 @@ Create PP with Geo Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Geo Waiver'
+            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
+            Create Document
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -72,9 +75,19 @@ Create PP with Geo Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+#                Add image to wordfile    ${FolderName}
+#                ${timestamp}=    gettimestamp
+#                capture page screenshot    ${execdir}\\${FolderName}\\${timestamp}.png
+#                add image    ${execdir}\\${FolderName}\\${timestamp}.png
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+#                Add image to wordfile    ${FolderName}
+#                ${timestamp}=    gettimestamp
+#                capture page screenshot    ${execdir}\\${FolderName}\\${timestamp}.png
+#                add image    ${execdir}\\${FolderName}\\${timestamp}.png
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -98,6 +111,8 @@ Create PP with Geo Waiver
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${WaiverCaseFilePath}
+    save document    ${FILE_NAME}
+    close document
 
 Create PP with Society Waiver
     [Tags]    id=WA_OP_02
@@ -110,6 +125,8 @@ Create PP with Society Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Society Waiver'
+            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
+            Create Document
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -149,9 +166,15 @@ Create PP with Society Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
+#                Add image to wordfile    ${FolderName}
+#                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+#                Add image to wordfile    ${FolderName}
+#                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -175,6 +198,8 @@ Create PP with Society Waiver
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${WaiverCaseFilePath}
+    save document    ${FILE_NAME}
+    close document
 
 Create PP with ArticleType Waiver
     [Tags]    id=WA_OP_03
@@ -187,6 +212,7 @@ Create PP with ArticleType Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Article Waiver'
+
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -231,9 +257,11 @@ Create PP with ArticleType Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -315,9 +343,11 @@ Create PP with Editorial Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -399,9 +429,11 @@ Create PP with Promotional Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -483,9 +515,11 @@ Create PP - Funder Affiliation with Geo Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -567,9 +601,11 @@ Create PP - Funder Affiliation with Editorial Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -651,9 +687,11 @@ Create PP - Funder Affiliation with Article Type Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
@@ -735,9 +773,11 @@ PP - Funder Affiliation with Society Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -820,9 +860,11 @@ PP - Funder Affiliation with Promo Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -904,9 +946,11 @@ Create PP - Funder Affiliation with Geo Discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -988,9 +1032,11 @@ Create PP - Funder Affiliation with Article Type Discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -1070,9 +1116,11 @@ Create PP - Funder Affiliation with Editorial Discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -1154,9 +1202,11 @@ Create PP - Funder Affiliation with Society Discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -1238,9 +1288,11 @@ Create PP - Funder Affiliation with Promotional Discount
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-                ${UIStatus}=    SeleniumLibrary.get text    //*[@class="x-order-details__status-wrapper"]
+                customvariables.save screenshot    ${Screenshotfolder}
+                ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    FunderPaid
@@ -1426,6 +1478,9 @@ Open Excel and DBS
      @{list}=     CustomLib.Get Value From Json    ${JsonResp}    $.access_token
      ${AuthToken}=    set variable    ${list}[0]
      set suite variable    ${AuthToken}    ${AuthToken}
+     ${FolderName}=    gettimestamp
+     create directory    ${execdir}\\${FolderName}
+     set suite variable    ${FolderName}    ${FolderName}
 
 
 Close Excel and Browser
@@ -1447,3 +1502,9 @@ getdate
     [Arguments]   ${date_format}
     ${Formatted_Date}       Get Current Date     result_format=${date_format}
     RETURN       ${Formatted_Date}
+
+Add image to wordfile
+    [Arguments]    ${FolderName}
+    ${timestamp}=    gettimestamp
+    capture page screenshot    ${execdir}\\${FolderName}\\${timestamp}.png
+    add image    ${execdir}\\${FolderName}\\${timestamp}.png
