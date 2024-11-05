@@ -9,9 +9,9 @@ from robot.utils.asserts import fail
 from jsonpath_ng import Index, Fields
 from jsonpath_ng.ext import parse as parse_ng
 from jsonpath_ng.exceptions import JsonPathParserError
-from docx import Document
-from docx.shared import Inches
-import shutil
+# from docx import Document
+# from docx.shared import Inches
+# import shutil
 
 
 
@@ -324,50 +324,50 @@ class CustomLib:
         parsed_json = json.loads(json_data)
         return parsed_json[key]
 
-    def __init__(self):
-        self.doc = None
-
-    def create_document(self):
-        """Initialize a new Word document."""
-        self.doc = Document()
-
-    def add_heading(self, text, level=1):
-        """Add a heading to the Word document."""
-        if self.doc:
-            self.doc.add_heading(text, level=level)
-        else:
-            raise ValueError("Document not initialized. Use 'Create Document' first.")
-
-    def add_paragraph(self, text):
-        """Add a paragraph to the Word document."""
-        if self.doc:
-            self.doc.add_paragraph(text)
-        else:
-            raise ValueError("Document not initialized. Use 'Create Document' first.")
-
-    def add_image(self, image_path, width=7, height=4):
-        """Add an image to the Word document."""
-        if self.doc:
-            if width and height:
-                self.doc.add_picture(image_path, width=Inches(width), height=Inches(height))
-            else:
-                self.doc.add_picture(image_path)
-
-        else:
-            raise ValueError("Document not initialized. Use 'Create Document' first.")
-
-    def save_document(self, file_path):
-        """Save the Word document to a specified path."""
-        if self.doc:
-            self.doc.save(file_path)
-        else:
-            raise ValueError("Document not initialized. Use 'Create Document' first.")
-
-    def close_document(self):
-        """Close the document by setting it to None."""
-        self.doc = None
-
-    @staticmethod
-    def compress_folder(folder_path, zip_name):
-        """Compresses the specified folder into a ZIP file."""
-        shutil.make_archive(zip_name, 'zip', folder_path)
+    # def __init__(self):
+    #     self.doc = None
+    #
+    # def create_document(self):
+    #     """Initialize a new Word document."""
+    #     self.doc = Document()
+    #
+    # def add_heading(self, text, level=1):
+    #     """Add a heading to the Word document."""
+    #     if self.doc:
+    #         self.doc.add_heading(text, level=level)
+    #     else:
+    #         raise ValueError("Document not initialized. Use 'Create Document' first.")
+    #
+    # def add_paragraph(self, text):
+    #     """Add a paragraph to the Word document."""
+    #     if self.doc:
+    #         self.doc.add_paragraph(text)
+    #     else:
+    #         raise ValueError("Document not initialized. Use 'Create Document' first.")
+    #
+    # def add_image(self, image_path, width=7, height=4):
+    #     """Add an image to the Word document."""
+    #     if self.doc:
+    #         if width and height:
+    #             self.doc.add_picture(image_path, width=Inches(width), height=Inches(height))
+    #         else:
+    #             self.doc.add_picture(image_path)
+    #
+    #     else:
+    #         raise ValueError("Document not initialized. Use 'Create Document' first.")
+    #
+    # def save_document(self, file_path):
+    #     """Save the Word document to a specified path."""
+    #     if self.doc:
+    #         self.doc.save(file_path)
+    #     else:
+    #         raise ValueError("Document not initialized. Use 'Create Document' first.")
+    #
+    # def close_document(self):
+    #     """Close the document by setting it to None."""
+    #     self.doc = None
+    #
+    # @staticmethod
+    # def compress_folder(folder_path, zip_name):
+    #     """Compresses the specified folder into a ZIP file."""
+    #     shutil.make_archive(zip_name, 'zip', folder_path)
