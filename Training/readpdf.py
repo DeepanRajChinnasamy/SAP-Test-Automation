@@ -22,3 +22,6 @@ if __name__ == '__main__':
     pdf_path = input('Enter the path to the PDF file: ')
     # file_path= input('Enter the path to the PDF file: ')
     readpdf(pdf_path)
+
+
+

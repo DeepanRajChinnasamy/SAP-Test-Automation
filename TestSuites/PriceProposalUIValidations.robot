@@ -61,8 +61,10 @@ Create PP with Funder Paid with UI Validations
         #Validation in UI
         SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
         sleep    5s
+        customvariables.save screenshot    ${Screenshotdir}
         seleniumlibrary.click element    //*[@title="#${OrderID}"]
         sleep    7s
+        customvariables.save screenshot    ${Screenshotdir}
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleType
         ${BaseArticleType}=    Get Value from excel columnwise    FunderPaid    BaseArticleType
         ${UIBaseArticleType}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[3]
@@ -82,6 +84,7 @@ Create PP with Funder Paid with UI Validations
 
         ${FirstName}=    Get Value from excel columnwise    FunderPaid    FirstName
         ${LastName}=    Get Value from excel columnwise    FunderPaid    LastName
+        customvariables.save screenshot    ${Screenshotdir}
         ${Name}=    Set Variable    ${FirstName} ${LastName}
         ${UIName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[1]
         @{namelist}=    split string    ${UIName}    ${SPACE}
@@ -118,7 +121,7 @@ Create PP with Funder Paid with UI Validations
         ${UIPublishedIn}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    FunderPaid    ${Rownum}
-
+        customvariables.save screenshot    ${Screenshotdir}
 #        ${MauScriptId}=    Get Value from excel columnwise    FunderPaid    MauScriptId
         ${MauScriptId}=    set variable    CAM4-2024-04-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
@@ -177,6 +180,7 @@ Create PP with Funder Paid with UI Validations
         ${TotalCharge}=    Get Value from excel columnwise    FunderPaid    TotalCharge
         ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
         ${Rownum}=    Get excel row number   ${Rowcount}    TotalCharge
+        customvariables.save screenshot    ${Screenshotdir}
         validate the content and update the excel   ${TotalCharge}    ${UITotalCharge}    UIValidations    FunderPaid    ${Rownum}
         run keyword and continue on failure    should be equal   ${TotalCharge}    ${UITotalCharge}
         run keyword and continue on failure    should be equal   ${Tax}    ${UITax}
@@ -249,8 +253,10 @@ Create PP with Society discount with UI Validations
         #Validation in UI
         SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
         sleep    5s
+        customvariables.save screenshot    ${Screenshotdir}
         seleniumlibrary.click element    //*[@title="#${OrderID}"]
         sleep    7s
+        customvariables.save screenshot    ${Screenshotdir}
         seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleType
         ${BaseArticleType}=    Get Value from excel columnwise    Society    BaseArticleType
@@ -268,6 +274,7 @@ Create PP with Society discount with UI Validations
 
         ${FirstName}=    Get Value from excel columnwise    Society    FirstName
         ${LastName}=    Get Value from excel columnwise    Society    LastName
+        customvariables.save screenshot    ${Screenshotdir}
         ${Name}=    Set Variable    ${FirstName} ${LastName}
         ${UIName}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[1]
         @{namelist}=    split string    ${UIName}    ${SPACE}
@@ -296,7 +303,7 @@ Create PP with Society discount with UI Validations
         ${UIInstitution}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[9]
         ${Rownum}=    Get excel row number   ${Rowcount}    Institution
         validate the content and update the excel   ${Institution}    ${UIInstitution}    UIValidations    Society    ${Rownum}
-
+        customvariables.save screenshot    ${Screenshotdir}
 
 
         ${CountryCode}=    Get Value from excel columnwise    Society    CountryCode
@@ -366,6 +373,7 @@ Create PP with Society discount with UI Validations
         ${UITax}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    Tax
         validate the content and update the excel   ${Tax}    ${UITax}    UIValidations    Society    ${Rownum}
+        customvariables.save screenshot    ${Screenshotdir}
 
         ${TotalCharge}=    Get Value from excel columnwise    Society    TotalCharge
         ${UITotalCharge}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[6]
@@ -386,7 +394,7 @@ Create PP with Society discount with UI Validations
 	    ${UIDisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
 	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition1
 	    validate the content and update the excel   ${DiscountCondition1}    ${UIDisountCondition1}    UIValidations    Society    ${Rownum}
-
+        customvariables.save screenshot     ${Screenshotdir}
 #	    ${DiscountCondition2}=    Get Value from excel columnwise    Society    DiscountCondition2
 #	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
@@ -415,12 +423,14 @@ Create PP with Society discount with UI Validations
 #	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Society    ${Rownum}
 
 	    ${Applied1}=    Get Value from excel columnwise    Society    Applied1
+	    customvariables.save screenshot    ${Screenshotdir}
 	    ${UIApplied1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
 #	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
 #
 #	    ${Applied2}=    Get Value from excel columnwise    Society    Applied2
 
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied1
+	    customvariables.save screenshot    ${Screenshotdir}
 	    validate the content and update the excel   ${Applied1}    ${UIApplied1}    UIValidations    Society    ${Rownum}
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
 #	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Society    ${Rownum}
@@ -505,8 +515,10 @@ Create PP with Multiple discount with UI Validations
         #Validation in UI
         SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
         sleep    5s
+        customvariables.save screenshot    ${Screenshotdir}
         seleniumlibrary.click element    //*[@title="#${OrderID}"]
         sleep    7s
+        customvariables.save screenshot    ${Screenshotdir}
         seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
         ${Rownum}=    Get excel row number   ${Rowcount}    BaseArticleType
         ${BaseArticleType}=    Get Value from excel columnwise    Multiple    BaseArticleType
@@ -525,7 +537,7 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    ArticleTitle
         validate the content and update the excel   ${ArticleTitle}    ${UIArticleTitle}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${ArticleTitle}    ${UIArticleTitle}
-
+        customvariables.save screenshot    ${Screenshotdir}
         ${FirstName}=    Get Value from excel columnwise    Multiple    FirstName
         ${LastName}=    Get Value from excel columnwise    Multiple    LastName
         ${Name}=    Set Variable    ${FirstName} ${LastName}
@@ -540,6 +552,7 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    Name
         validate the content and update the excel   ${Name}    ${UIName}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${Name}    ${UIName}
+        customvariables.save screenshot    ${Screenshotdir}
 
         ${EmailID}=    Get Value from excel columnwise    Multiple    EmailID
         ${UIEmailID}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[2]
@@ -558,7 +571,7 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    Institution
         validate the content and update the excel   ${Institution}    ${UIInstitution}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${Institution}    ${UIInstitution}
-
+        customvariables.save screenshot    ${Screenshotdir}
         ${CountryCode}=    Get Value from excel columnwise    Multiple    CountryCode
         ${UICountry}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//p[2])[10]
         ${Rownum}=    Get excel row number   ${Rowcount}    CountryCode
@@ -570,14 +583,14 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    PublishedIn
         validate the content and update the excel   ${PublishedIn}    ${UIPublishedIn}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${PublishedIn}    ${UIPublishedIn}
-
+        customvariables.save screenshot    ${Screenshotdir}
 #        ${MauScriptId}=    Get Value from excel columnwise    Multiple    MauScriptId
         ${MauScriptId}=    set variable    ACN3-2023-06-${random_4_digit_number}
         ${UIMauscriptID}=    seleniumlibrary.get text    (//*[@class="x-order-basics-view__value"])[1]
         ${Rownum}=    Get excel row number   ${Rowcount}    MauScriptId
         validate the content and update the excel   ${MauScriptId}    ${UIMauScriptId}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${MauScriptId}    ${UIMauScriptId}
-
+        customvariables.save screenshot    ${Screenshotdir}
         ${SubmittedBy}=    Get Value from excel columnwise    Multiple    SubmittedBy
         ${Rownum}=    Get excel row number   ${Rowcount}    SubmittedBy
         validate the content and update the excel   ${SubmittedBy}    ${Name}    UIValidations    Multiple    ${Rownum}
@@ -631,7 +644,7 @@ Create PP with Multiple discount with UI Validations
         ${Rownum}=    Get excel row number   ${Rowcount}    FinalNetPrice
         validate the content and update the excel   ${BaseAPCCharge}    ${UIAPICharge}    UIValidations    Multiple    ${Rownum}
         run keyword and continue on failure    should be equal   ${BaseAPCCharge}    ${UIAPICharge}
-
+        customvariables.save screenshot    ${Screenshotdir}
         ${Tax}=    Get Value from excel columnwise    Multiple    Tax
         ${UITax}=    seleniumlibrary.get text    (//*[contains(@class," x-pricing-view__col x-price-proposal__value")])[5]
         ${Rownum}=    Get excel row number   ${Rowcount}    Tax
@@ -727,6 +740,7 @@ Create PP with Multiple discount with UI Validations
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied3
 #	    validate the content and update the excel   ${Applied3}    ${UIApplied3}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}
+	    customvariables.save screenshot    ${Screenshotdir}
 #	    run keyword and continue on failure    should be equal   ${Applied2}    ${UIApplied2}
 #	    run keyword and continue on failure    should be equal   ${Applied3}    ${UIApplied3}
 	ELSE

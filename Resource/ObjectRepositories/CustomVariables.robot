@@ -59,7 +59,8 @@ ${Browser}        chrome
 ${username}     dchinnasam@wiley.com
 ${password}     VIRapr@678
 ${SearchBox}    //*[@class="x-search-input__field"]
-${statustext}    xpath=/html/body/div[1]/div/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[5]/div/span
+#${statustext}    xpath=/html/body/div[1]/div/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[5]/div/span
+${statustext}    //*[@class="x-pill x-pill_color_primary"]
 ${ordercheck}    xpath=/html/body/div[1]/div/div/div/div[2]/div/div[1]/div[1]
 ${wileyorderdetails}    xpath=/html/body/div[1]/div/div/div[1]/div[2]/div[2]/div/div/div[1]
 ${wileyordersearchbox}    xpath=/html/body/div[1]/div/div/div[1]/div[2]/div[2]/div/div[2]/div/div/div/div/div[4]/div/label/span/input
@@ -562,12 +563,13 @@ Validate Status and Process IDoc
 
 Launch and Login DBS
     [Arguments]    ${URL}    ${username}    ${password}
-    Open Browser    ${URL}    chrome    options=add_experimental_option("detach", True)
+    Open Browser    ${URL}    Edge    options=add_experimental_option("detach", True)
     Maximize Browser Window
     set selenium speed    3s
     SeleniumLibrary.input text      id=username    ${username}
     SeleniumLibrary.input password    id=password    ${password}
     SeleniumLibrary.click element    name=login
+
 
 
 VIAX Order Status

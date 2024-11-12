@@ -246,7 +246,7 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
     Close SAP Connection
 
 #    close all excel documents
-#    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
+#    Read All Input Values From OrderCreationCases    ${PPInputExcelPath}    Data
 #    ${ListIndexIterator}    set variable    0
 #    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
 #    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
@@ -271,16 +271,16 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
 #                ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
 #                Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
 #                Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
-#                save excel document    ${InputFilePath}
+#                save excel document    ${PPInputExcelPath}
 #                go back
 #            END
 #        END
 #        ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
 #        ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
-#        save excel document    ${InputFilePath}
+#        save excel document    ${PPInputExcelPath}
 #        sleep    5s
 #    END
-#    save excel document    ${InputFilePath}
+#    save excel document    ${PPInputExcelPath}
 #    open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
 #    run transaction    /nVA03
 #    sapguilibrary.input text    ${Var_OrderIDTextbox}      8000042395
@@ -304,7 +304,7 @@ E2E_01 Create a PP without any discounts and create an invoice order with P1 Sal
 #    ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
 #    send vkey    3
 #    send vkey    5
-#    slectInvoiceTree        ${Var_InvoiceElement}
+#    selectInvoiceTree        ${Var_InvoiceElement}
 #    send vkey    8
 #    ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
 #    sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT

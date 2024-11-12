@@ -20,111 +20,112 @@ ${Var_Total}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[5
 
 *** Test Cases ***
 
-Create Alipay Order for New Customer with Article discount GOA Order Type
-    [Tags]    id=CO_NW_01
-    Create Order    Create Alipay Order for New Customer with Article discount GOA Order Type
+#Create Alipay Order for New Customer with Article discount GOA Order Type
+#    [Tags]    id=CO_NW_01
+#    Create Order    Create Alipay Order for New Customer with Article discount GOA Order Type
+#
+#CreateCC Order with New Customer P1 with Society Discounts with GOA
+#     [Tags]    id=CO_NW_02
+#    Create Order    CreateCC Order with New Customer P1 with Society Discounts with GOA
+#
+#CreateCC Order with New Customer P2 with Promo Discounts with GOA
+#     [Tags]    id=CO_NW_03
+#    Create Order    CreateCC Order with New Customer P2 with Promo Discounts with GOA
+#
+#CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
+#     [Tags]    id=CO_NW_04
+#    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
+#
+#CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
+#     [Tags]    id=CO_NW_05
+#    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
+#
+#CreateCC Order with New Customer P4 with Institutional Discounts with GOA
+#     [Tags]    id=CO_NW_06
+#    Create Order    CreateCC Order with New Customer P4 with Institutional Discounts with GOA
+#
+#CreateCC Order with New Customer P4 with Article Type Discounts with GOA
+#     [Tags]    id=CO_NW_07
+#    Create Order    CreateCC Order with New Customer P4 with Article Type Discounts with GOA
+#
+#Create Invoice Order with New Customer P1 with Promo Discounts with GOA
+#     [Tags]    id=CO_NW_08
+#    Create Order    Create Invoice Order with New Customer P1 with Promo Discounts with GOA
+#
+#Create Invoice Order with New Customer P2 with Society Discounts with GOA
+#     [Tags]    id=CO_NW_09
+#    Create Order    Create Invoice Order with New Customer P2 with Society Discounts with GOA
+#Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+#    [Tags]    id=CO_NW_10
+#    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+#Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+#    [Tags]    id=CO_NW_11
+#    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+#Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
+#     [Tags]    id=CO_NW_12
+#    Create Order    Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
+#Create Invoice Order with New Customer P4 with Article Discounts with GOA
+#    [Tags]    id=CO_NW_13
+#    Create Order    Create Invoice Order with New Customer P4 with Article Discounts with GOA
+#Create Proforma Order with New Customer P1 with Society Discounts with GOA
+#    [Tags]    id=CO_NW_14
+#    Create Order    Create Proforma Order with New Customer P1 with Society Discounts with GOA
+#Create Proforma Order with New Customer P2 with Promo Discounts with GOA
+#    [Tags]    id=CO_NW_15
+#    Create Order    Create Proforma Order with New Customer P2 with Promo Discounts with GOA
+#Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+#    [Tags]    id=CO_NW_16
+#    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+#Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+#    [Tags]    id=CO_NW_17
+#    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+#Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
+#    [Tags]    id=CO_NW_18
+#    Create Order    Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
+#Create Proforma Order with New Customer P4 with Article Discounts with GOA
+#    [Tags]    id=CO_NW_19
+#    Create Order    Create Proforma Order with New Customer P4 with Article Discounts with GOA
+#Create Order with Society Discount (%) P1 with CC HOA Order
+#    [Tags]    id=CO_NW_20
+#    Create Order    Create Order with Society Discount (%) P1 with CC HOA Order
+#Create Order with Promo Discount (%) P2 with CC HOA Order
+#    [Tags]    id=CO_NW_21
+#    Create Order    Create Order with Promo Discount (%) P2 with CC HOA Order
+#Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
+#    [Tags]    id=CO_NW_22
+#    Create Order    Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
+#Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
+#    [Tags]    id=CO_NW_23
+#    Create Order    Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
+#Create Order with Institutional Discount P4 with CC HOA Order
+#    [Tags]    id=CO_NW_24
+#    Create Order    Create Order with Institutional Discount P4 with CC HOA Order
+#Create Order with Custom Discount P4 with CC HOA Order
+#    [Tags]    id=CO_NW_25
+#    Create Order    Create Order with Custom Discount P4 with CC HOA Order
+#Create Order with Society Discount (Value) P1 with Invoice HOA Order
+#    [Tags]    id=CO_NW_26
+#    Create Order    Create Order with Society Discount (Value) P1 with Invoice HOA Order
+#Create Order with Promo Discount (Value) P2 with Invoice HOA Order
+#    [Tags]    id=CO_NW_27
+#    Create Order    Create Order with Promo Discount (Value) P2 with Invoice HOA Order
+#Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
+#    [Tags]    id=CO_NW_28
+#    Create Order    Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
+#Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
+#    [Tags]    id=CO_NW_29
+#    Create Order    Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
+#Create Order with Custom Discount P4 with Invoice HOA Order
+#    [Tags]    id=CO_NW_30
+#    Create Order    Create Order with Custom Discount P4 with Invoice HOA Order
+#Create Order with Institutional Discount P4 with Invoice HOA Order
+#    [Tags]    id=CO_NW_31
+#    Create Order    Create Order with Institutional Discount P4 with Invoice HOA Order
+#Create Order with Society Discount Value P4 with Alipay HOA Order
+#    [Tags]    id=CO_NW_32
+#    Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
+#    close all excel documents
 
-CreateCC Order with New Customer P1 with Society Discounts with GOA
-     [Tags]    id=CO_NW_02
-    Create Order    CreateCC Order with New Customer P1 with Society Discounts with GOA
-
-CreateCC Order with New Customer P2 with Promo Discounts with GOA
-     [Tags]    id=CO_NW_03
-    Create Order    CreateCC Order with New Customer P2 with Promo Discounts with GOA
-
-CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
-     [Tags]    id=CO_NW_04
-    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
-
-CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
-     [Tags]    id=CO_NW_05
-    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
-
-CreateCC Order with New Customer P4 with Institutional Discounts with GOA
-     [Tags]    id=CO_NW_06
-    Create Order    CreateCC Order with New Customer P4 with Institutional Discounts with GOA
-
-CreateCC Order with New Customer P4 with Article Type Discounts with GOA
-     [Tags]    id=CO_NW_07
-    Create Order    CreateCC Order with New Customer P4 with Article Type Discounts with GOA
-
-Create Invoice Order with New Customer P1 with Promo Discounts with GOA
-     [Tags]    id=CO_NW_08
-    Create Order    Create Invoice Order with New Customer P1 with Promo Discounts with GOA
-
-Create Invoice Order with New Customer P2 with Society Discounts with GOA
-     [Tags]    id=CO_NW_09
-    Create Order    Create Invoice Order with New Customer P2 with Society Discounts with GOA
-Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-    [Tags]    id=CO_NW_10
-    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-    [Tags]    id=CO_NW_11
-    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
-     [Tags]    id=CO_NW_12
-    Create Order    Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
-Create Invoice Order with New Customer P4 with Article Discounts with GOA
-    [Tags]    id=CO_NW_13
-    Create Order    Create Invoice Order with New Customer P4 with Article Discounts with GOA
-Create Proforma Order with New Customer P1 with Society Discounts with GOA
-    [Tags]    id=CO_NW_14
-    Create Order    Create Proforma Order with New Customer P1 with Society Discounts with GOA
-Create Proforma Order with New Customer P2 with Promo Discounts with GOA
-    [Tags]    id=CO_NW_15
-    Create Order    Create Proforma Order with New Customer P2 with Promo Discounts with GOA
-Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-    [Tags]    id=CO_NW_16
-    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-    [Tags]    id=CO_NW_17
-    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
-    [Tags]    id=CO_NW_18
-    Create Order    Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
-Create Proforma Order with New Customer P4 with Article Discounts with GOA
-    [Tags]    id=CO_NW_19
-    Create Order    Create Proforma Order with New Customer P4 with Article Discounts with GOA
-Create Order with Society Discount (%) P1 with CC HOA Order
-    [Tags]    id=CO_NW_20
-    Create Order    Create Order with Society Discount (%) P1 with CC HOA Order
-Create Order with Promo Discount (%) P2 with CC HOA Order
-    [Tags]    id=CO_NW_21
-    Create Order    Create Order with Promo Discount (%) P2 with CC HOA Order
-Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
-    [Tags]    id=CO_NW_22
-    Create Order    Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
-Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
-    [Tags]    id=CO_NW_23
-    Create Order    Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
-Create Order with Institutional Discount P4 with CC HOA Order
-    [Tags]    id=CO_NW_24
-    Create Order    Create Order with Institutional Discount P4 with CC HOA Order
-Create Order with Custom Discount P4 with CC HOA Order
-    [Tags]    id=CO_NW_25
-    Create Order    Create Order with Custom Discount P4 with CC HOA Order
-Create Order with Society Discount (Value) P1 with Invoice HOA Order
-    [Tags]    id=CO_NW_26
-    Create Order    Create Order with Society Discount (Value) P1 with Invoice HOA Order
-Create Order with Promo Discount (Value) P2 with Invoice HOA Order
-    [Tags]    id=CO_NW_27
-    Create Order    Create Order with Promo Discount (Value) P2 with Invoice HOA Order
-Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
-    [Tags]    id=CO_NW_28
-    Create Order    Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
-Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
-    [Tags]    id=CO_NW_29
-    Create Order    Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
-Create Order with Custom Discount P4 with Invoice HOA Order
-    [Tags]    id=CO_NW_30
-    Create Order    Create Order with Custom Discount P4 with Invoice HOA Order
-Create Order with Institutional Discount P4 with Invoice HOA Order
-    [Tags]    id=CO_NW_31
-    Create Order    Create Order with Institutional Discount P4 with Invoice HOA Order
-Create Order with Society Discount Value P4 with Alipay HOA Order
-    [Tags]    id=CO_NW_32
-    Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
-    close all excel documents
 Validate the Order Status in DBS
     [Tags]    id=CO_NW_33
     sleep    400
@@ -138,14 +139,17 @@ Validate the Order Status in DBS
     ${OrderIdCount}=    get length    ${OrderIdList}
     ${RowCounter}    set variable    2
     FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
-#        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
-#        IF    '${Flag}' == 'Yes'
+##        ${Flag}=    get from list    ${FlagList}    ${ListIndexIterator}
+##        IF    '${Flag}' == 'Yes'
             ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
             IF  '${OrderId}' != 'None'
                 sleep    5s
+
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+#                customvariables.save screenshot
                 ${text}=    SeleniumLibrary.get text    ${statustext}
+#                customvariables.save screenshot
                 FOR    ${waitIterator}    IN RANGE    1    50
                     IF    '${text}' != 'Invoiced' or '${text}' != 'Completed' or '${text}' != 'Proforma Created'
                         reload page
@@ -154,6 +158,7 @@ Validate the Order Status in DBS
                         ${text}=    set variable   ${text}
                         IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                             #sleep    10s
+#                            customvariables.save screenshot
                             exit for loop
                         END
                     ELSE
@@ -164,8 +169,9 @@ Validate the Order Status in DBS
                 IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                     Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
                     #sleep    10s
-                    seleniumlibrary.click element    //*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-list-item__title"]
+                    seleniumlibrary.click element    //*[@title="#${OrderID}"]
                     sleep    7s
+#                    customvariables.save screenshot
                     ${UITax}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[4]
                     ${UIDiscount}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[2]
                     ${UIAPC}=    seleniumlibrary.get text    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[1]
@@ -216,14 +222,16 @@ Validate the Order Status in DBS
                     Validate the content and update the excel    ${Discount}    ${UIDiscount}    Data    Discount    ${RowCounter}
                     ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
                     #sleep    3s
+#                    customvariables.save screenshot
                     ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
+#                    customvariables.save screenshot
                     Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
                     Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
                     save excel document    ${InputFilePath}
                     go back
                 END
             END
-#        END
+##        END
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
         save excel document    ${InputFilePath}
@@ -240,7 +248,7 @@ SAPValidations
     ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
     ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
     Get DBS Orders Link    ${EnironmentValue}
-#    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
+##    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
     ${OrderIdCount}=    get length    ${OrderIdList}
     ${RowCounter}    set variable    2
     open sap logon window    ${SAPGUIPATH}    ${SAPUSERNAME}    ${SAPPASSWORD}    ${ENTERBUTTON}    ${CONNECTION}    ${continuebutton}
@@ -252,7 +260,9 @@ SAPValidations
             ${SubmissionID}=    get from list    ${SubmissionIDList}    ${ListIndexIterator}
             run transaction    /nVA03
             sapguilibrary.input text    ${Var_OrderIDTextbox}      ${saporderId}
+#            customvariables.save screenshot
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[0]
+#            customvariables.save screenshot
             sapguilibrary.click element    ${Var_ItemOverview}
             select table row   ${Var_ItemOverviewTableId}       0
             sapguilibrary.click element    ${Var_OpenItem}
@@ -260,6 +270,7 @@ SAPValidations
             ${TotalAmount}=    get from list    ${TotalAmountList}    ${ListIndexIterator}
             ${NetPrice}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-NETWR
             ${TaxValue}=   SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\06/ssubSUBSCREEN_BODY:SAPLV69A:6201/txtKOMP-MWSBP
+#            customvariables.save screenshot
             @{NetPrice}=    split string    ${NetPrice}    ${SPACE}
             ${NetPrice}=    set variable    ${NetPrice}[0]
             ${NetPrice}=    replace string    ${NetPrice}    ,    ${EMPTY}
@@ -272,24 +283,32 @@ SAPValidations
             run keyword and continue on failure    should be equal    ${NetPrice}    ${TotalAmount}
             Validate the content and update the excel    ${NetPrice}    ${TotalAmount}    Data    SAPPrice    ${RowCounter}
             sapguilibrary.click element    ${Var_OrderData}
+#            customvariables.save screenshot
             ${ReferenceID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ
             ${DBSOrderID}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\11/ssubSUBSCREEN_BODY:SAPMV45A:4454/txtVBKD-IHREZ_E
             run keyword and continue on failure    should be equal    ${DBSOrderID}    ${OrderId}
             Validate the content and update the excel    ${DBSOrderID}    ${OrderId}    Data    OrderId    ${RowCounter}
             sapguilibrary.click element    ${Var_DataB}
+#            customvariables.save screenshot
             ${ArticleNumber}=    SapGuiLibrary.Get Value    /app/con[0]/ses[0]/wnd[0]/usr/tabsTAXI_TABSTRIP_ITEM/tabpT\\15/ssubSUBSCREEN_BODY:SAPMV45A:4462/subKUNDEN-SUBSCREEN_8459:SAPMV45A:8459/txtVBAP-ZZARTNO
             run keyword and continue on failure    should be equal    ${ArticleNumber}    ${SubmissionID}
             Validate the content and update the excel    ${ArticleNumber}    ${SubmissionID}    Data    SubmissionID    ${RowCounter}
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
+#            customvariables.save screenshot
             SapGuiLibrary.selectInvoiceTree     ${Var_InvoiceElement}
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[8]
+#            customvariables.save screenshot
             ${InvoiceNumber}=    SapGuiLibrary.get value    /app/con[0]/ses[0]/wnd[0]/usr/ctxtVBRK-VBELN
+#            customvariables.save screenshot
             write output excel    Data    InvoiceNumber    ${RowCounter}    ${InvoiceNumber}
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/usr/btnTC_OUTPUT
             sapguilibrary.select table row    /app/con[0]/ses[0]/wnd[0]/usr/tblSAPDV70ATC_NAST3    0
+#            customvariables.save screenshot
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[1]/btn[5]
+#            customvariables.save screenshot
             sapguilibrary.click element    /app/con[0]/ses[0]/wnd[0]/tbar[0]/btn[3]
+#            customvariables.save screenshot
         END
         ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
