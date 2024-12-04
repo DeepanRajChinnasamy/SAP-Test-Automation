@@ -76,8 +76,8 @@ Create PP with Society discount
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-#                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+#                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 write output excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}
                 should contain    ${errormessage}    PriceDetermined
@@ -195,7 +195,7 @@ Create PP with Promotional discount
                 ${OrderStatus}=    convert to string    ${OrderID}.
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -319,7 +319,7 @@ Create PP with Institutional discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
 
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
@@ -440,7 +440,7 @@ Create PP with Editorial discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -558,7 +558,7 @@ Create PP with Referral discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -676,7 +676,7 @@ Create PP with Geographical discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -791,7 +791,7 @@ Create PP with Article type discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -900,7 +900,7 @@ Create PP with Stacked Institutional discount
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1029,7 +1029,7 @@ Create PP with multiple Society and Promotional discounts
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1155,7 +1155,7 @@ Create PP with same discount Geographical Editorial and Society discounts
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1294,7 +1294,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1435,7 +1435,7 @@ Create PP with Multiple Insitutional discounts
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1546,7 +1546,7 @@ Create PP with Funder details
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1642,7 +1642,7 @@ Create PP with Invalid Promotional discount code
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired' or '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1762,7 +1762,7 @@ Create PP with Manual override required value as Yes
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1860,7 +1860,7 @@ Create PP with Invalid Society
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -1949,7 +1949,7 @@ Create PP with Invalid Article Type
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2037,7 +2037,7 @@ Create PP with Invalid Editorial
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'DataCorrectionRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2123,7 +2123,7 @@ Create PP with Invalid Referal
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2208,7 +2208,7 @@ Create PP with Invalid CountryCode
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2291,7 +2291,7 @@ Create PP with Invalid MailId
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 IF    '${errormessage}' == 'ReSend'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
@@ -2386,7 +2386,7 @@ Create PP Society discount with Rejected
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -2524,7 +2524,7 @@ Create PP Society discount with Withdrawn
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
                 should contain any   ${errormessage}    PriceDetermined    ManualOverrideRequired
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
@@ -2647,8 +2647,8 @@ Verify UI Change Data Correction to Price Determined
                 ${OrderStatus}=    convert to string    ${OrderID}
                 Write Output Excel    PriceProposal    OrderStatus    ${RowCounter}    ${error_code}
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
-#                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
-                ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
+#                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
+                ${errormessage}=    set variable    ${json_dict['priceProposal']['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
 #                IF    '${errormessage}' == 'DataCorrectionRequired'
 #                    write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
