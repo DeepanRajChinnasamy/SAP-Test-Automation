@@ -18,7 +18,7 @@ ${Screenshotfolder}    ${execdir}\\\Screenshots\\
 *** Test Cases ***
 
 Create PP with Society discount
-    [Tags]    id=NC_OP_01
+    [Tags]    id=AP_PP_01
 #    set screenshot folder
     log to console    ${PPInputExcelPath}
     ${ListIndexIterator}    set variable    0
@@ -104,7 +104,7 @@ Create PP with Society discount
     save excel document    ${PPInputExcelPath}
 
 Create PP with Promotional discount
-    [Tags]    id=NC_OP_02
+    [Tags]    id=AP_PP_02
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -189,7 +189,7 @@ Create PP with Promotional discount
 
 
 Create PP with Institutional discount
-    [Tags]    id=NC_OP_03
+    [Tags]    id=AP_PP_03
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -280,7 +280,7 @@ Create PP with Institutional discount
 
 
 Create PP with Editorial discount
-    [Tags]    id=NC_OP_04
+    [Tags]    id=AP_PP_04
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -368,7 +368,7 @@ Create PP with Editorial discount
     save excel document    ${PPInputExcelPath}
 
 Create PP with Referral discount
-    [Tags]    id=NC_OP_05
+    [Tags]    id=AP_PP_05
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -459,7 +459,7 @@ Create PP with Referral discount
 
 
 Create PP with Geographical discount
-    [Tags]    id=NC_OP_06
+    [Tags]    id=AP_PP_06
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -543,7 +543,7 @@ Create PP with Geographical discount
     save excel document    ${PPInputExcelPath}
 
 Create PP with Article type discount
-    [Tags]    id=NC_OP_07
+    [Tags]    id=AP_PP_07
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -647,7 +647,7 @@ Create PP with Article type discount
     save excel document    ${PPInputExcelPath}
 
 Create PP with Stacked Institutional discount
-    [Tags]    id=NC_OP_08
+    [Tags]    id=AP_PP_08
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -735,7 +735,7 @@ Create PP with Stacked Institutional discount
     save excel document    ${PPInputExcelPath}
 
 Create PP with multiple Society and Promotional discounts
-    [Tags]    id=NC_OP_09
+    [Tags]    id=AP_PP_09
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -827,7 +827,7 @@ Create PP with multiple Society and Promotional discounts
     save excel document    ${PPInputExcelPath}
 
 Create PP with same discount Geographical Editorial and Society discounts
-    [Tags]    id=NC_OP_10
+    [Tags]    id=AP_PP_10
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -916,7 +916,7 @@ Create PP with same discount Geographical Editorial and Society discounts
     save excel document    ${PPInputExcelPath}
 
 Create PP with Society Promotional Geographical Editorial Article type and Referral discounts
-    [Tags]    id=NC_OP_11
+    [Tags]    id=AP_PP_11
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1021,7 +1021,7 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
     save excel document    ${PPInputExcelPath}
 
 Create PP with Multiple Insitutional discounts
-    [Tags]    id=NC_OP_12
+    [Tags]    id=AP_PP_12
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1098,7 +1098,7 @@ Create PP with Multiple Insitutional discounts
     save excel document    ${PPInputExcelPath}
 
 Create PP with Funder details
-    [Tags]    id=NC_OP_13
+    [Tags]    id=AP_PP_13
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1177,7 +1177,7 @@ Create PP with Funder details
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid Promotional discount code
-    [Tags]    id=NC_OP_14
+    [Tags]    id=AP_PP_14
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1265,7 +1265,7 @@ Create PP with Invalid Promotional discount code
     save excel document    ${PPInputExcelPath}
 
 Create PP with Manual override required value as Yes
-    [Tags]    id=NC_OP_15
+    [Tags]    id=AP_PP_15
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1352,7 +1352,7 @@ Create PP with Manual override required value as Yes
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid Society
-    [Tags]    id=NC_OP_16
+    [Tags]    id=AP_PP_16
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1431,7 +1431,7 @@ Create PP with Invalid Society
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid Article Type
-    [Tags]    id=NC_OP_17
+    [Tags]    id=AP_PP_17
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1510,7 +1510,7 @@ Create PP with Invalid Article Type
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid Editorial
-    [Tags]    id=NC_OP_18
+    [Tags]    id=AP_PP_18
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1588,7 +1588,7 @@ Create PP with Invalid Editorial
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid Referal
-    [Tags]    id=NC_OP_19
+    [Tags]    id=AP_PP_19
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1664,7 +1664,7 @@ Create PP with Invalid Referal
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid CountryCode
-    [Tags]    id=NC_OP_20
+    [Tags]    id=AP_PP_20
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}
@@ -1740,7 +1740,7 @@ Create PP with Invalid CountryCode
     save excel document    ${PPInputExcelPath}
 
 Create PP with Invalid MailId
-    [Tags]    id=NC_OP_21
+    [Tags]    id=AP_PP_21
     ${ListIndexIterator}    set variable    0
     ${DataIndexIterator}    set variable    0
     ${JournalIDCount}=    get length    ${JournalIDList}

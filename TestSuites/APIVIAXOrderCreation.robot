@@ -21,108 +21,108 @@ ${Var_Total}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[5
 *** Test Cases ***
 
 Create Alipay Order for New Customer with Article discount GOA Order Type
-    [Tags]    id=CO_NW_01
+    [Tags]    id=AP_OC_01
     Create Order    Create Alipay Order for New Customer with Article discount GOA Order Type
 
 CreateCC Order with New Customer P1 with Society Discounts with GOA
-     [Tags]    id=CO_NW_02
+     [Tags]    id=AP_OC_02
     Create Order    CreateCC Order with New Customer P1 with Society Discounts with GOA
 
 CreateCC Order with New Customer P2 with Promo Discounts with GOA
-     [Tags]    id=CO_NW_03
+     [Tags]    id=AP_OC_03
     Create Order    CreateCC Order with New Customer P2 with Promo Discounts with GOA
 
 CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
-     [Tags]    id=CO_NW_04
+     [Tags]    id=AP_OC_04
     Create Order    CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
 
 CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
-     [Tags]    id=CO_NW_05
+     [Tags]    id=AP_OC_05
     Create Order    CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
 
 CreateCC Order with New Customer P4 with Institutional Discounts with GOA
-     [Tags]    id=CO_NW_06
+     [Tags]    id=AP_OC_06
     Create Order    CreateCC Order with New Customer P4 with Institutional Discounts with GOA
 
 CreateCC Order with New Customer P4 with Article Type Discounts with GOA
-     [Tags]    id=CO_NW_07
+     [Tags]    id=AP_OC_07
     Create Order    CreateCC Order with New Customer P4 with Article Type Discounts with GOA
 
 Create Invoice Order with New Customer P1 with Promo Discounts with GOA
-     [Tags]    id=CO_NW_08
+     [Tags]    id=AP_OC_08
     Create Order    Create Invoice Order with New Customer P1 with Promo Discounts with GOA
 
 Create Invoice Order with New Customer P2 with Society Discounts with GOA
-     [Tags]    id=CO_NW_09
+     [Tags]    id=AP_OC_09
     Create Order    Create Invoice Order with New Customer P2 with Society Discounts with GOA
 Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-    [Tags]    id=CO_NW_10
+    [Tags]    id=AP_OC_10
     Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
 Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-    [Tags]    id=CO_NW_11
+    [Tags]    id=AP_OC_11
     Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
 Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
-     [Tags]    id=CO_NW_12
+     [Tags]    id=AP_OC_12
     Create Order    Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
 Create Invoice Order with New Customer P4 with Article Discounts with GOA
-    [Tags]    id=CO_NW_13
+    [Tags]    id=AP_OC_13
     Create Order    Create Invoice Order with New Customer P4 with Article Discounts with GOA
 Create Proforma Order with New Customer P1 with Society Discounts with GOA
-    [Tags]    id=CO_NW_14
+    [Tags]    id=AP_OC_14
     Create Order    Create Proforma Order with New Customer P1 with Society Discounts with GOA
 Create Proforma Order with New Customer P2 with Promo Discounts with GOA
-    [Tags]    id=CO_NW_15
+    [Tags]    id=AP_OC_15
     Create Order    Create Proforma Order with New Customer P2 with Promo Discounts with GOA
 Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-    [Tags]    id=CO_NW_16
+    [Tags]    id=AP_OC_16
     Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
 Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-    [Tags]    id=CO_NW_17
+    [Tags]    id=AP_OC_17
     Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
 Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
-    [Tags]    id=CO_NW_18
+    [Tags]    id=AP_OC_18
     Create Order    Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
 Create Proforma Order with New Customer P4 with Article Discounts with GOA
-    [Tags]    id=CO_NW_19
+    [Tags]    id=AP_OC_19
     Create Order    Create Proforma Order with New Customer P4 with Article Discounts with GOA
 Create Order with Society Discount (%) P1 with CC HOA Order
-    [Tags]    id=CO_NW_20
+    [Tags]    id=AP_OC_20
     Create Order    Create Order with Society Discount (%) P1 with CC HOA Order
 Create Order with Promo Discount (%) P2 with CC HOA Order
-    [Tags]    id=CO_NW_21
+    [Tags]    id=AP_OC_21
     Create Order    Create Order with Promo Discount (%) P2 with CC HOA Order
 Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
-    [Tags]    id=CO_NW_22
+    [Tags]    id=AP_OC_22
     Create Order    Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
 Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
-    [Tags]    id=CO_NW_23
+    [Tags]    id=AP_OC_23
     Create Order    Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
 Create Order with Institutional Discount P4 with CC HOA Order
-    [Tags]    id=CO_NW_24
+    [Tags]    id=AP_OC_24
     Create Order    Create Order with Institutional Discount P4 with CC HOA Order
 Create Order with Custom Discount P4 with CC HOA Order
-    [Tags]    id=CO_NW_25
+    [Tags]    id=AP_OC_25
     Create Order    Create Order with Custom Discount P4 with CC HOA Order
 Create Order with Society Discount (Value) P1 with Invoice HOA Order
-    [Tags]    id=CO_NW_26
+    [Tags]    id=AP_OC_26
     Create Order    Create Order with Society Discount (Value) P1 with Invoice HOA Order
 Create Order with Promo Discount (Value) P2 with Invoice HOA Order
-    [Tags]    id=CO_NW_27
+    [Tags]    id=AP_OC_27
     Create Order    Create Order with Promo Discount (Value) P2 with Invoice HOA Order
 Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
-    [Tags]    id=CO_NW_28
+    [Tags]    id=AP_OC_28
     Create Order    Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
 Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
-    [Tags]    id=CO_NW_29
+    [Tags]    id=AP_OC_29
     Create Order    Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
 Create Order with Custom Discount P4 with Invoice HOA Order
-    [Tags]    id=CO_NW_30
+    [Tags]    id=AP_OC_30
     Create Order    Create Order with Custom Discount P4 with Invoice HOA Order
 Create Order with Institutional Discount P4 with Invoice HOA Order
-    [Tags]    id=CO_NW_31
+    [Tags]    id=AP_OC_31
     Create Order    Create Order with Institutional Discount P4 with Invoice HOA Order
 Create Order with Society Discount Value P4 with Alipay HOA Order
-    [Tags]    id=CO_NW_32
+    [Tags]    id=AP_OC_32
     Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
     close all excel documents
 
@@ -353,6 +353,8 @@ Switch Case
     Run Keyword If    '${value}' == 'QA2'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa2.viax.io/graphql
     Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${GraphqlURL}    https://api.wileyas.stage.viax.io/graphql
     Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${PPURL}    https://wileyas.stage.viax.io/price-proposals
+    Run Keyword If    '${value}' == 'QA3'    set suite variable    ${PPURL}     https://wileyas.qa3.viax.io/orders
+    Run Keyword If    '${value}' == 'QA3'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa3.viax.io/graphql
     Run Keyword If    '${value}' == '4'    Log    Case 4
     ...    ELSE    Log    Default Case
 
@@ -363,7 +365,9 @@ Get DBS Orders Link
     Run Keyword If    '${value}' == 'QA2'    set suite variable    ${DBSURL}     https://wileyas.qa2.viax.io/orders
     Run Keyword If    '${value}' == 'QA2'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa2.viax.io/graphql
     Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${GraphqlURL}    https://api.wileyas.stage.viax.io/graphql
-    Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${DBSURL}    https://wileyas.stage.viax.io/price-proposals
+    Run Keyword If    '${value}' == 'QA3'    set suite variable    ${PPURL}     https://wileyas.qa3.viax.io/orders
+    Run Keyword If    '${value}' == 'QA3'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa3.viax.io/graphql
+    Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${DBSURL}    https://wileyas.stage.viax.io/orders
     ...    ELSE    Log    Default Case
 
 
