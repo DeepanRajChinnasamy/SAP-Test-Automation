@@ -663,11 +663,11 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${DiscountType1}    ${UIDiscountType1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${DiscountType1}    ${UIDiscountType1}
 	#
-#	    ${DiscountType2}=    Get Value from excel columnwise    Multiple    DiscountType2
-#	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
-#	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Multiple    ${Rownum}
-#	    run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
+	    ${DiscountType2}=    Get Value from excel columnwise    Multiple    DiscountType2
+	    ${UIDiscounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountType2
+	    validate the content and update the excel   ${DiscountType2}    ${UIDiscountType2}    UIValidations    Multiple    ${Rownum}
+	    run keyword and continue on failure    should be equal   ${DiscountType2}    ${UIDiscountType2}
 #	#
 #	    ${DiscountType3}=    Get Value from excel columnwise    Multiple    DiscountType3
 #	    ${UIDiscounttype3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[1])[1]
@@ -681,14 +681,12 @@ Create PP with Multiple discount with UI Validations
 	    validate the content and update the excel   ${DiscountCondition1}    ${UIDisountCondition1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${DiscountCondition1}    ${UIDisountCondition1}
 
-#	    ${DiscountCondition2}=    Get Value from excel columnwise    Multiple    DiscountCondition2
-#	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
-#	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Multiple    ${Rownum}
-#	    run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
-#
-#
-#
+	    ${DiscountCondition2}=    Get Value from excel columnwise    Multiple    DiscountCondition2
+	    ${UIDisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition2
+	    validate the content and update the excel   ${DiscountCondition2}    ${UIDisountCondition2}    UIValidations    Multiple    ${Rownum}
+	    run keyword and continue on failure    should be equal   ${DiscountCondition2}    ${UIDisountCondition2}
+
 #	    ${DiscountCondition3}=    Get Value from excel columnwise    Multiple    DiscountCondition3
 #	    ${UIDisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    DiscountCondition3
@@ -700,12 +698,12 @@ Create PP with Multiple discount with UI Validations
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Value1
 	    validate the content and update the excel   ${Value1}    ${UIValue1}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Value1}    ${UIValue1}
-#	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
+	    ${UIValue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[4])[1]
 #	    ${UIValue3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[4])[1]
-#	    ${Value2}=    Get Value from excel columnwise    Multiple    Value2
+	    ${Value2}=    Get Value from excel columnwise    Multiple    Value2
 #	    ${Value3}=    Get Value from excel columnwise    Multiple    Value3
-#	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
-#	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Multiple    ${Rownum}
+	    ${Rownum}=    Get excel row number   ${Rowcount}    Value2
+	    validate the content and update the excel   ${Value2}    ${UIValue2}    UIValidations    Multiple    ${Rownum}
 #	    run keyword and continue on failure    should be equal   ${Value2}    ${UIValue2}
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    Value3
 #	    validate the content and update the excel   ${Value3}    ${UIValue3}    UIValidations    Multiple    ${Rownum}
@@ -714,14 +712,14 @@ Create PP with Multiple discount with UI Validations
 	    ${Percentage1}=    Get Value from excel columnwise    Multiple    Percentage1
 	    ${UIPercentage1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
 #	    ${UIPercentage3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[3])[1]
-#	    ${Percentage2}=    Get Value from excel columnwise    Multiple    Percentage2
-#	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+	    ${Percentage2}=    Get Value from excel columnwise    Multiple    Percentage2
+	    ${UIPercentage2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
 #	    ${Percentage3}=    Get Value from excel columnwise    Multiple    Percentage3
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage1
 	    validate the content and update the excel   ${Percentage1}    ${UIPercentage1}    UIValidations    Multiple    ${Rownum}
 
-#	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
-#	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Multiple    ${Rownum}
+	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage2
+	    validate the content and update the excel   ${Percentage2}    ${UIPercentage2}    UIValidations    Multiple    ${Rownum}
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    Percentage3
 #	    validate the content and update the excel   ${Percentage3}    ${UIPercentage3}    UIValidations    Multiple    ${Rownum}
 #	    run keyword and continue on failure    should be equal   ${Percentage3}    ${UIPercentage3}
@@ -729,14 +727,14 @@ Create PP with Multiple discount with UI Validations
 	    run keyword and continue on failure    should be equal   ${Percentage1}    ${UIPercentage1}
 	    ${Applied1}=    Get Value from excel columnwise    Multiple    Applied1
 	    ${UIApplied1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-#	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+	    ${UIApplied2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
 #	    ${UIApplied3}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[3]/td[6])[1]
-#	    ${Applied2}=    Get Value from excel columnwise    Multiple    Applied2
+	    ${Applied2}=    Get Value from excel columnwise    Multiple    Applied2
 #	    ${Applied3}=    Get Value from excel columnwise    Multiple    Applied3
 	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied1
 	    validate the content and update the excel   ${Applied1}    ${UIApplied1}    UIValidations    Multiple    ${Rownum}
-#	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
-#	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Multiple    ${Rownum}
+	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied2
+	    validate the content and update the excel   ${Applied2}    ${UIApplied2}    UIValidations    Multiple    ${Rownum}
 #	    ${Rownum}=    Get excel row number   ${Rowcount}    Applied3
 #	    validate the content and update the excel   ${Applied3}    ${UIApplied3}    UIValidations    Multiple    ${Rownum}
 	    run keyword and continue on failure    should be equal   ${Applied1}    ${UIApplied1}

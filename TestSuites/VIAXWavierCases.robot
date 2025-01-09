@@ -30,8 +30,6 @@ Create PP with Geo Waiver
         ${ExecutionFlag}=    get from list    ${ExecutionFlagList}    ${ListIndexIterator}
         ${ScenarioName}=    get from list    ${ScenarioList}   ${ListIndexIterator}
         IF    '${ScenarioName}' == 'Create PP with Geo Waiver'
-#            ${FILE_NAME}=    set variable      ${execdir}\\${FolderName}\\${ScenarioName}.docx
-#            Create Document
             ${JSONFileName}=    get from list    ${JSONFileNameList}    ${ListIndexIterator}
             ${JournalID}=    get from list    ${JournalIDList}    ${ListIndexIterator}
             ${Environment}=    get from list    ${EnvironmentList}    ${ListIndexIterator}
@@ -75,17 +73,9 @@ Create PP with Geo Waiver
                 should contain    ${errormessage}    PriceDetermined
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
-#                Add image to wordfile    ${FolderName}
-#                ${timestamp}=    gettimestamp
-#                capture page screenshot    ${execdir}\\${FolderName}\\${timestamp}.png
-#                add image    ${execdir}\\${FolderName}\\${timestamp}.png
                 customvariables.save screenshot    ${Screenshotfolder}
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
-#                Add image to wordfile    ${FolderName}
-#                ${timestamp}=    gettimestamp
-#                capture page screenshot    ${execdir}\\${FolderName}\\${timestamp}.png
-#                add image    ${execdir}\\${FolderName}\\${timestamp}.png
                 customvariables.save screenshot    ${Screenshotfolder}
                 ${UIStatus}=    SeleniumLibrary.get text   //*[@class="x-button x-button_type_primary x-interaction-details__status"]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
@@ -111,8 +101,6 @@ Create PP with Geo Waiver
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${WaiverCaseFilePath}
-#    save document    ${FILE_NAME}
-#    close document
 
 Create PP with Society Waiver
     [Tags]    id=WA_OP_02
@@ -351,8 +339,6 @@ Create PP with Editorial Waiver
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 should be equal    ${UIStatus}    PRICE DETERMINED
                 should be equal    ${Typeofpayment}    AuthorPaid
-
-
                 IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${WaiverCaseFilePath}

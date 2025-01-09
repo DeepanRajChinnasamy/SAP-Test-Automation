@@ -22,11 +22,11 @@ ${inputExcelPath}    ${execdir}\\UploadExcel\\TD_Inputs.xlsx
 #${inputExcelPath}     \\AUS-WNASCRMP-03\\Share\\02.TestAutomation\\VIAX\\TD_Inputs.xlsx
 ${SheetName}    Inputs
 #---------------------General Variables-------------------------------
-${BASE_URLQA}       https://api.wileyas.qa2.viax.io/graphql
+${BASE_URLQA}       https://api.wileyas.stage.viax.io/graphql
 #${BASE_URLQA}    https://api.wileyas.qa2.viax.io/graphql
 #${BASE_URL}       https://api.wileyas.qa.viax.io/graphql
 ${EMPTY}
-${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyczVNbG80eUZVRC1kMzlseXZMUHhYOWJYc2NCZ3ZiaHVLWHpNNU53b3hrIn0.eyJleHAiOjE3MjA0NjYwNzMsImlhdCI6MTcyMDQ1ODg3MywianRpIjoiY2E2MjFkM2QtNjNiYi00Y2ZjLWI3MGEtOTMzMmEyOTNjNDU2IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMucWEyLnZpYXguaW8vcmVhbG1zL3dpbGV5YXMiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNmJmOTUzYjYtZDlhNS00MjdlLTgzNjItMjlmZjM1YTQ2MWIzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidmlheC11aSIsInNlc3Npb25fc3RhdGUiOiI1ODhlN2U0ZC1lOWFmLTQ5NDUtYjFmMC04MjJlNjcyNDJjNzAiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy13aWxleWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJyZWFsbSBwcm9maWxlIGVtYWlsIiwic2lkIjoiNTg4ZTdlNGQtZTlhZi00OTQ1LWIxZjAtODIyZTY3MjQyYzcwIiwidWlkIjoiYjZlNGUxZjctY2E1Yy00MTU2LWIzNmItODNhMjA2ZTFmMmMyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InJyYXZpcGF0aUB3aWxleS5jb20iLCJlbWFpbCI6InJyYXZpcGF0aUB3aWxleS5jb20ifQ.gO-I1yUvS1kKpdElahXR7bsie_BsR0gbgKBQ2ulJkkSILrUGg9UFrfxkBP9CbYgR_S8IkN5MiUv2BcDroRRj6lo6NeJj-IVNWKBxeKZnSVCxhCJqX8j1kY70ppr5brYoIMtC_AuuyXcuMVObl716P5zhdC8IsIXElUFr5wrp71CfoFzievv6j18cGpuWvjvJ_Pi-m8-E_8OX04ZdU9wl5w88RBSgQB7wt8WYJkc_t7O7dUpXRmjPIXTgxC3Con2NQphcV9HOzrhCq_EwcCRs8bWA-GzSX-rx0ubdB-x5vMMZeBakq6zSZxkaW9YQ_4Sp0Lv5r6PddO80uKS1Huj9Vg
+${Token1}   eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJyY3NJUmttTVVEMFVodmZsNGZwLUZXTFcyX2JUajk3YUJneEhURjFuanc4In0.eyJleHAiOjE3MzE5MjE3NTcsImlhdCI6MTczMTkxNDU1NywianRpIjoiOTdhMzI0NTctNWRiMC00M2I3LWEwMDctYjIyMWNkMWI1NGMzIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLndpbGV5YXMuc3RhZ2UudmlheC5pby9yZWFsbXMvd2lsZXlhcyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJmOTdiYzI1Yi02NzI5LTQzNTgtOGYwYy1kNWY3MDMzZWI2NWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJ2aWF4LXVpIiwic2Vzc2lvbl9zdGF0ZSI6ImU4ZGRlMWNkLWQ2MTEtNGY5My04Nzg4LWNhMWU1YjRhOTcyMiIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXdpbGV5YXMiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUgcmVhbG0iLCJzaWQiOiJlOGRkZTFjZC1kNjExLTRmOTMtODc4OC1jYTFlNWI0YTk3MjIiLCJ1aWQiOiI5NmJiY2ExNi00ZmNkLTQ0MGEtODdlNC1iYmY1M2E0MDNmNTciLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInJlYWxtIjoid2lsZXlhcyIsInByZWZlcnJlZF91c2VybmFtZSI6Im1nYXJsYXBhdGlAd2lsZXkuY29tIiwiZW1haWwiOiJtZ2FybGFwYXRpQHdpbGV5LmNvbSJ9.ZEWXTW9O8BQ9RuqTiyiacXzmMmBl165dg4dl0GXlDDFuc4xXI0ryj5TEVi71mXTrvPDK39MeDyatcAYYxvZ34gs1e5yAD5hVkZeuOXwab1gGNMRnp1OapEcgdfE_jgURvNJ_bmZeoash_GdRrI5ZH3Aqo7yEPXt06nUiWsaTtW1K-VvbuNH4bJK1pXzOT53niFvP9aH1lUiE58NwiQNXn7yBrQEwe0Vml_xrZ29NW9g52xWCoD2A6R5MmepgUy70KdZluE0thlhaLNo53zGGm0cQu4GMbml8nvdig3nletG9PxgkZ_ReyjoWQ9_NRkKq0Gf0S-YWFtkVuM5K14rv4g
 ${response_text}
 ${Screenshotdir}    ${execdir}\\Screenshots\\
 ${Screenshotfolder}    ${execdir}\\Screenshots\\
@@ -52,12 +52,12 @@ ${VatNumberList}
 ${green}    00FF00
 ${red}    FF0000
 #--------------------------Chrome---------------------------------------
-${URLQA}            https://wileyas.qa2.viax.io/orders
+${URLQA}            https://wileyas.stage.viax.io/orders
 #${URLQA}            https://wileyas.stage.viax.io/orders
 #${URLQA}       https://wileyas.qa2.viax.io/orders
 ${Browser}        chrome
 ${username}     dchinnasam@wiley.com
-${password}     VIRapr@678
+${password}     VIRapr@678     #Forgot@456
 ${SearchBox}    //*[@class="x-search-input__field"]
 #${statustext}    xpath=/html/body/div[1]/div/div/div/div[2]/div/div[2]/div[1]/div/div/div/div/div[5]/div/span
 ${statustext}    //*[@class="x-pill x-pill_color_primary"]
