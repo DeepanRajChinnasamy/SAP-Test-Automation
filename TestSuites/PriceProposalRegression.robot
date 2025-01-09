@@ -573,7 +573,7 @@ Create PP with Referral discount
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
                 customvariables.save screenshot    ${Screenshotfolder}
-#               ${UIStatus}=    SeleniumLibrary.get text   //*[contains(@class, "x-button x-button_type_primary x-")]
+                ${UIStatus}=    SeleniumLibrary.get text   //*[contains(@class, "x-button x-button_type_primary x-")]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 customvariables.save screenshot    ${Screenshotfolder}
