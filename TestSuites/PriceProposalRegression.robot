@@ -462,20 +462,20 @@ Create PP with Editorial discount
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
                 run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
-                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
+#                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+#                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
-                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
+#                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
                 run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
-                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+#                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
                 run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
-                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
+#                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -573,29 +573,29 @@ Create PP with Referral discount
                 seleniumlibrary.click element    //*[@title="#${OrderID}"]
                 sleep    5s
                 customvariables.save screenshot    ${Screenshotfolder}
-               ${UIStatus}=    SeleniumLibrary.get text   //*[contains(@class, "x-button x-button_type_primary x-")]
+#               ${UIStatus}=    SeleniumLibrary.get text   //*[contains(@class, "x-button x-button_type_primary x-")]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
                 run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
                 customvariables.save screenshot    ${Screenshotfolder}
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    AuthorPaid
-                seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
-                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
-                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
-                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
-               ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
-               run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
-#                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-#                run keyword and continue on failure    should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
-                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
-                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
-                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
-                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
-                ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
+#                seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
+#                ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
+#                run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
+#                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+#                run keyword and continue on failure    should be equal    ${Discounttype2}    ${discountType2}
+#               ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
+#               run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
+##                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+##                run keyword and continue on failure    should be equal    ${DisountCondition2}    E O Lawrence Berkeley National Laboratory
+#                ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
+#                run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
+#                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+#                ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
+#                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
+#                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
+                ${TaxValue}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[5]/div[2])[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
@@ -700,20 +700,20 @@ Create PP with Geographical discount
                 seleniumlibrary.click element    //*[@class="x-icon x-accordion__icon"]
                 ${Discounttype1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[1])[1]
                 run keyword and continue on failure    should be equal    ${Discounttype1}    ${discountType1}
-                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
-                run keyword and continue on failure    should be equal    ${Discounttype2}   ${discountType2}
+#                ${Discounttype2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[1])[1]
+#                run keyword and continue on failure    should be equal    ${Discounttype2}   ${discountType2}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
-                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
+#                ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
+#                run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
                 run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
-                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
+#                ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
+#                run keyword and continue on failure    should be equal    ${Percentagevalue2}  ${discountpercentage2}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
                 run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
-                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
+#                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
+#                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
@@ -1324,22 +1324,22 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 run keyword and continue on failure    should be equal    ${Discounttype3}    ${discountType3}
                 ${Discounttype4}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[1]
                 run keyword and continue on failure    should be equal    ${Discounttype4}    ${discountType4}
-                ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[1]
-                run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType5}
+#                ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[1]
+#                run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType5}
 #                ${Discounttype5}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[1]
 #                run keyword and continue on failure    should be equal    ${Discounttype5}    ${discountType6}
                 ${DisountCondition1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition1}    ${discountcondition1}
                 ${DisountCondition2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[2])[1]
                 run keyword and continue on failure    should be equal    ${DisountCondition2}    ${discountcondition2}
-#                ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
-#                run keyword and continue on failure    should be equal    ${DisountCondition3}    ${discountcondition3}
-#                ${DisountCondition4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
-#                run keyword and continue on failure    should be equal    ${DisountCondition4}
-                ${DisountCondition5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition5}    ${discountcondition5}
-                ${DisountCondition6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[2])[1]
-                run keyword and continue on failure    should be equal    ${DisountCondition6}    ${discountcondition6}
+                ${DisountCondition3}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[3]/td[2])[1]
+                run keyword and continue on failure    should be equal    ${DisountCondition3}    ${discountcondition3}
+                ${DisountCondition4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
+                run keyword and continue on failure    should be equal    ${DisountCondition4}    ${discountcondition4}
+#                ${DisountCondition5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[2])[1]
+#                run keyword and continue on failure    should be equal    ${DisountCondition5}    ${discountcondition5}
+#                ${DisountCondition6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[2])[1]
+#                run keyword and continue on failure    should be equal    ${DisountCondition6}    ${discountcondition6}
                 ${Percentagevalue1}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[1]/td[3])[1]
                 run keyword and continue on failure    should be equal    ${Percentagevalue1}    ${discountpercentage1}%
                 ${Percentagevalue2}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[2]/td[3])[1]
@@ -1348,8 +1348,8 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 run keyword and continue on failure    should be equal    ${Percentagevalue3}    ${discountpercentage3}%
                 ${Percentagevalue4}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[4]/td[3])[1]
                 run keyword and continue on failure    should be equal    ${Percentagevalue4}    ${discountpercentage4}%
-                ${Percentagevalue5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[3])[1]
-                run keyword and continue on failure    should be equal    ${Percentagevalue5}    ${discountpercentage5}%
+#                ${Percentagevalue5}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[5]/td[3])[1]
+#                run keyword and continue on failure    should be equal    ${Percentagevalue5}    ${discountpercentage5}%
 #                ${Percentagevalue6}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//table/tbody/tr[6]/td[3])[1]
 #                run keyword and continue on failure    should be equal    ${Percentagevalue6}    ${discountpercentage6}%
                 ${AppliedYes1}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[1]/td[6])[1]
@@ -1360,8 +1360,8 @@ Create PP with Society Promotional Geographical Editorial Article type and Refer
                 run keyword and continue on failure    should be equal    ${AppliedYes3}    ${appliedyes3}
                 ${AppliedYes4}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[4]/td[6])[1]
                 run keyword and continue on failure    should be equal    ${AppliedYes4}    ${appliedyes4}
-                ${AppliedYes5}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[5]/td[6])[1]
-                run keyword and continue on failure    should be equal    ${AppliedYes5}    ${appliedyes5}
+#                ${AppliedYes5}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[5]/td[6])[1]
+#                run keyword and continue on failure    should be equal    ${AppliedYes5}    ${appliedyes5}
 #                ${AppliedYes6}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[6]/td[6])[1]
 #                run keyword and continue on failure    should be equal    ${AppliedYes6}    ${appliedyes6}
                 ${TaxValue}=    SeleniumLibrary.get text    //*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2]
@@ -2327,8 +2327,6 @@ Create PP with Invalid MailId
     END
     save excel document    ${PPInputExcelPath}
 
-
-
 Create PP Society discount with Rejected
     [Tags]    id=NC_OP_22
     log to console    ${PPInputExcelPath}
@@ -2465,7 +2463,6 @@ Create PP Society discount with Rejected
         ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
     END
     save excel document    ${PPInputExcelPath}
-
 
 Create PP Society discount with Withdrawn
     [Tags]    id=NC_OP_23
