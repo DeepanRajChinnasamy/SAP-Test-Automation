@@ -129,7 +129,7 @@ Create Order with Society Discount Value P4 with Alipay HOA Order
 
 Validate the Order Status in DBS
     [Tags]    id=CO_NW_33
-#    sleep    400
+    sleep    400
     close all excel documents
     Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
     ${ListIndexIterator}    set variable    0
