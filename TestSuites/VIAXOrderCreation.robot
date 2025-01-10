@@ -20,115 +20,116 @@ ${Var_Total}    (//*[contains(@class,"x-col x-col_3 x-pricing-view__col x-")])[5
 
 *** Test Cases ***
 
-#Create Alipay Order for New Customer with Article discount GOA Order Type
-#    [Tags]    id=CO_NW_01
-#    Create Order    Create Alipay Order for New Customer with Article discount GOA Order Type
-#
-#CreateCC Order with New Customer P1 with Society Discounts with GOA
-#     [Tags]    id=CO_NW_02
-#    Create Order    CreateCC Order with New Customer P1 with Society Discounts with GOA
-#
-#CreateCC Order with New Customer P2 with Promo Discounts with GOA
-#     [Tags]    id=CO_NW_03
-#    Create Order    CreateCC Order with New Customer P2 with Promo Discounts with GOA
-#
-#CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
-#     [Tags]    id=CO_NW_04
-#    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
-#
-#CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
-#     [Tags]    id=CO_NW_05
-#    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
-#
-#CreateCC Order with New Customer P4 with Institutional Discounts with GOA
-#     [Tags]    id=CO_NW_06
-#    Create Order    CreateCC Order with New Customer P4 with Institutional Discounts with GOA
-#
-#CreateCC Order with New Customer P4 with Article Type Discounts with GOA
-#     [Tags]    id=CO_NW_07
-#    Create Order    CreateCC Order with New Customer P4 with Article Type Discounts with GOA
-#
-#Create Invoice Order with New Customer P1 with Promo Discounts with GOA
-#     [Tags]    id=CO_NW_08
-#    Create Order    Create Invoice Order with New Customer P1 with Promo Discounts with GOA
-#
-#Create Invoice Order with New Customer P2 with Society Discounts with GOA
-#     [Tags]    id=CO_NW_09
-#    Create Order    Create Invoice Order with New Customer P2 with Society Discounts with GOA
-#Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-#    [Tags]    id=CO_NW_10
-#    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-#Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-#    [Tags]    id=CO_NW_11
-#    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-#Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
-#     [Tags]    id=CO_NW_12
-#    Create Order    Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
-#Create Invoice Order with New Customer P4 with Article Discounts with GOA
-#    [Tags]    id=CO_NW_13
-#    Create Order    Create Invoice Order with New Customer P4 with Article Discounts with GOA
-#Create Proforma Order with New Customer P1 with Society Discounts with GOA
-#    [Tags]    id=CO_NW_14
-#    Create Order    Create Proforma Order with New Customer P1 with Society Discounts with GOA
-#Create Proforma Order with New Customer P2 with Promo Discounts with GOA
-#    [Tags]    id=CO_NW_15
-#    Create Order    Create Proforma Order with New Customer P2 with Promo Discounts with GOA
-#Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-#    [Tags]    id=CO_NW_16
-#    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
-#Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-#    [Tags]    id=CO_NW_17
-#    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
-#Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
-#    [Tags]    id=CO_NW_18
-#    Create Order    Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
-#Create Proforma Order with New Customer P4 with Article Discounts with GOA
-#    [Tags]    id=CO_NW_19
-#    Create Order    Create Proforma Order with New Customer P4 with Article Discounts with GOA
-#Create Order with Society Discount (%) P1 with CC HOA Order
-#    [Tags]    id=CO_NW_20
-#    Create Order    Create Order with Society Discount (%) P1 with CC HOA Order
-#Create Order with Promo Discount (%) P2 with CC HOA Order
-#    [Tags]    id=CO_NW_21
-#    Create Order    Create Order with Promo Discount (%) P2 with CC HOA Order
-#Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
-#    [Tags]    id=CO_NW_22
-#    Create Order    Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
-#Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
-#    [Tags]    id=CO_NW_23
-#    Create Order    Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
-#Create Order with Institutional Discount P4 with CC HOA Order
-#    [Tags]    id=CO_NW_24
-#    Create Order    Create Order with Institutional Discount P4 with CC HOA Order
-#Create Order with Custom Discount P4 with CC HOA Order
-#    [Tags]    id=CO_NW_25
-#    Create Order    Create Order with Custom Discount P4 with CC HOA Order
-#Create Order with Society Discount (Value) P1 with Invoice HOA Order
-#    [Tags]    id=CO_NW_26
-#    Create Order    Create Order with Society Discount (Value) P1 with Invoice HOA Order
-#Create Order with Promo Discount (Value) P2 with Invoice HOA Order
-#    [Tags]    id=CO_NW_27
-#    Create Order    Create Order with Promo Discount (Value) P2 with Invoice HOA Order
-#Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
-#    [Tags]    id=CO_NW_28
-#    Create Order    Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
-#Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
-#    [Tags]    id=CO_NW_29
-#    Create Order    Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
-#Create Order with Custom Discount P4 with Invoice HOA Order
-#    [Tags]    id=CO_NW_30
-#    Create Order    Create Order with Custom Discount P4 with Invoice HOA Order
-#Create Order with Institutional Discount P4 with Invoice HOA Order
-#    [Tags]    id=CO_NW_31
-#    Create Order    Create Order with Institutional Discount P4 with Invoice HOA Order
-#Create Order with Society Discount Value P4 with Alipay HOA Order
-#    [Tags]    id=CO_NW_32
-#    Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
-#    close all excel documents
+Create Alipay Order for New Customer with Article discount GOA Order Type
+    [Tags]    id=CO_NW_01
+    Create Order    Create Alipay Order for New Customer with Article discount GOA Order Type
+
+CreateCC Order with New Customer P1 with Society Discounts with GOA
+     [Tags]    id=CO_NW_02
+    Create Order    CreateCC Order with New Customer P1 with Society Discounts with GOA
+
+CreateCC Order with New Customer P2 with Promo Discounts with GOA
+     [Tags]    id=CO_NW_03
+    Create Order    CreateCC Order with New Customer P2 with Promo Discounts with GOA
+
+CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
+     [Tags]    id=CO_NW_04
+    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts without VAT ID with GOA
+
+CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
+     [Tags]    id=CO_NW_05
+    Create Order    CreateCC Order with New Customer P3 with Editorial Discounts with VAT ID with GOA
+
+CreateCC Order with New Customer P4 with Institutional Discounts with GOA
+     [Tags]    id=CO_NW_06
+    Create Order    CreateCC Order with New Customer P4 with Institutional Discounts with GOA
+
+CreateCC Order with New Customer P4 with Article Type Discounts with GOA
+     [Tags]    id=CO_NW_07
+    Create Order    CreateCC Order with New Customer P4 with Article Type Discounts with GOA
+
+Create Invoice Order with New Customer P1 with Promo Discounts with GOA
+     [Tags]    id=CO_NW_08
+    Create Order    Create Invoice Order with New Customer P1 with Promo Discounts with GOA
+
+Create Invoice Order with New Customer P2 with Society Discounts with GOA
+     [Tags]    id=CO_NW_09
+    Create Order    Create Invoice Order with New Customer P2 with Society Discounts with GOA
+Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+    [Tags]    id=CO_NW_10
+    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+    [Tags]    id=CO_NW_11
+    Create Order    Create Invoice Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
+     [Tags]    id=CO_NW_12
+    Create Order    Create Invoice Order with New Customer P4 with Institutonal Discounts with GOA
+Create Invoice Order with New Customer P4 with Article Discounts with GOA
+    [Tags]    id=CO_NW_13
+    Create Order    Create Invoice Order with New Customer P4 with Article Discounts with GOA
+Create Proforma Order with New Customer P1 with Society Discounts with GOA
+    [Tags]    id=CO_NW_14
+    Create Order    Create Proforma Order with New Customer P1 with Society Discounts with GOA
+Create Proforma Order with New Customer P2 with Promo Discounts with GOA
+    [Tags]    id=CO_NW_15
+    Create Order    Create Proforma Order with New Customer P2 with Promo Discounts with GOA
+Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+    [Tags]    id=CO_NW_16
+    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts with VAT and with GOA
+Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+    [Tags]    id=CO_NW_17
+    Create Order    Create Proforma Order with New Customer P3 with Editorial Discounts without VAT and with GOA
+Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
+    [Tags]    id=CO_NW_18
+    Create Order    Create Proforma Order with New Customer P4 with Institutonal Discounts with GOA
+Create Proforma Order with New Customer P4 with Article Discounts with GOA
+    [Tags]    id=CO_NW_19
+    Create Order    Create Proforma Order with New Customer P4 with Article Discounts with GOA
+Create Order with Society Discount (%) P1 with CC HOA Order
+    [Tags]    id=CO_NW_20
+    Create Order    Create Order with Society Discount (%) P1 with CC HOA Order
+Create Order with Promo Discount (%) P2 with CC HOA Order
+    [Tags]    id=CO_NW_21
+    Create Order    Create Order with Promo Discount (%) P2 with CC HOA Order
+Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
+    [Tags]    id=CO_NW_22
+    Create Order    Create Order with Society Discount (Value) P3 with CC HOA Order with VAT ID
+Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
+    [Tags]    id=CO_NW_23
+    Create Order    Create Order with Promo Discount (Value) P3 with CC HOA Order without VAT ID
+Create Order with Institutional Discount P4 with CC HOA Order
+    [Tags]    id=CO_NW_24
+    Create Order    Create Order with Institutional Discount P4 with CC HOA Order
+Create Order with Custom Discount P4 with CC HOA Order
+    [Tags]    id=CO_NW_25
+    Create Order    Create Order with Custom Discount P4 with CC HOA Order
+Create Order with Society Discount (Value) P1 with Invoice HOA Order
+    [Tags]    id=CO_NW_26
+    Create Order    Create Order with Society Discount (Value) P1 with Invoice HOA Order
+Create Order with Promo Discount (Value) P2 with Invoice HOA Order
+    [Tags]    id=CO_NW_27
+    Create Order    Create Order with Promo Discount (Value) P2 with Invoice HOA Order
+Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
+    [Tags]    id=CO_NW_28
+    Create Order    Create Order with Society Discount (%) P3 with Invoice HOA Order with VAT ID
+Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
+    [Tags]    id=CO_NW_29
+    Create Order    Create Order with Promo Discount (%) P3 with Invoice HOA Order without VAT ID
+Create Order with Custom Discount P4 with Invoice HOA Order
+    [Tags]    id=CO_NW_30
+    Create Order    Create Order with Custom Discount P4 with Invoice HOA Order
+Create Order with Institutional Discount P4 with Invoice HOA Order
+    [Tags]    id=CO_NW_31
+    Create Order    Create Order with Institutional Discount P4 with Invoice HOA Order
+Create Order with Society Discount Value P4 with Alipay HOA Order
+    [Tags]    id=CO_NW_32
+    Create Order    Create Order with Society Discount Value P4 with Alipay HOA Order
+    close all excel documents
+
 
 Validate the Order Status in DBS
     [Tags]    id=CO_NW_33
-    sleep    400
+#    sleep    400
     close all excel documents
     Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
     ${ListIndexIterator}    set variable    0
@@ -147,6 +148,7 @@ Validate the Order Status in DBS
 
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
+                customvariables.save screenshot    ${Screenshotdir}
 #                customvariables.save screenshot
                 ${text}=    SeleniumLibrary.get text    ${statustext}
 #                customvariables.save screenshot
@@ -317,6 +319,34 @@ SAPValidations
     save excel document    ${InputFilePath}
     close all excel documents
 
+
+Save ScreenShots
+    [Tags]     id=CO_NW_35
+    close all excel documents
+    Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
+    ${ListIndexIterator}    set variable    0
+    ${EnironmentValue}=    get from list    ${ExecutionEnvironmentList}     ${ListIndexIterator}
+    ${EnironmentValue}=    convert to upper case    ${EnironmentValue}
+    Get DBS Orders Link    ${EnironmentValue}
+    Launch and Login DBS    ${DBSURL}    ${username}    ${password}
+    ${OrderIdCount}=    get length    ${OrderIdList}
+    ${RowCounter}    set variable    2
+    FOR    ${ScenarioIterator}    IN RANGE    ${OrderIdCount}
+            ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
+            IF  '${OrderId}' != 'None'
+                sleep    5s
+                SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
+                sleep    5s
+                customvariables.save screenshot    ${Screenshotdir}
+                ${text}=    SeleniumLibrary.get text    ${statustext}
+                Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
+            END
+            ${ListIndexIterator}=    evaluate    ${ListIndexIterator} + int(${1})
+            ${RowCounter}=    evaluate    ${RowCounter} + int(${1})
+            save excel document    ${InputFilePath}
+   END
+   save excel document    ${InputFilePath}
+   close all excel documents
 
 *** Keywords ***
 Create Order
@@ -553,7 +583,7 @@ Get DBS Orders Link
     Run Keyword If    '${value}' == 'QA2'    set suite variable    ${DBSURL}     https://wileyas.qa2.viax.io/orders
     Run Keyword If    '${value}' == 'QA2'    set suite variable    ${GraphqlURL}      https://api.wileyas.qa2.viax.io/graphql
     Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${GraphqlURL}    https://api.wileyas.stage.viax.io/graphql
-    Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${DBSURL}    https://wileyas.stage.viax.io/price-proposals
+    Run Keyword If    '${value}' == 'STAGE'    set suite variable     ${DBSURL}    https://wileyas.stage.viax.io/orders
     ...    ELSE    Log    Default Case
 
 
