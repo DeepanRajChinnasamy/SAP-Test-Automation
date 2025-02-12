@@ -1548,7 +1548,7 @@ Create PP with Funder details
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
-                IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
+                IF    '${errormessage}' == 'WAITING ON FUNDING RESPONSE' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${PPInputExcelPath}
                 ELSE
@@ -1565,7 +1565,7 @@ Create PP with Funder details
                 customvariables.save screenshot    ${Screenshotfolder}
                 ${UIStatus}=    SeleniumLibrary.get text   //*[contains(@class, "x-button x-button_type_primary x-")]
                 ${Typeofpayment}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//span)[1]
-                run keyword and continue on failure    should be equal    ${UIStatus}    PRICE DETERMINED
+                run keyword and continue on failure    should be equal    ${UIStatus}    WAITING ON FUNDING RESPONSE
                 run keyword and continue on failure    should be equal    ${Typeofpayment}    FunderPaid
 
             ELSE
