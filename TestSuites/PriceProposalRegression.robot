@@ -1548,7 +1548,7 @@ Create PP with Funder details
                 Write Output Excel    PriceProposal    OrderID    ${RowCounter}    ${OrderID}
                 ${errormessage}=    set variable    ${json_dict['priceProposal']['bpStatus']['code']}
                 ${errormessage}=    convert to string    ${errormessage}
-                IF    '${errormessage}' == 'WAITING ON FUNDING RESPONSE' or '${errormessage}' == 'ManualOverrideRequired'
+                IF    '${errormessage}' == 'PriceDetermined' or '${errormessage}' == 'ManualOverrideRequired'
                     write and color excel    PriceProposal    PriceProposalStatus    ${RowCounter}    ${errormessage}    00FF00
                     save excel document    ${PPInputExcelPath}
                 ELSE
