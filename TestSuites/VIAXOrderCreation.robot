@@ -129,7 +129,7 @@ Create Order with Society Discount Value P4 with Alipay HOA Order
 
 Validate the Order Status in DBS
     [Tags]    id=CO_NW_33
-    sleep    400
+    sleep    420
     close all excel documents
     Read All Input Values From OrderCreationCases    ${InputFilePath}    Data
     ${ListIndexIterator}    set variable    0
@@ -145,28 +145,9 @@ Validate the Order Status in DBS
             ${OrderId}=    get from list    ${OrderIdList}    ${ListIndexIterator}
             IF  '${OrderId}' != 'None'
                 sleep    5s
-
                 SeleniumLibrary.input text    ${SearchBox}   ${OrderId}
                 sleep    5s
-                customvariables.save screenshot    ${Screenshotdir}
-#                customvariables.save screenshot
                 ${text}=    SeleniumLibrary.get text    ${statustext}
-#                customvariables.save screenshot
-                FOR    ${waitIterator}    IN RANGE    1    50
-                    IF    '${text}' != 'Invoiced' or '${text}' != 'Completed' or '${text}' != 'Proforma Created'
-                        reload page
-                        sleep    10s
-                        ${text}=    SeleniumLibrary.get text    ${statustext}
-                        ${text}=    set variable   ${text}
-                        IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
-                            #sleep    10s
-#                            customvariables.save screenshot
-                            exit for loop
-                        END
-                    ELSE
-                       exit for loop
-                    END
-                END
                 run keyword and continue on failure    should contain any    ${text}    Invoiced    Completed    Proforma Created
                 IF    '${text}' == 'Invoiced' or '${text}' == 'Completed' or '${text}' == 'Proforma Created'
                     Write Output Excel    Data    OrderStatus    ${RowCounter}    ${text}
@@ -225,7 +206,7 @@ Validate the Order Status in DBS
                     ${wileyorderId}=    seleniumlibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[1]
                     #sleep    3s
 #                    customvariables.save screenshot
-                    ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[8]
+                    ${saporderId}=    seleniumlibrary.get text   (//*[contains(@id,"single-spa-application:parcel")]//*[@class="x-order-basics-view__value"])[9]
 #                    customvariables.save screenshot
                     Write Output Excel    Data    WileyOrderId    ${RowCounter}    ${wileyorderId}
                     Write Output Excel    Data    SAPOrderID    ${RowCounter}    ${saporderId}
