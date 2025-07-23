@@ -595,7 +595,7 @@ Create PP with Referral discount
 #                run keyword and continue on failure    should be equal    ${AppliedYes1}    ${appliedyes1}
 #                ${AppliedYes2}=    SeleniumLibrary.get text    (//*[contains(@id, "single-spa-application:parcel")]//table/tbody/tr[2]/td[6])[1]
 #                run keyword and continue on failure    should be equal    ${AppliedYes2}    ${appliedyes2}
-                ${TaxValue}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[5]/div[2])[2]
+                ${TaxValue}=    SeleniumLibrary.get text    (//*[contains(@id,"single-spa-application:parcel")]/div/div/div/div[6]/div[2])
                 log to console  ${TaxValue}
                 ${TaxValue}=    replace string    ${TaxValue}    ${SPACE}    ${EMPTY}
                 run keyword and continue on failure    should be equal    ${TaxValue}    0.00USD
