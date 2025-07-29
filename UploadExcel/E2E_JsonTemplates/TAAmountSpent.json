@@ -1,0 +1,110 @@
+{
+  "query": "mutation receiveVersionEvent($event: Object!) { wAsHandleVersionEvent(input: $event)}",
+  "variables": {
+    "event": {
+      "apiversion": "1.0.0",
+      "tenant": "0636030c-5229-481c-a745-230519c60957",
+      "content-type": "application/cloudevents+json; charset=UTF-8",
+      "traceid": "168cfab8-3ba1-4b82-846e-7ed5bc4d8ee4",
+      "id": "44820e06-2a08-4e49-9a25-793e0e342fc5",
+      "source": "urn:appcat:as-fd-app",
+      "specversion": "1.0",
+      "type": "standalone-account-version.created",
+      "subtype": "Standalone",
+      "subject": "49837",
+      "time": "2024-12-02T12:08:56.235Z",
+      "datacontenttype": "application/json",
+      "data": {
+        "id": "<<ID>>7890",
+        "code": "<<ID>>7890",
+        "status": "Active",
+        "name": "Standalone TA Deal",
+        "startDate": "2024-02-01T05:00:00.000+0000",
+        "endDate": "2025-12-31T04:59:59.999+0000",
+        "hierarchy": {
+          "id": "<<ID>>7891",
+          "elementId": "<<ID>>7890:Account:<<ID>>7891",
+          "elementRole": "Account/Institution",
+          "name": "Standalone TA Account",
+          "code": "<<Code>>",
+          "customerBPID": "<<BPID>>",
+          "configuration": {
+            "id": "<<ID>>7892",
+            "revenueModel": "HybridOA",
+            "TAModel": "TA",
+            "contractPeriodAmounts": {
+              "timeBased": 0,
+              "eventBased": 2000
+            },
+            "poolConfigurations": {
+              "prePaid": {
+                "configurations": [
+                  {
+                    "type": "Amount Spent",
+                    "value": 2000,
+                    "appliesTo": "HybridOA"
+                  }
+                ]
+              }
+            },
+            "invoiceConfiguration": {
+              "recipients": [
+                "dchinnasam@wiley.com"
+              ],
+              "specialNotes": "For Testing"
+            },
+            "pricingConfiguration": {
+              "priceLock": "No",
+              "currency": "<<Currency>>",
+              "discounts": [
+                {
+                  "revenueModel": "GoldOA",
+                  "type": "N/A",
+                  "value": 0
+                }
+              ]
+            },
+            "fundsConfiguration": {
+              "ringfencingEarmarkingFunds": "Yes",
+              "configurations": [
+                {
+                  "revenueModel": "GoldOA",
+                  "postPaidAllowed": "No",
+                  "expiredUnusedFundsManagement": "Earned as OA"
+                },
+                {
+                  "revenueModel": "GoldOA",
+                  "postPaidAllowed": "No",
+                  "expiredUnusedFundsManagement": "Earned as OA"
+                }
+              ]
+            },
+            "fundingRequestConfiguration": {
+              "creationStageConfigurations": [
+                {
+                  "revenueModel": "GoldOA",
+                  "stage": "Submission"
+                }
+              ],
+              "approvalStageConfigurations": [
+                {
+                  "revenueModel": "GoldOA",
+                  "stage": "Submission"
+                }
+              ]
+            }
+          },
+          "institution": {
+            "id": "<<ID>>7893",
+            "ids": [
+              {
+                "type": "Ringgold",
+                "id": "<<ID>>7894"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
