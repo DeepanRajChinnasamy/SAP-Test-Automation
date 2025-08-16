@@ -14,7 +14,7 @@ ${JIRA_BASE_URL}           https://wiley.atlassian.net
 ${JIRA_API_ENDPOINT}       /rest/api/3/search
 ${JIRA_USERNAME}           dchinnasam@wiley.com
 ${EMAIL_TO}       dchinnasam@wiley.com    #;hkbonam@wiley.com;smally@wiley.com;kcdodda@wiley.com
-${JIRA_TOKEN}              ATATT3xFfGF0uhdYyaPbFOzZSqcKtQcXwY6CuwP34NbeLBGUHxnCBhvSCQp4aaAwbveMd_QtqklLB6QgZl3BpJnoGznjcaLxq_YmzKF5vxmKfrLg7fDePzdsxswecQUzRfwOc0WmyjSTR5Q3FjaLbOkudCb9VkLBDygb2vMYH3vsBnyBZ6T5aXU=D88328FC
+${JIRA_TOKEN}              ATATT3xFfGF0uhdYyaPbFOzZSXwY6CuwP34NbeLBGUHxnCBhvSCQp4aaAwbveMd_QtqklLB6QgZl3BpJnoGznjcaLxq_YmzKF5vxmKfrLg7fDePzdsxswecQUzRfwOc0WmyjSTR5Q3FjaLbOkudCb9VkLBDygb2vMYH3vsBnyBZ6T5aXU=D88328FC
 ${EXCEL_OUTPUT_DIR}        ${CURDIR}/results
 ${EXCEL_FILENAME}          Jeffsdaily_report
 ${EMAIL_SUBJECT}     Automated Daily Jeff_Report
@@ -50,6 +50,7 @@ Export Issues With All Fields To Excel
     File Should Exist    ${excel_file}
     Log    Comprehensive export completed: ${excel_file}
     ${filepath}=    send latest excel via outlook    ${EXCEL_OUTPUT_DIR}     ${EMAIL_TO}   ${EMAIL_SUBJECT}   ${EMAIL_BODY}
+
 
 
 
